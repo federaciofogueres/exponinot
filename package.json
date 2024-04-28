@@ -10,6 +10,9 @@
     "serve:ssr:exponinot": "node dist/exponinot/server/server.mjs"
   },
   "private": true,
+  "engines": {
+    "node": "20.11.0"
+  },
   "dependencies": {
     "@angular/animations": "^17.1.0",
     "@angular/common": "^17.1.0",
