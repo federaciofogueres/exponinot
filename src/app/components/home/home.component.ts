@@ -18,7 +18,7 @@ export class HomeComponent {
   }
 
   enableScanner() {
-    this.scannerEnabled = true;
+    this.scannerEnabled = !this.scannerEnabled;
   }
 
 }
