@@ -1,6 +1,12 @@
 <div class="container">
     <button class="center-button" (click)="enableScanner()">Escanear QR</button>
     @if (scannerEnabled) {
-        <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+        <div class="scanner-container">
+            <div class="scanner-header">
+                <button (click)="scannerEnabled = false">←</button>
+                <h1>Escanear QR</h1>
+            </div>
+            <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+        </div>
     }
 </div>
