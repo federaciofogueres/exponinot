@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <button class="center-button">Escanear QR</button>
-    </div>
-</body>
-</html>
+<div class="container">
+    <button class="center-button" (click)="enableScanner()">Escanear QR</button>
+    @if (scannerEnabled) {
+        <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+    }
+</div>
