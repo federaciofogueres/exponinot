@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { environment } from './../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterOutlet } from '@angular/router';
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { NinotsService } from './services/ninots.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +15,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  constructor() {
-    const app = initializeApp(environment.firebase);
-    const db = getFirestore(app);
-  }
+  title = 'firebase-cms';
 }

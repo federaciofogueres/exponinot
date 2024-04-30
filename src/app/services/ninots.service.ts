@@ -1,39 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FirebaseService } from './firebase.service';
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc, getDoc } from 'firebase/firestore';
+import { Firestore, collectionData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NinotsService {
-  private db;
+  private _firestore = inject(Firestore);
 
-  constructor(private firebaseService: FirebaseService) {
-    this.db = this.firebaseService.getDb();
-  }
+  private _collection = collection(this._firestore, 'ninots');
 
   // Create
   async createNinot(ninotData: any) {
-    await addDoc(collection(this.db, 'ninots'), ninotData);
+    await addDoc(collection(this._firestore, 'ninots'), ninotData);
   }
 
   // Read
-  async getNinots() {
-    const querySnapshot = await getDocs(collection(this.db, 'ninots'));
-    return querySnapshot.docs.map(doc => doc.data());
+  getNinots() {
+    return collectionData(this._collection) as Observable<any[]>;
   }
 
   // Read one
   async getNinot(id: string) {
-    console.log(id);
-    console.log(this.db);
-    const ninotRef = doc(this.db, 'ninots', id);
-    console.log(ninotRef);
+    const ninotRef = doc(this._firestore, 'ninots', id);
     const ninotSnap = await getDoc(ninotRef); // Replace getDocs with getDoc
-    console.log(ninotSnap);
     if (ninotSnap.exists()) {
-      console.log('Document data:', ninotSnap.data());
-      
       return ninotSnap.data();
     } else {
       throw new Error('No such document!');
@@ -42,13 +35,13 @@ export class NinotsService {
 
   // Update
   async updateNinot(id: any, updatedData: any) {
-    const ninotRef = doc(this.db, 'ninots', id);
+    const ninotRef = doc(this._firestore, 'ninots', id);
     await updateDoc(ninotRef, updatedData);
   }
 
   // Delete
   async deleteNinot(id: any) {
-    const ninotRef = doc(this.db, 'ninots', id);
+    const ninotRef = doc(this._firestore, 'ninots', id);
     await deleteDoc(ninotRef);
   }
 }
