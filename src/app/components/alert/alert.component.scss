@@ -1,0 +1,25 @@
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+.close {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: transparent;
+  border: 0;
+}
+  
+.close:hover {
+  color: #000;
+  text-decoration: none;
+}
+  
+.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+  opacity: .75;
+}
+  

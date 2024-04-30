@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { routes } from '../../app.routes';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,5 +11,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  routes = routes;
+  constructor(
+    protected router: Router,
+    protected authService: AuthService
+  ) {}
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('');
+  }
+
 }

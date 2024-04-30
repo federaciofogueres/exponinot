@@ -1,0 +1,30 @@
+$azul-oscuro: #0033A0;
+
+.login-container {
+    max-width: 350px;
+    .row.banner{
+        text-align: center;
+        img {
+            max-height: 75px;
+        }
+    }
+}
+
+.submit-button button{
+    margin: auto;
+    color: white;
+    background-color: $azul-oscuro;
+    border: 1px solid $azul-oscuro;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 25px;
+    width: auto;
+    max-width: 80%;
+}
+
+.row.banner{
+    text-align: center;
+    img {
+        max-height: 75px;
+    }
+}
