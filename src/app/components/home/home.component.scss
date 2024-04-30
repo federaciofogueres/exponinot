@@ -10,6 +10,8 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
+    height: calc(100vh - 94px); /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
+
 }
 
 .center-button {
@@ -41,3 +43,14 @@ zxing-scanner {
     width: 100%;
     height: calc(100% - 60px); /* Restamos la altura de la cabecera */
 }
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%); /* Ajusta el segundo valor para mover el contenedor hacia arriba */
+  }
