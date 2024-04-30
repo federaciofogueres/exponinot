@@ -30,6 +30,8 @@ export class NinotsComponent {
     this.ninotsService.getNinots().subscribe({
       next: (ninots) => {
         this.ninots = ninots;
+        console.log('Ninots:', this.ninots);
+        
         this.loading = false;
       },
       error: (error) => {

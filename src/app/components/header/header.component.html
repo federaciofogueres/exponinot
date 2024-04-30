@@ -1,1 +1,18 @@
-<p>header works!</p>
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="path/to/your/image.jpg" alt="" width="30" height="24">
+      </a>
+  
+      <h1 class="mx-auto">Exposición Ninot 24</h1>
+  
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownMenuButton" ngbDropdownToggle>Menú</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" [routerLink]="''">Home</a>
+            <a class="dropdown-item" [routerLink]="'/ninots'">Ninots</a>
+            <a class="dropdown-item" [routerLink]="'/admin'">Administración</a>
+        </div>
+      </div>
+    </div>
+  </header>

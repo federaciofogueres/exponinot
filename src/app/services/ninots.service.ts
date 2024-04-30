@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { FirebaseService } from './firebase.service';
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc, getDoc } from 'firebase/firestore';
-import { Firestore, collectionData } from '@angular/fire/firestore';
+import { Firestore, collectionData, setDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,8 +13,9 @@ export class NinotsService {
   private _collection = collection(this._firestore, 'ninots');
 
   // Create
-  async createNinot(ninotData: any) {
-    await addDoc(collection(this._firestore, 'ninots'), ninotData);
+  async createNinot(ninotData: any, id: string) {
+    await setDoc(doc(this._firestore, 'ninots', id), ninotData);
+    // await addDoc(collection(this._firestore, 'ninots'), ninotData);
   }
 
   // Read
