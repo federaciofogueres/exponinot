@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
 import { Router } from '@angular/router';
+import { QRModel } from '../../models/qr-model';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,14 @@ export class HomeComponent {
 
   handleQrCodeResult(resultString: string) {
     console.log('Resultado del escaneo QR: ', resultString);
-    this.router.navigate(['/ninots', resultString]);
+    let content: QRModel = JSON.parse(resultString);
+    
+    if (content.tipo === 0) {
+      this.router.navigate(['/ninots', content.id]);
+    } else {
+      // Redirige a otra ruta si 'tipo' no es 0
+      // this.router.navigate(['/otra-ruta', content.id]);
+    }
   }
 
   enableScanner() {
