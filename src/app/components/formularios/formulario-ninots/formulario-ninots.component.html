@@ -12,14 +12,18 @@
 
     <div class="form-group">
       <label for="categoria">Categoría</label>
-      <input type="text" id="categoria" class="form-control" formControlName="categoria">
+      <select class="form-control" id="categoria" formControlName="categoria">
+        @for (categoria of categorias; track $index) {
+          <option [value]="categoria">{{categoria}}</option>
+        }
+      </select>
     </div>
 
     <div class="form-group">
       <label for="asociacion">Asociación</label>
       <select class="form-control" id="asociacion" formControlName="asociacion" (change)="handleAsociacion($event)">
         @for (asociacion of asociaciones; track $index) {
-          <option [value]="asociacion.id">{{asociacion.nombre}}</option>
+          <option [value]="asociacion.nombre">{{asociacion.nombre}}</option>
         }
       </select>
     </div>

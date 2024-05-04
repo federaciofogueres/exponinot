@@ -17,6 +17,7 @@ import { AlertService } from '../../alert/alert.service';
 export class FormularioNinotsComponent {
   ninotForm!: FormGroup;
   asociaciones: Asociacion[] = [];
+  categorias: string[] = ['Especial', 'Primera', 'Segunda', 'Tercera', 'Cuarta', 'Quinta', 'Sexta', 'Sexta A', 'Sexta B'];
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -48,7 +49,9 @@ export class FormularioNinotsComponent {
   }
 
   handleAsociacion(event: any) {
-    this.ninotForm.controls['idAsociacion'].setValue(event.target.value);
+    let asociacion: Asociacion = this.asociaciones.find(asoc => asoc.nombre === event.target.value)!;
+    this.ninotForm.controls['idAsociacion'].setValue(asociacion.id);
+    this.ninotForm.controls['asociacion'].setValue(asociacion.nombre);
   }
 
   initForm() {
