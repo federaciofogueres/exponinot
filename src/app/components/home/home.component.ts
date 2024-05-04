@@ -15,6 +15,7 @@ export class HomeComponent {
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
   scannerEnabled = false;
   audioMode = false;
+  isPlaying = false;
 
   constructor(private router: Router) { }
 
@@ -38,10 +39,17 @@ export class HomeComponent {
     console.log('Resultado -> ', resultString);
     
     // Reproduce un sonido cuando se escanea un código QR
-    let audio = new Audio();
-    audio.src = 'assets/audio/intro.ogg';
-    audio.load();
-    audio.play();
+    if (!this.isPlaying) {
+      this.isPlaying = true;
+      let audio = new Audio();
+      audio.src = 'assets/audio/intro.ogg';
+      audio.load();
+      audio.play();
+
+      audio.onended = () => {
+        this.isPlaying = false;
+      };
+    }
   }
 
 }
