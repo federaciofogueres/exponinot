@@ -17,7 +17,7 @@ export class HomeComponent {
   audioMode = false;
   isPlaying = false;
 
-  constructor(private router: Router) { }
+  constructor(protected router: Router) { }
 
   handleQrCodeResult(resultString: string) {
     console.log('Resultado del escaneo QR: ', resultString);
