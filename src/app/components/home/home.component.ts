@@ -14,6 +14,7 @@ import { QRModel } from '../../models/qr-model';
 export class HomeComponent {
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
   scannerEnabled = false;
+  audioMode = false;
 
   constructor(private router: Router) { }
 
@@ -31,6 +32,16 @@ export class HomeComponent {
 
   enableScanner() {
     this.scannerEnabled = !this.scannerEnabled;
+  }
+
+  handleQrCodeResultAudioMode(resultString: string) {
+    console.log('Resultado -> ', resultString);
+    
+    // Reproduce un sonido cuando se escanea un código QR
+    let audio = new Audio();
+    audio.src = 'assets/audio/intro.ogg';
+    audio.load();
+    audio.play();
   }
 
 }

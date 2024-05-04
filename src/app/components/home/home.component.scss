@@ -54,3 +54,9 @@ zxing-scanner {
     left: 50%;
     transform: translate(-50%, -60%); /* Ajusta el segundo valor para mover el contenedor hacia arriba */
   }
+
+  .audio-btn {
+    position: absolute;
+    top: 104px;
+    right: 10px;
+  }

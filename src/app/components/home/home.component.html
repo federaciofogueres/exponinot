@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary text-primary mt-2 audio-btn" (click)="audioMode = true">
+            <i class="bi bi-volume-up-fill"></i>
+            <span>Modo audio</span>
+        </button>
+    </div>
+    
     <div class="qr-container d-flex flex-column align-items-center" (click)="enableScanner()">
         <button class="center-button btn btn-outline-primary text-primary" style="background-color: transparent; border-color: transparent; font-weight: bold; color: cornflowerblue;">
             <span>Escanear QR</span>
@@ -15,3 +22,7 @@
         </div>
     }
 </div>
+
+@if (audioMode) {
+    <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResultAudioMode($event)"></zxing-scanner>
+}
