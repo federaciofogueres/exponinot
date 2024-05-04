@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NinotsService } from '../../../services/ninots.service';
 import { Router } from '@angular/router';
+import { Asociacion } from '../../../../external-api/asociacion';
+import { CensoService } from '../../../services/censo.service';
+import { ResponseAsociaciones } from '../../../../external-api/responseAsociaciones';
+import { AlertService } from '../../alert/alert.service';
 
 @Component({
   selector: 'app-formulario-ninots',
@@ -12,15 +16,39 @@ import { Router } from '@angular/router';
 })
 export class FormularioNinotsComponent {
   ninotForm!: FormGroup;
+  asociaciones: Asociacion[] = [];
 
   constructor(
     private formBuilder: FormBuilder, 
     private ninotsService: NinotsService,
-    private router: Router
+    private router: Router,
+    private censoService: CensoService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
+    this.loadAsociaciones();
     this.initForm();
+  }
+
+  loadAsociaciones() {
+    this.censoService.asociacionesGet().subscribe({
+      next: (response: ResponseAsociaciones) => {
+        if (response.status?.status === 200) {
+          this.asociaciones = response.asociaciones!;
+        } else {
+          //@ts-ignore
+          this.alertService.danger('Error loading asociaciones: ', response.status.message);
+        }
+      },
+      error: (error) => {
+        this.alertService.danger('Error loading asociaciones: ', error.message);
+      }
+    });
+  }
+
+  handleAsociacion(event: any) {
+    this.ninotForm.controls['idAsociacion'].setValue(event.target.value);
   }
 
   initForm() {

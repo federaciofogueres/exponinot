@@ -17,17 +17,16 @@
 
     <div class="form-group">
       <label for="asociacion">Asociación</label>
-      <input type="text" id="asociacion" class="form-control" formControlName="asociacion">
+      <select class="form-control" id="asociacion" formControlName="asociacion" (change)="handleAsociacion($event)">
+        @for (asociacion of asociaciones; track $index) {
+          <option [value]="asociacion.id">{{asociacion.nombre}}</option>
+        }
+      </select>
     </div>
 
     <div class="form-group">
       <label for="artista">Artista</label>
       <input type="text" id="artista" class="form-control" formControlName="artista">
-    </div>
-
-    <div class="form-group">
-      <label for="idAsociacion">ID Asociación</label>
-      <input type="number" id="idAsociacion" class="form-control" formControlName="idAsociacion">
     </div>
 
     <div class="form-group">
