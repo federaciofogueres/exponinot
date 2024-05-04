@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="ninotForm" (ngSubmit)="saveNinot()">
+  <form [formGroup]="ninotForm">
     <div class="form-group">
       <label for="lema">Lema</label>
       <input type="text" id="lema" class="form-control" formControlName="lema">
@@ -47,7 +47,9 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!ninotForm.valid">Crear</button>
   </form>
-  <button class="btn btn-secondary" (click)="editNinot(ninotForm.get('id')!.value)">Editar</button>
+  <div class="d-flex justify-content-between my-3">
+    <button type="submit" class="btn btn-primary px-4" [disabled]="!ninotForm.valid" (click)="saveNinot()">Crear</button>
+    <button class="btn btn-secondary px-4" [disabled]="!ninotForm.valid" (click)="editNinot(ninotForm.get('id')!.value)">Editar</button>
+  </div>
 </div>

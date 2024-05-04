@@ -1,14 +1,20 @@
-<div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" id="toggleFormCheckbox" [(ngModel)]="showNinotsForm">
-    <label class="form-check-label" for="toggleFormCheckbox">
-        {{ showNinotsForm ? 'Formulario tipos de ninots' : 'Formulario ninots' }}
-    </label>
+
+<div class="container">
+    <div class="d-flex justify-content-start m-3">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="toggleFormCheckbox" [(ngModel)]="showNinotsForm">
+            <label class="form-check-label" for="toggleFormCheckbox">
+                {{ showNinotsForm ? 'Formulario tipos de ninots' : 'Formulario ninots' }}
+            </label>
+        </div>
+    </div>
+    @if (showNinotsForm) {
+        <app-formulario-ninots></app-formulario-ninots>
+    } @else {
+        <app-formulario-tipo-ninot></app-formulario-tipo-ninot>
+    }
+    
+    <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-primary" (click)="generarQR()">Generar QR's</button>
+    </div>
 </div>
-
-@if (showNinotsForm) {
-    <app-formulario-ninots></app-formulario-ninots>
-} @else {
-    <app-formulario-tipo-ninot></app-formulario-tipo-ninot>
-}
-
-<button class="btn btn-primary" (click)="generarQR()">Generar QR's</button>

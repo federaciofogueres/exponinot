@@ -4,14 +4,13 @@
         <label for="id">ID</label>
         <input type="number" id="id" class="form-control" formControlName="id">
       </div>
-  
       <div class="form-group">
         <label for="tipo">Tipo</label>
         <input type="text" id="tipo" class="form-control" formControlName="tipo">
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="!tipoNinotForm.valid">Crear</button>
     </form>
-
-    <button class="btn btn-secondary" (click)="editTipoNinot(tipoNinotForm.get('id')!.value)">Editar</button>
+    <div class="d-flex justify-content-between my-3">
+      <button type="submit" class="btn btn-primary px-4" [disabled]="!tipoNinotForm.valid" (click)="saveTipoNinot()">Crear</button>
+      <button class="btn btn-secondary px-4" [disabled]="!tipoNinotForm.valid" (click)="editTipoNinot(tipoNinotForm.get('id')!.value)">Editar</button>
+    </div>
   </div>
