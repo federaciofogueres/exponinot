@@ -6,6 +6,7 @@ import { Asociacion } from '../../../../external-api/asociacion';
 import { CensoService } from '../../../services/censo.service';
 import { ResponseAsociaciones } from '../../../../external-api/responseAsociaciones';
 import { AlertService } from '../../alert/alert.service';
+import { TipoNinot } from '../../../models/tipo-ninot-model';
 
 @Component({
   selector: 'app-formulario-ninots',
@@ -18,6 +19,11 @@ export class FormularioNinotsComponent {
   ninotForm!: FormGroup;
   asociaciones: Asociacion[] = [];
   categorias: string[] = ['Especial', 'Primera', 'Segunda', 'Tercera', 'Cuarta', 'Quinta', 'Sexta', 'Sexta A', 'Sexta B'];
+  tiposNinots: TipoNinot[] = [
+    { id: 0, tipo: 'Foguera adulta' },
+    { id: 1, tipo: 'Foguera infantil' },
+    { id: 2, tipo: 'Barraca' },
+  ];
 
   constructor(
     private formBuilder: FormBuilder, 
