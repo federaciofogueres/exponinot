@@ -48,8 +48,14 @@ export class FormularioNinotsComponent {
     });
   }
 
-  handleAsociacion(event: any) {
-    let asociacion: Asociacion = this.asociaciones.find(asoc => asoc.nombre === event.target.value)!;
+  handleAsociacion(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const asociacionId = target.value;
+    console.log('Asociacion id selected -> ', asociacionId);
+      
+    let asociacion: Asociacion = this.asociaciones.find(asoc => asoc.id === +asociacionId)!;
+    console.log('Asociacion selected -> ', asociacion);
+    
     this.ninotForm.controls['idAsociacion'].setValue(asociacion.id);
     this.ninotForm.controls['asociacion'].setValue(asociacion.nombre);
   }

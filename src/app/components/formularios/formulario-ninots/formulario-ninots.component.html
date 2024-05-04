@@ -21,9 +21,9 @@
 
     <div class="form-group">
       <label for="asociacion">Asociación</label>
-      <select class="form-control" id="asociacion" formControlName="asociacion" (change)="handleAsociacion($event)">
+      <select class="form-control" id="asociacion" (change)="handleAsociacion($event)">
         @for (asociacion of asociaciones; track $index) {
-          <option [value]="asociacion.nombre">{{asociacion.nombre}}</option>
+          <option [value]="asociacion.id">{{asociacion.nombre}}</option>
         }
       </select>
     </div>
