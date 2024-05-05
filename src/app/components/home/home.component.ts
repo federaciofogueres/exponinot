@@ -42,7 +42,6 @@ export class HomeComponent {
     console.log('Resultado -> ', resultString);
     this.resultado = resultString;
     this.scannerEnabled = false;
-    this.audioMode = false;
     
     // Reproduce un sonido cuando se escanea un código QR
     if (!this.isPlaying) {
@@ -51,10 +50,11 @@ export class HomeComponent {
       audio.src = 'assets/audio/intro.ogg';
       audio.load();
       audio.play();
-
+      
       audio.onended = () => {
         this.isPlaying = false;
       };
+      this.audioMode = false;
     }
   }
 
