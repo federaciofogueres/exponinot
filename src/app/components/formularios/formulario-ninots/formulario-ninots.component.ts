@@ -7,6 +7,7 @@ import { CensoService } from '../../../services/censo.service';
 import { ResponseAsociaciones } from '../../../../external-api/responseAsociaciones';
 import { AlertService } from '../../alert/alert.service';
 import { TipoNinot } from '../../../models/tipo-ninot-model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-formulario-ninots',
@@ -16,6 +17,7 @@ import { TipoNinot } from '../../../models/tipo-ninot-model';
   styleUrl: './formulario-ninots.component.scss'
 })
 export class FormularioNinotsComponent {
+  editing: boolean = false;
   ninotForm!: FormGroup;
   asociaciones: Asociacion[] = [];
   categorias: string[] = ['Especial', 'Primera', 'Segunda', 'Tercera', 'Cuarta', 'Quinta', 'Sexta', 'Sexta A', 'Sexta B'];
@@ -30,7 +32,8 @@ export class FormularioNinotsComponent {
     private ninotsService: NinotsService,
     private router: Router,
     private censoService: CensoService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit() {
@@ -77,6 +80,11 @@ export class FormularioNinotsComponent {
       id: ['', Validators.required],
       tipo: ['', Validators.required],
     });
+    let ninot = this.cookieService.get('ninot');
+    if (ninot) {
+      this.editing = true;
+      this.ninotForm.patchValue(JSON.parse(ninot));
+    }
   }
 
   saveNinot() {

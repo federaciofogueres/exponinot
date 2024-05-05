@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NinotsService } from './../../services/ninots.service';
-import { doc, getDoc } from 'firebase/firestore';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-ninot',
@@ -17,7 +17,8 @@ export class NinotComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
-    private ninotsService: NinotsService
+    private ninotsService: NinotsService,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit() {
@@ -38,6 +39,11 @@ export class NinotComponent implements OnInit {
     }
   }
 
+  edit() {
+    console.log('Edit ninot -> ', this.ninot);
+    this.cookieService.set('ninot', JSON.stringify(this.ninot));
+    this.router.navigateByUrl('/admin');
+  }
 
   speak() {
     const utterance = new SpeechSynthesisUtterance();
