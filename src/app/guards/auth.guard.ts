@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    if (this.authService.isLoggedIn){
+    if (this.authService.isLoggedIn()){
       let token = this.authService.getToken();
       this.censoService.configuration.accessToken = token;
       return true;

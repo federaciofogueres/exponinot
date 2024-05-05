@@ -4,6 +4,7 @@ import { ResponseToken } from '../../external-api/responseToken';
 import { Router } from '@angular/router';
 import { EncoderService } from './encoder.service';
 import { CensoService } from './censo.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +15,25 @@ export class AuthService {
   constructor(
     private router: Router,
     private censoService: CensoService,
-    private encoderService: EncoderService
+    private encoderService: EncoderService,
+    private cookieService: CookieService
   ) { }
 
   checkToken(): boolean {
-    return !this.checkExpireDateToken(this.encoderService.decrypt(localStorage.getItem('token')!))
+    return !this.checkExpireDateToken(this.encoderService.decrypt(this.cookieService.get('token')!))
   }
 
   checkExpireDateToken(token: string) {
+
+    console.log('Token 2 -> ', token);
+    
     const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
     return (Math.floor((new Date).getTime() / 1000)) >= expiry;
   }
 
   saveToken(token: string): void {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('token', this.encoderService.encrypt(token));
+      this.cookieService.set('token', this.encoderService.encrypt(token));
     }
   }
 
@@ -56,21 +61,21 @@ export class AuthService {
 
   public getToken() {
     let token = '';
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
-      token = this.encoderService.decrypt(localStorage.getItem('token')!);
+    if (this.cookieService.get('token')) {
+      token = this.encoderService.decrypt(this.cookieService.get('token')!);
     }
     return token;
   }
 
   logout() {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('token');
-    }
+    this.cookieService.delete('token');
     this.router.navigateByUrl('login');
   }
 
-  get isLoggedIn(): boolean {
-    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token')! : null;
-    return token !== null ? this.checkToken() : false;
+  isLoggedIn(): boolean {
+    const token = this.cookieService.get('token');
+    console.log('Checking -> ', token !== null && token !== '');
+    
+    return token !== null && token !== '' ? this.checkToken() : false;
   }
 }

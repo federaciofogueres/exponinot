@@ -11,10 +11,15 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  userLogged: boolean = false;
   constructor(
     protected router: Router,
     protected authService: AuthService
   ) {}
+
+  ngOnInit() {
+    this.userLogged = this.authService.isLoggedIn();
+  }
 
   logout() {
     this.authService.logout();

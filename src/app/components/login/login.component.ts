@@ -27,7 +27,7 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {
-    if (this.authService.isLoggedIn) {
+    if (this.authService.isLoggedIn()) {
       this.route.navigateByUrl('home');
     }
   }

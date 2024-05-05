@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NinotsService } from './../../services/ninots.service';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-ninot',
@@ -14,17 +15,24 @@ export class NinotComponent implements OnInit {
   ninot: any;
   loading: boolean = false;
   speaking: boolean = false;
+  userLogged: boolean = false;
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
     private ninotsService: NinotsService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    protected authService: AuthService
   ) {}
 
   ngOnInit() {
     this.loading = true;
     const id = this.route.snapshot.paramMap.get('id');
     this.getNinot(id);
+    this.checkUser();
+  }
+
+  checkUser(){
+    this.userLogged = this.authService.isLoggedIn();
   }
 
   async getNinot(id: any) {
@@ -63,6 +71,11 @@ export class NinotComponent implements OnInit {
   stopSpeaking() {
     window.speechSynthesis.cancel();
     this.speaking = false;
+  }
+
+  deleteNinot() {
+    this.ninotsService.deleteNinot(this.ninot.id);
+    this.router.navigateByUrl('/ninots');
   }
 
 }
