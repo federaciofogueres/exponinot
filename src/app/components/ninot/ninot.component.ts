@@ -16,6 +16,7 @@ export class NinotComponent implements OnInit {
   loading: boolean = false;
   speaking: boolean = false;
   userLogged: boolean = false;
+  state = 'nada';
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
@@ -32,7 +33,12 @@ export class NinotComponent implements OnInit {
     this.checkSpeak();
   }
 
+  ngOnChanges(){
+    this.checkSpeak();
+  }
+
   checkSpeak(){
+    this.state = 'checking';
     if(this.cookieService.get('audioMode') === 'true'){
       this.speak().then((res: any) => {
         console.log('Speaking: ', true);
@@ -65,6 +71,8 @@ export class NinotComponent implements OnInit {
 
   speak() {
     return new Promise((resolve, reject) => {
+
+      this.state = 'speaking';
       const utterance = new SpeechSynthesisUtterance();
       utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
     
