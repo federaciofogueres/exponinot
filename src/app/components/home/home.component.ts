@@ -59,6 +59,7 @@ export class HomeComponent {
   }
 
   handleQrCodeResultAudioMode(resultString: string) {
+    this.cookieService.set('audioMode', 'true');
     let qrModel: QRModel = JSON.parse(resultString);
     if (qrModel.tipo === -1) {
       this.playAudio();
@@ -78,7 +79,6 @@ export class HomeComponent {
       audio.onended = () => {
         this.isPlaying = false;
       };
-      this.audioMode = false;
     }
   }
 
