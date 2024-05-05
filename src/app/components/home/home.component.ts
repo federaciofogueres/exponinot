@@ -18,7 +18,7 @@ export class HomeComponent {
   audioMode = false;
   isPlaying = false;
 
-  resultado: string = 'result';
+  resultado: QRModel = { tipo: 0, id: 0 };
 
   constructor(protected router: Router) { }
 
@@ -41,7 +41,7 @@ export class HomeComponent {
   handleQrCodeResultAudioMode(resultString: string) {
     let qrModel: QRModel = JSON.parse(resultString);
     console.log('Resultado -> ', qrModel);
-    this.resultado = resultString;
+    this.resultado = qrModel;
     this.scannerEnabled = false;
     
     // Reproduce un sonido cuando se escanea un código QR
