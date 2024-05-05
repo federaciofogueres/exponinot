@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { QRModel } from '../../models/qr-model';
 import { CookiesComponent } from '../cookies/cookies.component';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,20 @@ export class HomeComponent {
 
   resultado: QRModel = { tipo: 0, id: 0 };
 
-  constructor(protected router: Router) { }
+  constructor(
+    protected router: Router,
+    private cookieService: CookieService
+  ) { }
+
+  ngOnInit() { 
+    this.checkSpeak();
+  }
+
+  checkSpeak(){
+    if(this.cookieService.get('audioMode') === 'true'){
+      this.audioMode = true;
+    }
+  }
 
   handleQrCodeResult(resultString: string) {
     console.log('Resultado del escaneo QR: ', resultString);
@@ -35,17 +49,25 @@ export class HomeComponent {
     }
   }
 
+  setAudioMode() {
+    this.audioMode = !this.audioMode;
+    this.cookieService.set('audioMode', this.audioMode.toString());
+  }
+
   enableScanner() {
     this.scannerEnabled = !this.scannerEnabled;
   }
 
   handleQrCodeResultAudioMode(resultString: string) {
     let qrModel: QRModel = JSON.parse(resultString);
-    console.log('Resultado -> ', qrModel);
-    this.resultado = qrModel;
-    this.scannerEnabled = false;
-    
-    // Reproduce un sonido cuando se escanea un código QR
+    if (qrModel.tipo === -1) {
+      this.playAudio();
+    } else {
+      this.router.navigate(['/ninots', qrModel.id]);
+    }
+  }
+
+  playAudio() {
     if (!this.isPlaying) {
       this.isPlaying = true;
       let audio = new Audio();

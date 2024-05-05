@@ -29,6 +29,16 @@ export class NinotComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.getNinot(id);
     this.checkUser();
+    this.checkSpeak();
+  }
+
+  checkSpeak(){
+    if(this.cookieService.get('audioMode') === 'true'){
+      this.speak().then((res: any) => {
+        console.log('Speaking: ', true);
+        this.router.navigateByUrl('/home');
+      })
+    }
   }
 
   checkUser(){
@@ -54,18 +64,21 @@ export class NinotComponent implements OnInit {
   }
 
   speak() {
-    const utterance = new SpeechSynthesisUtterance();
-    utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
-  
-    // Set this.speaking to true when speech starts
-    this.speaking = true;
-  
-    // Set this.speaking to false when speech ends
-    utterance.onend = () => {
-      this.speaking = false;
-    };
-  
-    window.speechSynthesis.speak(utterance);
+    return new Promise((resolve, reject) => {
+      const utterance = new SpeechSynthesisUtterance();
+      utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
+    
+      // Set this.speaking to true when speech starts
+      this.speaking = true;
+    
+      // Set this.speaking to false when speech ends
+      utterance.onend = () => {
+        this.speaking = false;
+        resolve(true);
+      };
+    
+      window.speechSynthesis.speak(utterance);
+    });
   }
 
   stopSpeaking() {
