@@ -107,4 +107,11 @@ export class FormularioNinotsComponent {
       console.log('Error updating ninot -> ', error);
     });
   }
+
+  limpiar(){
+    this.cookieService.delete('ninot');
+    this.editing = false;
+    this.ninotForm.reset();
+  }
+
 }

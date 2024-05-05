@@ -50,6 +50,7 @@
   </form>
   <div class="d-flex justify-content-between my-3">
     <button type="submit" class="btn btn-primary px-4" [disabled]="!ninotForm.valid || editing" (click)="saveNinot()">Crear</button>
+    <button class="btn btn-danger px-4" (click)="limpiar()">Borrar</button>
     <button class="btn btn-secondary px-4" [disabled]="!ninotForm.valid" (click)="editNinot(ninotForm.get('id')!.value)">Editar</button>
   </div>
 </div>
