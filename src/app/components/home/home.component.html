@@ -29,6 +29,7 @@
 @if (audioMode) {
     <div class="container">
         <div class="scanner-container">
+            <h1>{{resultado}}</h1>
             <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResultAudioMode($event)"></zxing-scanner>
         </div>
     </div>
