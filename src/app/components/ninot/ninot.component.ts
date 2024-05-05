@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NinotsService } from './../../services/ninots.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -22,7 +22,8 @@ export class NinotComponent implements OnInit {
     protected router: Router,
     private ninotsService: NinotsService,
     private cookieService: CookieService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -36,20 +37,22 @@ export class NinotComponent implements OnInit {
   ngAfterViewInit() {
     this.checkSpeak();
   }
-  
+
   ngOnChanges(){
     this.checkSpeak();
   }
 
-  checkSpeak(){
-    this.state = 'checking';
-    if(this.cookieService.get('audioMode') === 'true'){
+checkSpeak() {
+  this.state = 'checking';
+  if (this.cookieService.get('audioMode') === 'true') {
+    this.ngZone.run(() => {
       const speakButton: HTMLElement = document.querySelector('.speak-button')!;
       if (speakButton) {
         speakButton.click();
       }
-    }
+    });
   }
+}
 
   checkUser(){
     this.userLogged = this.authService.isLoggedIn();
