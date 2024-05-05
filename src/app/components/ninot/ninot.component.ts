@@ -78,6 +78,9 @@ export class NinotComponent implements OnInit {
       utterance.onend = () => {
         this.speaking = false;
         this.state = 'speaking 3';
+        if (this.cookieService.get('audioMode') === 'true') {
+          this.router.navigate(['/home']);
+        }
       };
       this.state = 'speaking 2';
   
