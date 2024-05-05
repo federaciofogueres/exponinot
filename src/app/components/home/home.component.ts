@@ -41,6 +41,7 @@ export class HomeComponent {
   handleQrCodeResultAudioMode(resultString: string) {
     console.log('Resultado -> ', resultString);
     this.resultado = resultString;
+    this.scannerEnabled = false;
     
     // Reproduce un sonido cuando se escanea un código QR
     if (!this.isPlaying) {
