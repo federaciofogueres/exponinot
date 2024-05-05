@@ -41,7 +41,7 @@ export class HomeComponent {
     console.log('Resultado del escaneo QR: ', resultString);
     let content: QRModel = JSON.parse(resultString);
     
-    if (content.tipo === 0) {
+    if (content.tipo !== -1) {
       this.router.navigate(['/ninots', content.id]);
     } else {
       // Redirige a otra ruta si 'tipo' no es 0
