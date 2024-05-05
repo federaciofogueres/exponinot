@@ -40,7 +40,10 @@ export class NinotComponent implements OnInit {
   checkSpeak(){
     this.state = 'checking';
     if(this.cookieService.get('audioMode') === 'true'){
-      this.speak();
+      const speakButton: HTMLElement = document.querySelector('.speak-button')!;
+      if (speakButton) {
+        speakButton.click();
+      }
     }
   }
 
