@@ -40,10 +40,7 @@ export class NinotComponent implements OnInit {
   checkSpeak(){
     this.state = 'checking';
     if(this.cookieService.get('audioMode') === 'true'){
-      this.speak().then((res: any) => {
-        console.log('Speaking: ', true);
-        this.router.navigateByUrl('/home');
-      })
+      this.speak();
     }
   }
 
@@ -70,7 +67,6 @@ export class NinotComponent implements OnInit {
   }
 
   speak() {
-    return new Promise((resolve, reject) => {
       this.state = 'speaking 1';
       const utterance = new SpeechSynthesisUtterance();
       utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
@@ -82,7 +78,6 @@ export class NinotComponent implements OnInit {
       utterance.onend = () => {
         this.speaking = false;
         this.state = 'speaking 3';
-        resolve(true);
       };
       this.state = 'speaking 2';
   
@@ -96,9 +91,7 @@ export class NinotComponent implements OnInit {
           window.speechSynthesis.speak(utterance);
         }
       } else {
-        reject('La API de síntesis de voz no está soportada en este navegador.');
       }
-    });
   }
 
   stopSpeaking() {
