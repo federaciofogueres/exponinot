@@ -3,11 +3,12 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
 import { Router } from '@angular/router';
 import { QRModel } from '../../models/qr-model';
+import { CookiesComponent } from '../cookies/cookies.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ZXingScannerModule],
+  imports: [ZXingScannerModule, CookiesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
