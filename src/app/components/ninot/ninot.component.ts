@@ -33,6 +33,10 @@ export class NinotComponent implements OnInit {
     this.checkSpeak();
   }
 
+  ngAfterViewInit() {
+    this.checkSpeak();
+  }
+  
   ngOnChanges(){
     this.checkSpeak();
   }
