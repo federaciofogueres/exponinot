@@ -39,7 +39,8 @@ export class HomeComponent {
   }
 
   handleQrCodeResultAudioMode(resultString: string) {
-    console.log('Resultado -> ', resultString);
+    let qrModel: QRModel = JSON.parse(resultString);
+    console.log('Resultado -> ', qrModel);
     this.resultado = resultString;
     this.scannerEnabled = false;
     
