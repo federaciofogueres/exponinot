@@ -82,8 +82,10 @@ export class NinotComponent implements OnInit {
       // Set this.speaking to false when speech ends
       utterance.onend = () => {
         this.speaking = false;
+        this.state = 'speaking 3';
         resolve(true);
       };
+      this.state = 'speaking 2';
     
       window.speechSynthesis.speak(utterance);
     });
