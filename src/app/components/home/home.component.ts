@@ -69,7 +69,7 @@ export class HomeComponent {
     let qrModel: QRModel = JSON.parse(resultString);
     this.resultado = qrModel;
     if (qrModel.tipo === -1) {
-      this.playAudio();
+      this.playAudio(qrModel.file);
     } else {
       this.router.navigate(['/ninots', qrModel.id]);
     }
