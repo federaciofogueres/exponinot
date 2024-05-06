@@ -34,7 +34,7 @@ export class NinotComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
-    this.checkSpeak();
+    // this.checkSpeak();
   }
 
 checkSpeak() {
@@ -65,34 +65,16 @@ checkSpeak() {
   }
 
   speak() {
-    // Si ya se está hablando, no hagas nada
-    if (this.speaking) {
-      return;
-    }
-    const utterance = new SpeechSynthesisUtterance();
-    utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
-
-    // Set this.speaking to true when speech starts
-    this.speaking = true;
-
-    // Set this.speaking to false when speech ends
-    utterance.onend = () => {
-      this.speaking = false;
-      if (this.cookieService.get('audioMode') === 'true') {
-        this.router.navigate(['/home']);
-      }
-    };
-
-    // Ensure the voices are loaded before speaking
-    if ('speechSynthesis' in window) {
-      if (window.speechSynthesis.getVoices().length == 0) {
-        window.speechSynthesis.onvoiceschanged = () => {
-          window.speechSynthesis.speak(utterance);
-        };
-      } else {
-        window.speechSynthesis.speak(utterance);
-      }
-    } else {
+    if (!this.speaking) {
+      this.speaking = true;
+      const utterance = new SpeechSynthesisUtterance();
+      utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
+      utterance.onend = () => {
+        this.speaking = false;
+        if (this.cookieService.get('audioMode') === 'true') {
+          this.router.navigate(['/home']);
+        }
+      };
     }
   }
 
