@@ -80,6 +80,10 @@ checkSpeak() {
       return;
     }
     const utterance = new SpeechSynthesisUtterance();
+    console.log(this.ninot);
+    console.log(Boolean(this.ninot));
+    
+    
     if (Boolean(this.ninot)){
       utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
     } else {
