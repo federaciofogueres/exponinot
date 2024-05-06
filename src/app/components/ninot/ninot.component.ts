@@ -85,11 +85,16 @@ checkSpeak() {
     
     
     if (Boolean(this.ninot)){
+      console.log('Entro aquí -> speak');
+      
       this.hasCheckedSpeak = true;
       utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
     } else {
       utterance.text = 'No se ha encontrado información del ninot';
     }
+
+    console.log('Texto -> ', utterance.text);
+    
 
     // Set this.speaking to true when speech starts
     this.speaking = true;
