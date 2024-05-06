@@ -16,6 +16,7 @@ export class NinotComponent implements OnInit {
   loading: boolean = false;
   speaking: boolean = false;
   userLogged: boolean = false;
+  contador = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,11 +35,12 @@ export class NinotComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
-    // this.checkSpeak();
+    this.checkSpeak();
   }
 
 checkSpeak() {
   if (this.cookieService.get('audioMode') === 'true') {
+    this.contador++;
     this.speak();
   }
 }
