@@ -76,6 +76,8 @@ checkSpeak() {
 
   speak() {
     // Si ya se está hablando, no hagas nada
+    console.log(this.speaking || !this.ninot, this.speaking, !this.ninot);
+    
     if (this.speaking || !this.ninot) {
       return;
     }
