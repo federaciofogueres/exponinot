@@ -17,6 +17,7 @@ export class NinotComponent implements OnInit {
   speaking: boolean = false;
   userLogged: boolean = false;
   contador = 0;
+  hasCheckedSpeak = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,11 +40,10 @@ export class NinotComponent implements OnInit {
   ngAfterViewChecked() {
     console.log('Entro aquí -> ngAfterViewChecked');
     
-  }
-  
-  ngAfterViewInit() {
-    console.log('Entro aquí -> ngAfterViewInit');
-    this.checkSpeak();
+    if (!this.hasCheckedSpeak) {
+      this.checkSpeak();
+      this.hasCheckedSpeak = true;
+    }
   }
 
 checkSpeak() {
