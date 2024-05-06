@@ -67,6 +67,7 @@ export class HomeComponent {
 
   handleQrCodeResultAudioMode(resultString: string) {
     let qrModel: QRModel = JSON.parse(resultString);
+    this.resultado = qrModel;
     if (qrModel.tipo === -1) {
       this.playAudio();
     } else {
