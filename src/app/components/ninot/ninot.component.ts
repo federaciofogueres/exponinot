@@ -42,7 +42,7 @@ export class NinotComponent implements OnInit {
     
     if (!this.hasCheckedSpeak) {
       this.checkSpeak();
-      this.hasCheckedSpeak = true;
+      // this.hasCheckedSpeak = true;
     }
   }
 
@@ -85,6 +85,7 @@ checkSpeak() {
     
     
     if (Boolean(this.ninot)){
+      this.hasCheckedSpeak = true;
       utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
     } else {
       utterance.text = 'No se ha encontrado información del ninot';
