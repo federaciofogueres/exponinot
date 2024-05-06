@@ -50,14 +50,12 @@ checkSpeak() {
   this.state = 'checking';
   if (this.cookieService.get('audioMode') === 'true') {
     this.state = 'mode audio ON';
-    this.ngZone.run(() => {
-      const speakButton: HTMLElement = document.querySelector('.speak-button')!;
-      this.state = 'button -> ' + speakButton;
-      if (speakButton) {
-        this.state = 'button existsW -> ' + speakButton;
-        speakButton.click();
-      }
-    });
+    const speakButton: HTMLElement = document.querySelector('.speak-button')!;
+    this.state = 'button -> ' + speakButton;
+    if (speakButton) {
+      this.state = 'button existsW -> ' + speakButton;
+      speakButton.click();
+    }
   }
 }
 
@@ -78,13 +76,11 @@ checkSpeak() {
   }
 
   edit() {
-    console.log('Edit ninot -> ', this.ninot);
     this.cookieService.set('ninot', JSON.stringify(this.ninot));
     this.router.navigateByUrl('/admin');
   }
 
   speak() {
-      this.state = 'speaking 1';
       const utterance = new SpeechSynthesisUtterance();
       utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
   
@@ -94,12 +90,10 @@ checkSpeak() {
       // Set this.speaking to false when speech ends
       utterance.onend = () => {
         this.speaking = false;
-        this.state = 'speaking 3';
         if (this.cookieService.get('audioMode') === 'true') {
           this.router.navigate(['/home']);
         }
       };
-      this.state = 'speaking 2';
   
       // Ensure the voices are loaded before speaking
       if ('speechSynthesis' in window) {
