@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NinotsService } from './../../services/ninots.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -16,14 +16,13 @@ export class NinotComponent implements OnInit {
   loading: boolean = false;
   speaking: boolean = false;
   userLogged: boolean = false;
-  state = 'nada';
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
     private ninotsService: NinotsService,
     private cookieService: CookieService,
-    protected authService: AuthService,
-    private ngZone: NgZone
+    protected authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -39,16 +38,8 @@ export class NinotComponent implements OnInit {
   }
 
 checkSpeak() {
-  this.state = 'checking';
   if (this.cookieService.get('audioMode') === 'true') {
-    this.state = 'mode audio ON';
     this.speak();
-    // const speakButton: HTMLElement = document.querySelector('.speak-button')!;
-    // this.state = 'button -> ' + speakButton;
-    // if (speakButton) {
-    //   this.state = 'button existsW -> ' + speakButton;
-    //   speakButton.click();
-    // }
   }
 }
 

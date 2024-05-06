@@ -6,11 +6,12 @@ import { QRModel } from '../../models/qr-model';
 import { CookiesComponent } from '../cookies/cookies.component';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ZXingScannerModule, CookiesComponent, CommonModule],
+  imports: [ZXingScannerModule, CookiesComponent, CommonModule, SpinnerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -19,6 +20,7 @@ export class HomeComponent {
   scannerEnabled = false;
   audioMode = false;
   isPlaying = false;
+  loading = false;
 
   resultado: QRModel = { tipo: 0, id: 0 };
 
@@ -28,6 +30,7 @@ export class HomeComponent {
   ) { }
 
   ngOnInit() { 
+    this.loading = true;
     this.checkSpeak();
   }
 
@@ -35,6 +38,7 @@ export class HomeComponent {
     if(this.cookieService.get('audioMode') === 'true'){
       this.audioMode = true;
     }
+    this.loading = false;
   }
 
   handleQrCodeResult(resultString: string) {
