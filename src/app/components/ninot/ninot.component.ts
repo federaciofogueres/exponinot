@@ -31,11 +31,15 @@ export class NinotComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.getNinot(id);
     this.checkUser();
+    console.log('Entro aquí -> ngOnInit');
+    
     this.checkSpeak();
   }
 
   ngAfterViewChecked() {
-    // this.checkSpeak();
+    console.log('Entro aquí -> ngAfterViewChecked');
+    
+    this.checkSpeak();
   }
 
 checkSpeak() {
