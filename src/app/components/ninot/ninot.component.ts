@@ -33,12 +33,16 @@ export class NinotComponent implements OnInit {
     this.checkUser();
     console.log('Entro aquí -> ngOnInit');
     
-    this.checkSpeak();
+    // this.checkSpeak();
   }
 
   ngAfterViewChecked() {
     console.log('Entro aquí -> ngAfterViewChecked');
     
+  }
+  
+  ngAfterViewInit() {
+    console.log('Entro aquí -> ngAfterViewInit');
     this.checkSpeak();
   }
 
