@@ -48,6 +48,7 @@ export class HomeComponent {
     if (content.tipo !== -1) {
       this.router.navigate(['/ninots', content.id]);
     } else {
+      this.playAudio(content.file);
       // Redirige a otra ruta si 'tipo' no es 0
       // this.router.navigate(['/otra-ruta', content.id]);
     }
@@ -73,11 +74,11 @@ export class HomeComponent {
     }
   }
 
-  playAudio() {
+  playAudio(file?: string) {
     if (!this.isPlaying) {
       this.isPlaying = true;
       let audio = new Audio();
-      audio.src = 'assets/audio/intro.ogg';
+      audio.src = file ? file : 'assets/audio/intro.ogg';
       audio.load();
       audio.play();
       
