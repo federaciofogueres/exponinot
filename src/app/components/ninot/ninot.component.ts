@@ -34,28 +34,21 @@ export class NinotComponent implements OnInit {
     this.checkSpeak();
   }
 
-  ngAfterViewInit() {
-    // this.checkSpeak();
-  }
-
   ngAfterViewChecked() {
     this.checkSpeak();
-  }
-
-  ngOnChanges(){
-    // this.checkSpeak();
   }
 
 checkSpeak() {
   this.state = 'checking';
   if (this.cookieService.get('audioMode') === 'true') {
     this.state = 'mode audio ON';
-    const speakButton: HTMLElement = document.querySelector('.speak-button')!;
-    this.state = 'button -> ' + speakButton;
-    if (speakButton) {
-      this.state = 'button existsW -> ' + speakButton;
-      speakButton.click();
-    }
+    this.speak();
+    // const speakButton: HTMLElement = document.querySelector('.speak-button')!;
+    // this.state = 'button -> ' + speakButton;
+    // if (speakButton) {
+    //   this.state = 'button existsW -> ' + speakButton;
+    //   speakButton.click();
+    // }
   }
 }
 
