@@ -45,9 +45,12 @@ export class NinotComponent implements OnInit {
 checkSpeak() {
   this.state = 'checking';
   if (this.cookieService.get('audioMode') === 'true') {
+    this.state = 'mode audio ON';
     this.ngZone.run(() => {
       const speakButton: HTMLElement = document.querySelector('.speak-button')!;
+      this.state = 'button -> ' + speakButton;
       if (speakButton) {
+        this.state = 'button existsW -> ' + speakButton;
         speakButton.click();
       }
     });
