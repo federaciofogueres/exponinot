@@ -40,10 +40,10 @@ export class NinotComponent implements OnInit {
   ngAfterViewChecked() {
     console.log('Entro aquí -> ngAfterViewChecked');
     
-    if (!this.hasCheckedSpeak) {
+    // if (!this.hasCheckedSpeak) {
       this.checkSpeak();
       // this.hasCheckedSpeak = true;
-    }
+    // }
   }
 
 checkSpeak() {
@@ -76,25 +76,12 @@ checkSpeak() {
 
   speak() {
     // Si ya se está hablando, no hagas nada
-    if (this.speaking) {
+    if (this.speaking || !this.ninot) {
       return;
     }
     const utterance = new SpeechSynthesisUtterance();
-    console.log(this.ninot);
-    console.log(Boolean(this.ninot));
-    
-    
-    if (Boolean(this.ninot)){
-      console.log('Entro aquí -> speak');
-      
-      this.hasCheckedSpeak = true;
-      utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
-    } else {
-      utterance.text = 'No se ha encontrado información del ninot';
-    }
-
+    utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
     console.log('Texto -> ', utterance.text);
-    
 
     // Set this.speaking to true when speech starts
     this.speaking = true;
