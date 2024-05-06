@@ -80,7 +80,11 @@ checkSpeak() {
       return;
     }
     const utterance = new SpeechSynthesisUtterance();
-    utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
+    if (Boolean(this.ninot)){
+      utterance.text = `Asociación: ${this.ninot.asociacion}. Descripción: ${this.ninot.descripcion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}.`;
+    } else {
+      utterance.text = 'No se ha encontrado información del ninot';
+    }
 
     // Set this.speaking to true when speech starts
     this.speaking = true;
