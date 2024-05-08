@@ -49,8 +49,7 @@ export class HomeComponent {
       this.router.navigate(['/ninots', content.id]);
     } else {
       this.playAudio(content.file);
-      // Redirige a otra ruta si 'tipo' no es 0
-      // this.router.navigate(['/otra-ruta', content.id]);
+      this.scannerEnabled = false;
     }
   }
 
@@ -87,6 +86,11 @@ export class HomeComponent {
         this.isPlaying = false;
       };
     }
+  }
+
+  back() {
+    this.scannerEnabled = false;
+    this.audioMode = false;
   }
 
 }

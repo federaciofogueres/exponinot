@@ -41,7 +41,7 @@ body {
 
 zxing-scanner {
     width: 100%;
-    height: calc(100% - 60px); /* Restamos la altura de la cabecera */
+    height: calc(100% - 96px); /* Restamos la altura de la cabecera */
 }
 
 .qr-container {
@@ -64,4 +64,8 @@ zxing-scanner {
   .container-fluid{
     background-color: white;
     z-index: 1000;
+  }
+
+  .audio-scanner {
+    height: calc(100vh - 96px); /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
   }

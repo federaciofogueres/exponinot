@@ -20,7 +20,7 @@
         @if (scannerEnabled) {
             <div class="scanner-container">
                 <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
-                    <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="scannerEnabled = false"></i>
+                    <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
                     <h1 class="m-0 ms-1">Escanea un QR</h1>
                 </div>
                 <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
@@ -30,14 +30,13 @@
     </div>
 }
 
-<div class="container-fluid">
-    <h1>Resultado aquí!!!!</h1>
-    <h1>{{resultado | json}}</h1>
-</div>
-
 @if (audioMode && !loading) {
-    <div class="container">
+    <div class="container audio-scanner">
         <div class="scanner-container">
+            <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
+                <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
+                <h1 class="m-0 ms-1">Escanea un QR</h1>
+            </div>
             <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResultAudioMode($event)"></zxing-scanner>
         </div>
     </div>
