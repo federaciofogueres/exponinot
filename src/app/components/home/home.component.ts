@@ -91,6 +91,7 @@ export class HomeComponent {
   back() {
     this.scannerEnabled = false;
     this.audioMode = false;
+    this.cookieService.set('audioMode', 'false');
   }
 
 }

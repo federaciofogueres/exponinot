@@ -13,7 +13,7 @@ export class QRService {
     return new Promise(async (resolve, reject) => {
       try {
         console.log('Data: ', data);
-        const url = await QRCode.toDataURL(JSON.stringify(data));
+        const url = await QRCode.toDataURL(JSON.stringify(data), { errorCorrectionLevel: 'H' });
         resolve(url);
       } catch (err) {
         console.error(err);
