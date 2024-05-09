@@ -89,6 +89,8 @@ export class FormularioNinotsComponent {
 
   saveNinot() {
     const ninotData = this.ninotForm.value;
+    ninotData.visitas = 0;
+    ninotData.boceto = 'assets/bocetos/default.jpg';
     this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
       console.log('Ninot created successfully -> ', result);
       this.ninotForm.reset();

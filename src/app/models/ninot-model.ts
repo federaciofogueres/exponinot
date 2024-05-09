@@ -7,4 +7,6 @@ export interface Ninot {
     idAsociacion: number;
     id: string;
     tipo: number;
+    visitas: number;
+    boceto: string;
   }
