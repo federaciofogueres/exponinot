@@ -56,7 +56,7 @@ export class NinotsComponent {
 
   updateFilteredNinots(tipoId: number) {
     this.selectedTipoNinot = tipoId;
-    this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId);
+    this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId).sort((a, b) => a.order! - b.order!);
   }
 
 }
