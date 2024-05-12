@@ -1,12 +1,26 @@
 
 <div class="container">
-    <div class="d-flex justify-content-start m-3">
+    <div class="d-flex justify-content-between m-3">
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="toggleFormCheckbox" [(ngModel)]="showNinotsForm">
             <label class="form-check-label" for="toggleFormCheckbox">
                 {{ showNinotsForm ? 'Formulario tipos de ninots' : 'Formulario ninots' }}
             </label>
         </div>
+        <div class="dropdown">
+            <button class="excel-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-filetype-xlsx" style="font-size: 1rem;">
+                    <span style="font-style: normal;">
+                        Excel
+                    </span>
+                </i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" (click)="downloadExcelTemplate()">Descargar plantilla</a></li>
+                <li><a class="dropdown-item" (click)="openUploadDialog()">Subir Excel</a></li>
+            </ul>
+        </div>
+        <input type="file" (change)="onFileChange($event)" style="display: none;" #uploadExcel />
     </div>
     @if (showNinotsForm) {
         <app-formulario-ninots></app-formulario-ninots>

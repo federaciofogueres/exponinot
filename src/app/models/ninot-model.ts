@@ -4,7 +4,9 @@ export interface Ninot {
     categoria: string;
     asociacion: string;
     artista: string;
-    idAsociacion: number;
+    idAsociacion: number | null;
     id: string;
-    tipo: number;
+    tipo: number | null;
+    boceto: string;
+    order: number | null;
   }
