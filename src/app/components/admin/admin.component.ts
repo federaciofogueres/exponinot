@@ -75,7 +75,8 @@ export class AdminComponent {
       id: '',
       tipo: null,
       boceto: '',
-      order: null
+      order: null,
+      visitas: 0
     };
   
     // Crea un array con un solo objeto que tiene las claves del objeto ninot como propiedades.
@@ -117,6 +118,7 @@ export class AdminComponent {
   processData(data: any[]) {
     for (let item of data) {
       const ninotData: Ninot = {
+        visitas: 0,
         lema: item.lema.toString(),
         descripcion: item.descripcion.toString(),
         categoria: item.categoria.toString(),

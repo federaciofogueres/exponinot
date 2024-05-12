@@ -9,26 +9,25 @@
         </div>
         <div class="dropdown">
             <button class="excel-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-filetype-xlsx" style="font-size: 1rem;">
+                <i class="bi bi-gear-fill" style="font-size: 1rem;">
                     <span style="font-style: normal;">
-                        Excel
+                        Opciones
                     </span>
                 </i>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" (click)="downloadExcelTemplate()">Descargar plantilla</a></li>
-                <li><a class="dropdown-item" (click)="openUploadDialog()">Subir Excel</a></li>
+                <li><a class="dropdown-item" (click)="downloadExcelTemplate()"><i class="bi bi-filetype-xlsx me-2"></i>Descargar plantilla</a></li>
+                <li><a class="dropdown-item" (click)="openUploadDialog()"><i class="bi bi-cloud-arrow-up-fill me-2"></i>Subir Excel</a></li>
+                <li><a class="dropdown-item" (click)="generarQR()"><i class="bi bi-qr-code-scan me-2"></i>Generar QR's</a></li>
             </ul>
         </div>
         <input type="file" (change)="onFileChange($event)" style="display: none;" #uploadExcel />
     </div>
-    @if (showNinotsForm) {
-        <app-formulario-ninots></app-formulario-ninots>
-    } @else {
-        <app-formulario-tipo-ninot></app-formulario-tipo-ninot>
-    }
-    
-    <div class="d-flex justify-content-center mt-3">
-        <button class="btn btn-primary" (click)="generarQR()">Generar QR's</button>
+    <div class="form-container">
+        @if (showNinotsForm) {
+            <app-formulario-ninots></app-formulario-ninots>
+        } @else {
+            <app-formulario-tipo-ninot></app-formulario-tipo-ninot>
+        }
     </div>
 </div>
