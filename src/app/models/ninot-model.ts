@@ -9,4 +9,5 @@ export interface Ninot {
     tipo: number | null;
     boceto: string;
     order: number | null;
+    visitas: number;
   }
