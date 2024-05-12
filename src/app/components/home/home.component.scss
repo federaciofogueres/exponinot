@@ -1,8 +1,8 @@
-body {
-    background-image: url('./../../../assets/img/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+// body {
+//     background-image: url('./../../../assets/img/background.jpg');
+//     background-size: cover;
+//     background-repeat: no-repeat;
+// }
 
 .container {
     display: flex;
@@ -69,3 +69,28 @@ zxing-scanner {
   .audio-scanner {
     height: calc(100vh - 96px); /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
   }
+
+
+
+
+.home-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('./../../../assets/img/background.jpg');
+    background-size: cover;
+}
+
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #ffffff;
+    padding: 10px;
+    box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.3);
+}
