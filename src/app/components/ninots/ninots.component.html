@@ -1,8 +1,14 @@
 <div class="container">
-    <h2 class="mb-2">Listado de ninots expuestos</h2>
+    <div class="btn-group my-2" role="group" aria-label="Tipo de Ninot">
+        @for (tipo of tiposNinots; track $index) {
+            <button type="button" class="btn btn-secondary" 
+                    [class.active]="tipo.id === selectedTipoNinot" 
+                    (click)="updateFilteredNinots(tipo.id)">{{ tipo.tipo }}</button>
+        }
+    </div>
     @if (!loading) {
         <div class="ninots-container">
-            @for (ninot of ninots; track $index) {
+            @for (ninot of filteredNinots; track $index) {
                 <div class="card w-100 my-1">
                     <div class="card-body">
                         <h5 class="card-title">{{ ninot.asociacion }}</h5>

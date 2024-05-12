@@ -3,6 +3,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import { FirebaseService } from './../../services/firebase.service';
 import { NinotsService } from '../../services/ninots.service';
 import { Router } from '@angular/router';
+import { TipoNinot } from '../../models/tipo-ninot-model';
+import { Ninot } from '../../models/ninot-model';
 
 @Component({
   selector: 'app-ninots',
@@ -11,9 +13,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./ninots.component.scss']
 })
 export class NinotsComponent {
-
+  tiposNinots: TipoNinot[] = [
+    { id: 0, tipo: 'Foguera adulta' },
+    { id: 1, tipo: 'Foguera infantil' },
+    { id: 2, tipo: 'Barraca' },
+  ];
+  selectedTipoNinot = this.tiposNinots[0].id;
   
-  ninots: any[] = [];
+  ninots: Ninot[] = [];
+  filteredNinots: Ninot[] = [];
   loading: boolean = false;
 
   constructor(
@@ -31,7 +39,7 @@ export class NinotsComponent {
       next: (ninots) => {
         this.ninots = ninots;
         console.log('Ninots:', this.ninots);
-        
+        this.updateFilteredNinots(0);
         this.loading = false;
       },
       error: (error) => {
@@ -45,4 +53,10 @@ export class NinotsComponent {
     console.log(ninot);
     this.router.navigateByUrl(`/ninots/${ninot.id}`);
   }
+
+  updateFilteredNinots(tipoId: number) {
+    this.selectedTipoNinot = tipoId;
+    this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId);
+  }
+
 }
