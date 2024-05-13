@@ -32,6 +32,7 @@ export class HomeComponent {
   ngOnInit() { 
     this.loading = true;
     this.checkSpeak();
+    this.checkScanner();
   }
 
   checkSpeak(){
@@ -39,6 +40,14 @@ export class HomeComponent {
       this.audioMode = true;
     }
     this.loading = false;
+  }
+
+  checkScanner() {
+    if (this.cookieService.get('scannerEnabled') === 'true') {
+      this.scannerEnabled = true;
+    } else if (this.cookieService.get('scannerEnabled') === 'false') {
+      this.scannerEnabled = false;
+    }
   }
 
   handleQrCodeResult(resultString: string) {
@@ -92,6 +101,7 @@ export class HomeComponent {
     this.scannerEnabled = false;
     this.audioMode = false;
     this.cookieService.set('audioMode', 'false');
+    this.cookieService.set('scannerEnabled', 'false');
   }
 
 }

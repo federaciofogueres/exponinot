@@ -7,10 +7,10 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'ninots', component: NinotsComponent },
     { path: 'ninots/:id', component: NinotComponent },
-    { path: '**', component: HomeComponent },
+    { path: '**', redirectTo: 'home'},
 ];

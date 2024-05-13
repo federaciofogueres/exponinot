@@ -68,6 +68,8 @@ export class AuthService {
   }
 
   logout() {
+    console.log('Sesión cerrada');
+    
     this.cookieService.delete('token');
     this.router.navigateByUrl('login');
   }

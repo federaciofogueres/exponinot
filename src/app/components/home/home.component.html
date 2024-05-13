@@ -1,48 +1,3 @@
-<!-- @if (loading) {
-    <app-spinner></app-spinner>
-}
-
-@if (!audioMode && !loading) {
-    <div class="container">
-        <div class="d-flex justify-content-end audio-btn">
-            <button class="btn btn-outline-primary text-primary mt-2 ms-2" (click)="setAudioMode()">
-                <i class="bi bi-volume-up-fill"></i>
-                <span>Modo audio</span>
-            </button>
-        </div>
-        
-        <div class="qr-container d-flex flex-column align-items-center" (click)="enableScanner()">
-            <button class="center-button btn btn-outline-primary text-primary" style="background-color: transparent; border-color: transparent; font-weight: bold; color: cornflowerblue;">
-                <span>Escanear QR</span>
-            </button>
-            <i class="bi bi-qr-code-scan mt-2" style="font-size: 7rem; color: cornflowerblue;"></i>
-        </div>
-        @if (scannerEnabled) {
-            <div class="scanner-container">
-                <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
-                    <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
-                    <h1 class="m-0 ms-1">Escanea un QR</h1>
-                </div>
-                <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
-            </div>
-        }
-        <app-cookies></app-cookies>
-    </div>
-}
-
-@if (audioMode && !loading) {
-    <div class="container audio-scanner">
-        <div class="scanner-container">
-            <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
-                <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
-                <h1 class="m-0 ms-1">Escanea un QR</h1>
-            </div>
-            <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResultAudioMode($event)"></zxing-scanner>
-        </div>
-    </div>
-}
- -->
-
 @if (loading) {
     <app-spinner></app-spinner>
 }
@@ -60,7 +15,7 @@
 }
 
 @if (!audioMode && !loading) {
-    <div class="home-page" style="background-image: url('assets/img/background.jpg'); background-size: cover;">
+    <div [class.home-page]="!scannerEnabled && !audioMode" ngclas style="background-image: url('assets/img/background.jpg'); background-size: cover;">
         <!-- Eliminamos el header -->
         <!-- Resto del contenido de la página... -->
 

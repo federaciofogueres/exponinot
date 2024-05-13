@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="btn-group my-2" role="group" aria-label="Tipo de Ninot">
+    <div class="btn-group" role="group" aria-label="Tipo de Ninot">
         @for (tipo of tiposNinots; track $index) {
             <button type="button" class="btn btn-secondary" 
                     [class.active]="tipo.id === selectedTipoNinot" 
