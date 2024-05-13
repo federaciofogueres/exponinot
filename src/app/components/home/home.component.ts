@@ -7,11 +7,12 @@ import { CookiesComponent } from '../cookies/cookies.component';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ZXingScannerModule, CookiesComponent, CommonModule, SpinnerComponent],
+  imports: [ZXingScannerModule, CookiesComponent, CommonModule, SpinnerComponent, NgxScannerQrcodeModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -50,7 +51,7 @@ export class HomeComponent {
     }
   }
 
-  handleQrCodeResult(resultString: string) {
+  handleQrCodeResult(resultString: any) {
     console.log('Resultado del escaneo QR: ', resultString);
     let content: QRModel = JSON.parse(resultString);
     
@@ -73,7 +74,7 @@ export class HomeComponent {
     this.scannerEnabled = !this.scannerEnabled;
   }
 
-  handleQrCodeResultAudioMode(resultString: string) {
+  handleQrCodeResultAudioMode(resultString: any) {
     let qrModel: QRModel = JSON.parse(resultString);
     this.resultado = qrModel;
     if (qrModel.tipo === -1) {

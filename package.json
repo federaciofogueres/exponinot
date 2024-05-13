@@ -40,6 +40,7 @@
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "ngx-cookie-service": "^17.1.0",
+    "ngx-scanner-qrcode": "^1.6.9",
     "qrcode": "^1.5.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
