@@ -54,22 +54,48 @@
         }
       </div>
     }
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title d-flex justify-content-between">
-          <div class="title">
-            <strong>Asociación -</strong> {{ ninot.asociacion }}
+    <div class="p-3">
+      <div class="title text-center">
+        <span class="h4 m-0">
+          {{ninot.asociacion}}
+        </span>
+      </div>
+      <hr class="m-0">
+      <div class="text-center">
+        <span class="h5 m-0">
+          {{ ninot.categoria }}
+        </span>
+      </div>
+      <div class="data mt-2">
+        <p>
+          <i class="bi bi-brush-fill"></i>
+          <strong>Artista:</strong>
+           {{ ninot.artista }}
+        </p>
+        @if (fotoMode === 'boceto' && ninot.tipo !== 2) {
+          <p><strong>Lema:</strong> {{ ninot.lema }}</p>
+          <div class="text-center mb-1">
+            <span class="h4 m-0">
+              Boceto de la foguera
+            </span>
           </div>
-        </h4>
-        <p class="card-text"><strong>Artista:</strong> {{ ninot.artista }}</p>
-        <p class="card-text"><strong>Lema:</strong> {{ ninot.lema }}</p>
-        <p class="card-text"><strong>Categoría:</strong> {{ ninot.categoria }}</p>
-        <p class="card-text"><strong>Descripción:</strong> {{ ninot.descripcion }}</p>
-        <img [src]="fotoMode === 'boceto' ? ninot.boceto : ninot.ninot" 
-          alt="Imagen del ninot" 
-          class="img-fluid" 
-          (click)="toggleFlip(); fotoMode = fotoMode === 'boceto' ? 'ninot' : 'boceto'" 
-          [@flipState]="flip">
+        } @else if (fotoMode === 'ninot') {
+          <p>{{ ninot.descripcion }}</p>
+          <div class="text-center mb-1">
+            <span class="h4 m-0">
+              Ninot de exposición
+            </span>
+          </div>
+        }
+        @if (ninot.tipo !== 2) {
+          <img [src]="fotoMode === 'boceto' ? ninot.boceto : ninot.ninot" 
+            alt="Imagen del ninot" 
+            class="img-fluid rounded" 
+            (click)="toggleFlip(); fotoMode = fotoMode === 'boceto' ? 'ninot' : 'boceto'" 
+            [@flipState]="flip">
+        } @else {
+          <img [src]="ninot.ninot" alt="Imagen del ninot" class="img-fluid rounded" >
+        }
       </div>
     </div>
   </div>

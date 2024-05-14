@@ -55,7 +55,7 @@ export class NinotComponent implements OnInit {
   ngAfterViewChecked() {
     console.log('Entro aquí -> ngAfterViewChecked');
     
-    console.log('speaking -> ', this.speaking, this.ninot);
+    // console.log('speaking -> ', this.speaking, this.ninot);
     
     if (!this.speaking && this.ninot !== undefined) {
       this.checkSpeak();
