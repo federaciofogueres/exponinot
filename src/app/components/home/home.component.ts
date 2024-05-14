@@ -81,6 +81,8 @@ export class HomeComponent {
     let qrModel: QRModel = JSON.parse(resultString);
     this.resultado = qrModel;
     if (qrModel.tipo === -1) {
+      console.log('Incrementando visitas', qrModel.id.toString(), qrModel);
+      
       this.ninotsService.incrementVisits(qrModel.id.toString());
       this.playAudio(qrModel.file);
     } else {
