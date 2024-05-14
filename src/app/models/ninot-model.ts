@@ -10,4 +10,5 @@ export interface Ninot {
     boceto: string;
     order: number | null;
     visitas: number;
+    ninot: string;
   }

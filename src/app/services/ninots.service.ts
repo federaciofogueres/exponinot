@@ -15,7 +15,7 @@ export class NinotsService {
   incrementVisits(ninotId: string) {
     const ninotRef = doc(this._firestore, 'ninots', ninotId);
     return updateDoc(ninotRef, {
-      visits: increment(1)
+      visitas: increment(1)
     });
   }
 
