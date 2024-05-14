@@ -79,11 +79,17 @@ export class FormularioNinotsComponent {
       idAsociacion: ['', Validators.required],
       id: ['', Validators.required],
       tipo: ['', Validators.required],
+      boceto: ['', Validators.required],
+      ninot: ['', Validators.required],
     });
-    let ninot = this.cookieService.get('ninot');
+    let ninot = JSON.parse(this.cookieService.get('ninot'));
+    console.log('Ninot -> ', ninot);
+    
     if (ninot) {
       this.editing = true;
-      this.ninotForm.patchValue(JSON.parse(ninot));
+      this.ninotForm.patchValue(ninot);
+      this.ninotForm.controls['idAsociacion'].setValue(ninot.idAsociacion);
+      this.ninotForm.controls['asociacion'].setValue(ninot.asociacion);
     }
   }
 
@@ -114,6 +120,28 @@ export class FormularioNinotsComponent {
     this.cookieService.delete('ninot');
     this.editing = false;
     this.ninotForm.reset();
+  }
+
+  async uploadImage(event: any, field: any) {
+    const file = event.target.files[0];
+    const tipoNinot = this.ninotForm.get('tipoNinot')?.value;
+    let tipoNinotPath = '';
+  
+    switch(tipoNinot) {
+      case 0:
+        tipoNinotPath = 'adultos';
+        break;
+      case 1:
+        tipoNinotPath = 'infantiles';
+        break;
+      case 2:
+        tipoNinotPath = 'barracas';
+        break;
+    }
+  
+    const idNinot = this.ninotForm.get('id')?.value;
+    const filePath = `images/${field}/${tipoNinotPath}/${idNinot}.jpg`;
+    this.ninotForm.get(field)?.setValue(await this.ninotsService.uploadImageNinot(filePath, file, field, this.ninotForm));
   }
 
 }
