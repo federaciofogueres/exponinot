@@ -3,11 +3,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NinotsService } from './../../services/ninots.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-ninot',
   standalone: true,
   imports: [],
+  animations: [
+    trigger('flipState', [
+      state('active', style({
+        transform: 'rotateY(180deg)'
+      })),
+      state('inactive', style({
+        transform: 'rotateY(0)'
+      })),
+      transition('active => inactive', animate('500ms ease-out')),
+      transition('inactive => active', animate('500ms ease-in'))
+    ])
+  ],
   templateUrl: './ninot.component.html',
   styleUrl: './ninot.component.scss'
 })
@@ -19,6 +32,7 @@ export class NinotComponent implements OnInit {
   contador = 0;
 
   fotoMode: string = 'boceto';
+  flip: string = 'inactive';
 
   constructor(
     private route: ActivatedRoute,
@@ -115,6 +129,10 @@ checkSpeak() {
   deleteNinot() {
     this.ninotsService.deleteNinot(this.ninot.id);
     this.router.navigateByUrl('/ninots');
+  }
+
+  toggleFlip() {
+    this.flip = (this.flip == 'inactive') ? 'active' : 'inactive';
   }
 
 }

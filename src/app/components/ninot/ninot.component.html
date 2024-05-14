@@ -65,11 +65,11 @@
         <p class="card-text"><strong>Lema:</strong> {{ ninot.lema }}</p>
         <p class="card-text"><strong>Categoría:</strong> {{ ninot.categoria }}</p>
         <p class="card-text"><strong>Descripción:</strong> {{ ninot.descripcion }}</p>
-        @if (fotoMode === 'boceto') {
-          <img [src]="ninot.boceto" alt="Boceto del ninot" class="img-fluid" (click)="fotoMode = 'ninot'">
-        } @else if (fotoMode === 'ninot') {
-          <img [src]="ninot.ninot" alt="Foto del ninot" class="img-fluid" (click)="fotoMode = 'boceto'">
-        }
+        <img [src]="fotoMode === 'boceto' ? ninot.boceto : ninot.ninot" 
+          alt="Imagen del ninot" 
+          class="img-fluid" 
+          (click)="toggleFlip(); fotoMode = fotoMode === 'boceto' ? 'ninot' : 'boceto'" 
+          [@flipState]="flip">
       </div>
     </div>
   </div>
