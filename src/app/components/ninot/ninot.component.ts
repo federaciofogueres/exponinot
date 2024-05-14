@@ -99,7 +99,7 @@ checkSpeak() {
     console.log('loooog -> ', this.speaking || !this.ninot, this.speaking, !this.ninot);
     
     const utterance = new SpeechSynthesisUtterance();
-    utterance.text = `Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcion}.`;
+    utterance.text = `Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcionAccesible !== '' ? this.ninot.descripcionAccesible : 'No tiene descripción.'}.`;
 
     // Set this.speaking to true when speech starts
     this.speaking = true;

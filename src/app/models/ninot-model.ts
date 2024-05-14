@@ -11,4 +11,5 @@ export interface Ninot {
     order: number | null;
     visitas: number;
     ninot: string;
+    descripcionAccesible: string;
   }
