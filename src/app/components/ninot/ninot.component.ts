@@ -34,6 +34,8 @@ export class NinotComponent implements OnInit {
   fotoMode: string = 'boceto';
   flip: string = 'inactive';
 
+  audioMode: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
@@ -47,7 +49,6 @@ export class NinotComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.getNinot(id);
     this.checkUser();
-    this.checkSpeak();
     console.log('Entro aquí -> ngOnInit');
     
     // this.checkSpeak();
@@ -65,6 +66,7 @@ export class NinotComponent implements OnInit {
 
 checkSpeak() {
   if (this.cookieService.get('audioMode') === 'true') {
+    this.audioMode = true;
     this.contador++;
     this.speak();
   }
@@ -78,6 +80,8 @@ checkSpeak() {
     try {
       this.ninot = await this.ninotsService.getNinot(id);
       // this.ninotsService.incrementVisits(this.ninot.id);
+      this.checkSpeak();
+
       this.loading = false;
     } catch (error) {
       console.error('Error getting ninot:', error);
@@ -99,11 +103,13 @@ checkSpeak() {
 
     // Set this.speaking to true when speech starts
     this.speaking = true;
+    console.log('Speaking -> ', utterance.text);
+    
 
     // Set this.speaking to false when speech ends
     utterance.onend = () => {
       this.speaking = false;
-      if (this.cookieService.get('audioMode') === 'true') {
+      if (this.audioMode) {
         this.router.navigate(['/home']);
       }
     };
