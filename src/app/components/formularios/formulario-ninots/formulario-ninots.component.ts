@@ -96,7 +96,8 @@ export class FormularioNinotsComponent {
   saveNinot() {
     const ninotData = this.ninotForm.value;
     ninotData.visitas = 0;
-    ninotData.boceto = 'assets/bocetos/default.jpg';
+    console.log('Creating ninot -> ', ninotData);
+    
     this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
       console.log('Ninot created successfully -> ', result);
       this.ninotForm.reset();
@@ -107,6 +108,8 @@ export class FormularioNinotsComponent {
 
   editNinot(ninotId: string) {
     const ninotData = this.ninotForm.value;
+    console.log('Updating ninot -> ', ninotData, ninotId);
+    
     this.ninotsService.updateNinot(ninotId, ninotData).then((result) => {
       console.log('Ninot updated successfully -> ', result);
       this.ninotForm.reset();
@@ -141,7 +144,10 @@ export class FormularioNinotsComponent {
   
     const idNinot = this.ninotForm.get('id')?.value;
     const filePath = `images/${field}/${tipoNinotPath}/${idNinot}.jpg`;
-    this.ninotForm.get(field)?.setValue(await this.ninotsService.uploadImageNinot(filePath, file, field, this.ninotForm));
+    let imageUrl = await this.ninotsService.uploadImageNinot(filePath, file, field, this.ninotForm);
+    console.log('DATA -> ', imageUrl, field);
+    
+    this.ninotForm.get(field)?.setValue(imageUrl);
   }
 
 }
