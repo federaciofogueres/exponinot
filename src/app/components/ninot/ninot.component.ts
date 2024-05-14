@@ -18,6 +18,8 @@ export class NinotComponent implements OnInit {
   userLogged: boolean = false;
   contador = 0;
 
+  fotoMode: string = 'boceto';
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
