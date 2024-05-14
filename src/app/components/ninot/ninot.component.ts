@@ -60,10 +60,8 @@ checkSpeak() {
   async getNinot(id: any) {
     try {
       this.ninot = await this.ninotsService.getNinot(id);
-      console.log(this.ninot);
       this.ninotsService.incrementVisits(this.ninot.id);
       this.loading = false;
-      
     } catch (error) {
       console.error('Error getting ninot:', error);
       this.loading = false;
