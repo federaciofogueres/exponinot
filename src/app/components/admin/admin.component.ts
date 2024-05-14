@@ -119,19 +119,21 @@ export class AdminComponent {
 
   processData(data: any[]) {
     for (let item of data) {
+      console.log(item);
+      
       const ninotData: Ninot = {
         visitas: 0,
-        lema: item.lema.toString(),
-        descripcion: item.descripcion.toString(),
-        categoria: item.categoria.toString(),
-        asociacion: item.asociacion.toString(),
-        artista: item.artista.toString(),
+        lema: (item.lema.toString() || ''),
+        descripcion: (item.descripcion.toString() || ''),
+        categoria: (item.categoria.toString() || ''),
+        asociacion: (item.asociacion.toString() || ''),
+        artista: (item.artista.toString() || ''),
         idAsociacion: item.idAsociacion,
-        id: item.id.toString(),
+        id: (item.id.toString() || ''),
         tipo: item.tipo,
-        boceto: item.boceto.toString(),
+        boceto: (item.boceto.toString() || ''),
         order: item.order,
-        ninot: item.ninot.toString(),
+        ninot: (item.ninot.toString() || ''),
         descripcionAccesible: ''
       }
       console.log('Ninot data -> ', ninotData);
