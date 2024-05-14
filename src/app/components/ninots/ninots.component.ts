@@ -37,7 +37,7 @@ export class NinotsComponent {
     this.loading = true;
     this.ninotsService.getNinots().subscribe({
       next: (ninots) => {
-        this.ninots = ninots;
+        this.ninots = ninots.sort((a, b) => a.id! - b.id!);
         console.log('Ninots:', this.ninots);
         this.updateFilteredNinots(0);
         this.loading = false;
@@ -56,7 +56,7 @@ export class NinotsComponent {
 
   updateFilteredNinots(tipoId: number) {
     this.selectedTipoNinot = tipoId;
-    this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId).sort((a, b) => a.order! - b.order!);
+    this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId);
   }
 
 }

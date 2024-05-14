@@ -83,6 +83,8 @@ export class FormularioNinotsComponent {
       tipo: ['', Validators.required],
       boceto: ['', Validators.required],
       ninot: ['', Validators.required],
+      order: ['', Validators.required],
+      descripcionAccesible: ['', Validators.required],
     });
     let ninot = JSON.parse(this.cookieService.get('ninot'));
     console.log('Ninot -> ', ninot);
@@ -98,6 +100,8 @@ export class FormularioNinotsComponent {
   saveNinot() {
     const ninotData = this.ninotForm.value;
     ninotData.visitas = 0;
+    ninotData.order = ninotData.idAsociacion;
+    ninotData.tipo = Number(this.ninotForm.get('tipoNinot')?.value);
     console.log('Creating ninot -> ', ninotData);
     
     this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
