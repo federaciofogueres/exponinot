@@ -47,20 +47,21 @@ export class NinotComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.getNinot(id);
     this.checkUser();
+    this.checkSpeak();
     console.log('Entro aquí -> ngOnInit');
     
     // this.checkSpeak();
   }
 
-  ngAfterViewChecked() {
-    console.log('Entro aquí -> ngAfterViewChecked');
+  // ngAfterViewChecked() {
+  //   console.log('Entro aquí -> ngAfterViewChecked');
     
-    // console.log('speaking -> ', this.speaking, this.ninot);
+  //   // console.log('speaking -> ', this.speaking, this.ninot);
     
-    if (!this.speaking && this.ninot !== undefined) {
-      this.checkSpeak();
-    }
-  }
+  //   if (!this.speaking && this.ninot !== undefined) {
+  //     this.checkSpeak();
+  //   }
+  // }
 
 checkSpeak() {
   if (this.cookieService.get('audioMode') === 'true') {
