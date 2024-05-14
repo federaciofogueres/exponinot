@@ -1,4 +1,7 @@
 <div class="container">
+  @if(loading) {
+    <app-spinner></app-spinner>
+  }
   <form [formGroup]="ninotForm">
     <div class="form-group">
       <label for="lema">Lema</label>

@@ -8,11 +8,12 @@ import { ResponseAsociaciones } from '../../../../external-api/responseAsociacio
 import { AlertService } from '../../alert/alert.service';
 import { TipoNinot } from '../../../models/tipo-ninot-model';
 import { CookieService } from 'ngx-cookie-service';
+import { SpinnerComponent } from '../../spinner/spinner.component';
 
 @Component({
   selector: 'app-formulario-ninots',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, SpinnerComponent],
   templateUrl: './formulario-ninots.component.html',
   styleUrl: './formulario-ninots.component.scss'
 })
@@ -26,6 +27,7 @@ export class FormularioNinotsComponent {
     { id: 1, tipo: 'Foguera infantil' },
     { id: 2, tipo: 'Barraca' },
   ];
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -126,6 +128,7 @@ export class FormularioNinotsComponent {
   }
 
   async uploadImage(event: any, field: any) {
+    this.loading = true
     const file = event.target.files[0];
     const tipoNinot = this.ninotForm.get('tipoNinot')?.value;
     let tipoNinotPath = '';
@@ -148,6 +151,7 @@ export class FormularioNinotsComponent {
     console.log('DATA -> ', imageUrl, field);
     
     this.ninotForm.get(field)?.setValue(imageUrl);
+    this.loading = false;
   }
 
 }
