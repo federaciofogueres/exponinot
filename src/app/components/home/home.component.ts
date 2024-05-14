@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+import { NinotsService } from '../../services/ninots.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ export class HomeComponent {
 
   constructor(
     protected router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private ninotsService: NinotsService
   ) { }
 
   ngOnInit() { 
@@ -56,6 +58,7 @@ export class HomeComponent {
     let content: QRModel = JSON.parse(resultString);
     
     if (content.tipo !== -1) {
+      this.ninotsService.incrementVisits(content.id.toString());
       this.router.navigate(['/ninots', content.id]);
     } else {
       this.playAudio(content.file);
