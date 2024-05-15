@@ -134,7 +134,7 @@ export class AdminComponent {
         boceto: (item.boceto.toString() || ''),
         order: item.order,
         ninot: (item.ninot.toString() || ''),
-        descripcionAccesible: ''
+        descripcionAccesible: (item.descripcionAccesible.toString() || '')
       }
       console.log('Ninot data -> ', ninotData);
       

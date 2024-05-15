@@ -86,22 +86,24 @@ export class FormularioNinotsComponent {
       order: ['', Validators.required],
       descripcionAccesible: ['', Validators.required],
     });
-    let ninot = JSON.parse(this.cookieService.get('ninot'));
-    console.log('Ninot -> ', ninot);
-    
-    if (ninot) {
-      this.editing = true;
-      this.ninotForm.patchValue(ninot);
-      this.ninotForm.controls['idAsociacion'].setValue(ninot.idAsociacion);
-      this.ninotForm.controls['asociacion'].setValue(ninot.asociacion);
+    let ninotData = this.cookieService.get('ninot');
+    if (ninotData){
+      let ninot = JSON.parse(ninotData);
+      console.log('Ninot -> ', ninot);
+
+      if (ninot) {
+        this.editing = true;
+        this.ninotForm.patchValue(ninot);
+        this.ninotForm.controls['idAsociacion'].setValue(ninot.idAsociacion);
+        this.ninotForm.controls['asociacion'].setValue(ninot.asociacion);
+      }
     }
   }
 
   saveNinot() {
     const ninotData = this.ninotForm.value;
     ninotData.visitas = 0;
-    ninotData.order = ninotData.idAsociacion;
-    ninotData.tipo = Number(this.ninotForm.get('tipoNinot')?.value);
+    ninotData.tipo = Number(this.ninotForm.get('tipo')?.value);
     console.log('Creating ninot -> ', ninotData);
     
     this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
@@ -158,4 +160,30 @@ export class FormularioNinotsComponent {
     this.loading = false;
   }
 
+  // onFileDrop(event: any ) {
+  //   console.log('File dropped -> ', event);
+    
+  //   event.preventDefault();
+  //   if (event.dataTransfer) {
+  //     const files = event.dataTransfer.files;
+  //     if (files.length > 0) {
+  //       const uploadEvent = {
+  //         target: {
+  //           files: files
+  //         }
+  //       };
+  //       this.uploadImage(uploadEvent, 'boceto');
+  //     }
+  //   }
+  // }
+  
+  // onDragOver(event: any) {
+  //   event.stopPropagation();
+  //   event.preventDefault();
+  // }
+  
+  // onDragLeave(event: any) {
+  //   event.stopPropagation();
+  //   event.preventDefault();
+  // }
 }
