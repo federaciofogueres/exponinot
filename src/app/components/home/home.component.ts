@@ -9,11 +9,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 import { NinotsService } from '../../services/ninots.service';
+import { CarruselComponent } from '../carrusel/carrusel.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ZXingScannerModule, CookiesComponent, CommonModule, SpinnerComponent, NgxScannerQrcodeModule],
+  imports: [ZXingScannerModule, CookiesComponent, CommonModule, SpinnerComponent, NgxScannerQrcodeModule, CarruselComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

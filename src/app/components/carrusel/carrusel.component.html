@@ -1,0 +1,17 @@
+@if (loading){
+  <app-spinner [fullscreen]="true"></app-spinner>
+}
+@if (showCarousel) {
+  <div class="container p-0">
+    <ngb-carousel [interval]="3000" style="height: 100%; width: 100%;" [showNavigationArrows]="false" [showNavigationIndicators]="false" (slid)="checkCarousel()">
+      @for (image of images; track $index) {
+        <ng-template ngbSlide>
+          <img class="img-fluid" [src]="image" [alt]="'Slide ' + ($index + 1)">
+        </ng-template>
+      }
+    </ngb-carousel>
+  </div>
+  <div class="close-carousel text-light">
+    <i class="bi bi-x-circle" style="font-size: 2rem;" (click)="showCarousel = false"></i>
+  </div>
+}
