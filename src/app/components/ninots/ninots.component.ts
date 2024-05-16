@@ -50,13 +50,13 @@ export class NinotsComponent {
       'Cuarta': 5,
       'Quinta': 6,
       'Sexta': 7,
-      'Sexta A': 8,
-      'Sexta B': 9
+      'Sexta A': 7,
+      'Sexta B': 8
     };
   
     switch(tipo) {
       case 'cat':
-        this.showNinots.sort((a, b) => categoryOrder[a.categoria] - categoryOrder[b.categoria]);
+        this.showNinots.sort((a, b) => (categoryOrder[a.categoria] || 10) - (categoryOrder[b.categoria] || 10));
         this.sort = 'cat';
         break;
       case 'alf':
@@ -97,6 +97,7 @@ export class NinotsComponent {
     this.selectedTipoNinot = tipoId;
     this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId);
     this.showNinots = [...this.filteredNinots];
+    if(this.sort === 'cat') this.sortNinots('cat');
   }
 
   filterNinots() {
