@@ -75,7 +75,7 @@ export class HomeComponent {
   }
 
   enableScanner() {
-    this.scannerEnabled = !this.scannerEnabled;
+    this.scannerEnabled = true;
   }
 
   handleQrCodeResultAudioMode(resultString: any) {

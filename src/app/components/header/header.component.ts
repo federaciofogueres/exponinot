@@ -74,7 +74,7 @@ export class HeaderComponent {
   }
 
   enableScanner() {
-    this.scannerEnabled = !this.scannerEnabled;
+    this.scannerEnabled = true;
     this.cookieService.set('scannerEnabled', this.scannerEnabled.toString());
     this.router.navigate(['/home']);
   }
