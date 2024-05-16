@@ -6,9 +6,15 @@
                     (click)="updateFilteredNinots(tipo.id)">{{ tipo.tipo }}</button>
         }
     </div>
+    <div class="input-group my-3 w-auto border-rojo text-naranja">
+        <span class="input-group-text border-rojo text-naranja" id="basic-addon1">
+            <i class="bi bi-person-circle"></i>
+        </span>
+        <input type="text" class="form-control  border-rojo text-naranja" [(ngModel)]="searchTerm" placeholder="Búsqueda por asociación" (input)="filterNinots()">
+    </div>
     @if (!loading) {
         <div class="ninots-container">
-            @for (ninot of filteredNinots; track $index) {
+            @for (ninot of showNinots; track $index) {
                 <div class="card w-100 my-1 border-salmon" (click)="viewNinot(ninot)">
                     <div class="d-flex align-items-center p-1">
                         <span class="h2 m-0 pe-2 text-rojo">

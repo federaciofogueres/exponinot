@@ -5,10 +5,12 @@ import { NinotsService } from '../../services/ninots.service';
 import { Router } from '@angular/router';
 import { TipoNinot } from '../../models/tipo-ninot-model';
 import { Ninot } from '../../models/ninot-model';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ninots',
   standalone: true,
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './ninots.component.html',
   styleUrls: ['./ninots.component.scss']
 })
@@ -22,7 +24,10 @@ export class NinotsComponent {
   
   ninots: Ninot[] = [];
   filteredNinots: Ninot[] = [];
+  showNinots: Ninot[] = [];
   loading: boolean = false;
+
+  searchTerm: string = '';
 
   constructor(
     private ninotsService: NinotsService,
@@ -57,6 +62,15 @@ export class NinotsComponent {
   updateFilteredNinots(tipoId: number) {
     this.selectedTipoNinot = tipoId;
     this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId);
+    this.showNinots = [...this.filteredNinots];
+  }
+
+  filterNinots() {
+    if (this.searchTerm) {
+      this.showNinots = this.filteredNinots.filter(ninot => ninot.asociacion.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    } else {
+      this.showNinots = [...this.filteredNinots];
+    }
   }
 
 }
