@@ -63,7 +63,7 @@ zxing-scanner {
 
   .container-fluid{
     background-color: white;
-    z-index: 1000;
+    z-index: 996;
   }
 
   .audio-scanner {
@@ -73,15 +73,15 @@ zxing-scanner {
 
 
 
-.home-page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('./../../../assets/img/background.jpg');
-    background-size: cover;
-}
+// .home-page {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-image: url('./../../../assets/img/backgrounds/BG1.png');
+//     background-size: cover;
+// }
 
 .tab-bar {
     position: fixed;
@@ -93,4 +93,10 @@ zxing-scanner {
     background-color: #ffffff;
     padding: 10px;
     box-shadow: 0px -2px 5px 0px rgba(0,0,0,0.3);
+}
+
+.bg-img {
+    width: 100%;
+    position: absolute;
+    z-index: -1;
 }

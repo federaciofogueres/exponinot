@@ -15,7 +15,7 @@ export class CarruselComponent {
 
   images = ['assets/img/sponsors/SP1.png', 'assets/img/sponsors/SP2.png', 'assets/img/sponsors/SP3.png'];
   showCarousel = false;
-  slidesView = 3;
+  slidesView = 0;
   loading = true;
 
   constructor(private cookieService: CookieService) {}
@@ -53,10 +53,10 @@ export class CarruselComponent {
   }
 
   checkCarousel() {
-    if (this.slidesView > 2) {
+    this.slidesView++;
+    if (this.slidesView >= this.images.length) {
       this.deactivateCarousel();
     }
-    this.slidesView++;
   }
 
 }
