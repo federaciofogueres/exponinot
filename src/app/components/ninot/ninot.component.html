@@ -44,11 +44,11 @@
     } @else {
       <div class="d-flex justify-content-between btn-listen">
         @if (speaking) {
-          <button class="btn btn-outline-dark" (click)="stopSpeaking()">
+          <button class="btn btn-outline-dark border-naranja text-naranja" (click)="stopSpeaking()">
             <i class="bi bi-stop-fill"></i> Parar
           </button>
         } @else {
-          <button class="btn btn-outline-dark speak-button" (click)="speak()">
+          <button class="btn btn-outline-dark speak-button border-rojo text-rojo" (click)="speak()">
             <i class="bi bi-volume-up-fill"></i> Escuchar
           </button>
         }
@@ -56,33 +56,37 @@
     }
     <div class="p-3">
       <div class="title text-center">
-        <span class="h4 m-0">
+        <span class="h4 m-0 text-rojo">
           {{ninot.asociacion}}
         </span>
       </div>
-      <hr class="m-0">
-      <div class="text-center">
+      <hr class="m-0 border-salmon">
+      <div class="text-center text-naranja">
         <span class="h5 m-0">
           {{ ninot.categoria }}
         </span>
       </div>
       <div class="data mt-2">
         <p>
-          <i class="bi bi-brush-fill"></i>
-          <strong>Artista:</strong>
+          <i class="bi bi-brush-fill text-rojo me-1"></i>
+          <strong class="text-rojo">Artista:</strong>
            {{ ninot.artista }}
         </p>
         @if (fotoMode === 'boceto' && ninot.tipo !== 2) {
-          <p><strong>Lema:</strong> {{ ninot.lema }}</p>
+          <p>
+            <i class="bi bi-chat-text-fill text-rojo me-1"></i>
+            <strong class="text-rojo">Lema:</strong>
+             {{ ninot.lema }}
+          </p>
           <div class="text-center mb-1">
-            <span class="h4 m-0">
+            <span class="h4 m-0 text-rojo">
               Boceto de la foguera
             </span>
           </div>
         } @else if (fotoMode === 'ninot') {
           <p>{{ ninot.descripcion }}</p>
           <div class="text-center mb-1">
-            <span class="h4 m-0">
+            <span class="h4 m-0 text-naranja">
               Ninot de exposición
             </span>
           </div>
