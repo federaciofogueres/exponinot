@@ -93,7 +93,7 @@ export class HomeComponent {
     if (!this.isPlaying) {
       this.isPlaying = true;
       let audio = new Audio();
-      audio.src = file ? file : 'assets/audio/intro.ogg';
+      audio.src = file ? file : 'assets/audio/guia-1.mp3';
       audio.load();
       audio.play();
       
