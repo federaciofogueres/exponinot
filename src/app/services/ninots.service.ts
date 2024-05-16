@@ -49,16 +49,19 @@ export class NinotsService {
       return of(this.ninotsCache);
     }
   
-    const ninotsData = this.storage.getItem('ninots');
+    // const ninotsData = this.storage.getItem('ninots');
+    const ninotsData = sessionStorage.getItem('ninots');
     // const ninotsData = localStorage.getItem('ninots');
     if (ninotsData) {
       const { ninots, time } = JSON.parse(ninotsData);
       const currentTime = new Date().getTime();
       const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-      if (currentTime - time < oneDay) {
-        this.ninotsCache = ninots;
-        return of(ninots);
-      }
+      // if (currentTime - time < oneDay) {
+      //   this.ninotsCache = ninots;
+      //   return of(ninots);
+      // }
+      this.ninotsCache = ninots;
+      return of(ninots);
     }
     
     return this.getNinots().pipe(
@@ -76,18 +79,24 @@ export class NinotsService {
       ninots: ninots,
       time: date.getTime()
     };
-    this.storage.setItem('ninots', JSON.stringify(ninotsData));
+    sessionStorage.setItem('ninots', JSON.stringify(ninotsData));
+    // this.storage.setItem('ninots', JSON.stringify(ninotsData));
     // localStorage.setItem('ninots', JSON.stringify(ninotsData));
   }
 
   // Read one
   async getNinot(id: string) {
-    const ninotRef = doc(this._firestore, 'ninots', id);
-    const ninotSnap = await getDoc(ninotRef); // Replace getDocs with getDoc
-    if (ninotSnap.exists()) {
-      return ninotSnap.data();
+    const cachedNinot = await this.ninotsCache?.find(ninot => ninot.id === id);
+    if (cachedNinot) {
+      return cachedNinot;
     } else {
-      throw new Error('No such document!');
+      const ninotRef = doc(this._firestore, 'ninots', id);
+      const ninotSnap = await getDoc(ninotRef); // Replace getDocs with getDoc
+      if (ninotSnap.exists()) {
+        return ninotSnap.data();
+      } else {
+        throw new Error('No such document!');
+      }
     }
   }
 

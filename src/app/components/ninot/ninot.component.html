@@ -1,3 +1,6 @@
+@if (loading) {
+  <app-spinner [fullscreen]="true"></app-spinner>
+}
 @if (!loading) {
   <div class="container ninot-container">
     @if (userLogged) {

@@ -4,11 +4,12 @@ import { NinotsService } from './../../services/ninots.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-ninot',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent],
   animations: [
     trigger('flipState', [
       state('active', style({
