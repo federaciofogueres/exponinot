@@ -16,9 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class NinotsComponent {
   tiposNinots: TipoNinot[] = [
-    { id: 0, tipo: 'Foguera adulta' },
-    { id: 1, tipo: 'Foguera infantil' },
-    { id: 2, tipo: 'Barraca' },
+    { id: 0, tipo: 'Foguera adulta', label: 'Adultos' },
+    { id: 1, tipo: 'Foguera infantil', label: 'Infantiles' },
+    { id: 2, tipo: 'Barraca', label: 'Barracas' },
   ];
   selectedTipoNinot = this.tiposNinots[0].id;
   
@@ -29,6 +29,9 @@ export class NinotsComponent {
 
   searchTerm: string = '';
 
+  categoria: string = '';
+  sort: string = 'num';
+
   constructor(
     private ninotsService: NinotsService,
     private router: Router
@@ -38,9 +41,40 @@ export class NinotsComponent {
     this.loadData();
   }
 
+  sortNinots(tipo: string) {
+    const categoryOrder: any = {
+      'Especial': 1,
+      'Primera': 2,
+      'Segunda': 3,
+      'Tercera': 4,
+      'Cuarta': 5,
+      'Quinta': 6,
+      'Sexta': 7,
+      'Sexta A': 8,
+      'Sexta B': 9
+    };
+  
+    switch(tipo) {
+      case 'cat':
+        this.showNinots.sort((a, b) => categoryOrder[a.categoria] - categoryOrder[b.categoria]);
+        this.sort = 'cat';
+        break;
+      case 'alf':
+        this.showNinots.sort((a, b) => a.asociacion.localeCompare(b.asociacion));
+        this.sort = 'alf';
+        break;
+      case 'num':
+        this.showNinots.sort((a, b) => a.order! - b.order!);
+        this.sort = 'num';
+        break;
+      default:
+        break;
+    }
+  }
+
   loadData() {
     this.loading = true;
-    this.ninotsService.getNinots().subscribe({
+    this.ninotsService.getNinotsWithCache().subscribe({
       next: (ninots) => {
         this.ninots = ninots.sort((a, b) => a.id! - b.id!);
         console.log('Ninots:', this.ninots);
@@ -70,6 +104,15 @@ export class NinotsComponent {
       this.showNinots = this.filteredNinots.filter(ninot => ninot.asociacion.toLowerCase().includes(this.searchTerm.toLowerCase()));
     } else {
       this.showNinots = [...this.filteredNinots];
+    }
+  }
+
+  showCategoria(ninot: Ninot): boolean {
+    if (this.categoria === ninot.categoria) {
+      return false;
+    } else {
+      this.categoria = ninot.categoria;
+      return true;
     }
   }
 

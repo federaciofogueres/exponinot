@@ -1,10 +1,26 @@
 <div class="container">
-    <div class="btn-group" role="group" aria-label="Tipo de Ninot">
-        @for (tipo of tiposNinots; track $index) {
-            <button type="button" class="btn btn-secondary" 
-                    [class.active]="tipo.id === selectedTipoNinot" 
-                    (click)="updateFilteredNinots(tipo.id)">{{ tipo.tipo }}</button>
-        }
+    <div class="d-flex justify-content-between">
+        <div class="btn-group" role="group" aria-label="Tipo de Ninot">
+            @for (tipo of tiposNinots; track $index) {
+                <button type="button" class="btn btn-secondary border-rojo text-naranja bg-white" 
+                        [class.btn-selected]="tipo.id === selectedTipoNinot" 
+                        (click)="updateFilteredNinots(tipo.id)">{{ tipo.label }}</button>
+            }
+        </div>
+        <div class="dropdown">
+            <button class="btn border-rojo text-naranja excel-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-list-ol" style="font-size: 1rem;">
+                    <span style="font-style: normal;">
+                        Orden
+                    </span>
+                </i>
+            </button>
+            <ul class="dropdown-menu border-rojo" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item text-naranja" (click)="sortNinots('cat')"><i class="bi bi-trophy-fill me-2 text-rojo"></i>Por categorías</a></li>
+                <li><a class="dropdown-item text-naranja" (click)="sortNinots('alf')"><i class="bi bi-alphabet me-2 text-rojo"></i>Alfabéticamente</a></li>
+                <li><a class="dropdown-item text-naranja" (click)="sortNinots('num')"><i class="bi bi-123 me-2 text-rojo"></i>Por número</a></li>
+            </ul>
+        </div>
     </div>
     <div class="input-group my-3 w-auto border-rojo text-naranja">
         <span class="input-group-text border-rojo text-naranja" id="basic-addon1">
@@ -15,6 +31,10 @@
     @if (!loading) {
         <div class="ninots-container">
             @for (ninot of showNinots; track $index) {
+                @if (sort === 'cat' && showCategoria(ninot)) {
+                    <span class="h2 text-rojo text-center m-0 pt-2 mt-2">{{categoria}}</span>
+                    <hr class="border-naranja my-2">
+                }
                 <div class="card w-100 my-1 border-salmon" (click)="viewNinot(ninot)">
                     <div class="d-flex align-items-center p-1">
                         <span class="h2 m-0 pe-2 text-rojo">

@@ -29,7 +29,7 @@ export class AdminComponent {
 
   generarQR() {
     console.log('Generar QR');
-    this.ninotsService.getNinots().subscribe({
+    this.ninotsService.getNinotsWithCache().subscribe({
       next: async (response) => {
         let qrPromises = response.map(ninot => 
           this.qrService.generateQRCode({
@@ -59,7 +59,7 @@ export class AdminComponent {
   }
 
   openUploadDialog() {
-    // this.uploadExcel.nativeElement.click();
+    this.uploadExcel.nativeElement.click();
     this.alertService.warning('Esta funcionalidad está deshabilitada temporalmente');
   }
 
