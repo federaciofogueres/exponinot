@@ -28,6 +28,7 @@
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.2",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
+    "@ng-web-apis/storage": "^3.0.6",
     "@types/bcryptjs": "^2.4.6",
     "@types/crypto-js": "^4.2.2",
     "@types/qrcode": "^1.5.5",

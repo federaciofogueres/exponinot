@@ -7,7 +7,7 @@ import { Firestore, collectionData, increment, setDoc } from '@angular/fire/fire
 import { Observable, finalize, of } from 'rxjs';
 import { getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { first, tap } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
+import { LOCAL_STORAGE } from '@ng-web-apis/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +21,8 @@ export class NinotsService {
   private _storage = getStorage(this._firebaseApp, 'gs://exponinot.appspot.com');
 
   private ninotsCache: any[] | null = null;
+
+  private readonly storage = inject(LOCAL_STORAGE);
 
   incrementVisits(ninotId: string) {
     const ninotRef = doc(this._firestore, 'ninots', ninotId);
@@ -37,6 +39,8 @@ export class NinotsService {
 
   // Read
   getNinots() {
+    console.log('Getting ninots');
+    
     return collectionData(this._collection) as Observable<any[]>;
   }
 
@@ -45,7 +49,8 @@ export class NinotsService {
       return of(this.ninotsCache);
     }
   
-    const ninotsData = localStorage.getItem('ninots');
+    const ninotsData = this.storage.getItem('ninots');
+    // const ninotsData = localStorage.getItem('ninots');
     if (ninotsData) {
       const { ninots, time } = JSON.parse(ninotsData);
       const currentTime = new Date().getTime();
@@ -71,7 +76,8 @@ export class NinotsService {
       ninots: ninots,
       time: date.getTime()
     };
-    localStorage.setItem('ninots', JSON.stringify(ninotsData));
+    this.storage.setItem('ninots', JSON.stringify(ninotsData));
+    // localStorage.setItem('ninots', JSON.stringify(ninotsData));
   }
 
   // Read one
