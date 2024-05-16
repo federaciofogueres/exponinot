@@ -32,9 +32,9 @@ export class AuthService {
   }
 
   saveToken(token: string): void {
-    if (typeof localStorage !== 'undefined') {
-      this.cookieService.set('token', this.encoderService.encrypt(token));
-    }
+    this.cookieService.set('token', this.encoderService.encrypt(token));
+    // if (typeof localStorage !== 'undefined') {
+    // }
   }
 
   async login(user: string, password: string) {
