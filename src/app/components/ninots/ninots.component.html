@@ -9,13 +9,13 @@
     @if (!loading) {
         <div class="ninots-container">
             @for (ninot of filteredNinots; track $index) {
-                <div class="card w-100 my-1" (click)="viewNinot(ninot)">
-                    <div class="d-flex flex-column p-1">
-                        <span class="h3">
-                            {{ ninot.asociacion }}
-                        </span>
-                        <span>
+                <div class="card w-100 my-1 border-salmon" (click)="viewNinot(ninot)">
+                    <div class="d-flex align-items-center p-1">
+                        <span class="h2 m-0 pe-2 text-rojo">
                             {{ ninot.order }}
+                        </span>
+                        <span class="h5 m-0 ps-2 text-naranja">
+                            {{ ninot.asociacion }}
                         </span>
                     </div>
                 </div>
