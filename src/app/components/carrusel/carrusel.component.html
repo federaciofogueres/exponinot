@@ -2,7 +2,7 @@
   <app-spinner [fullscreen]="true"></app-spinner>
 }
 @if (showCarousel) {
-  <div class="container p-0">
+  <div class="container carousel-position">
     <ngb-carousel [interval]="3000" style="height: 100%; width: 100%;" [showNavigationArrows]="false" [showNavigationIndicators]="false" (slid)="checkCarousel()">
       @for (image of images; track $index) {
         <ng-template ngbSlide>

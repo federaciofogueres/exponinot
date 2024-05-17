@@ -54,7 +54,7 @@ export class CarruselComponent {
 
   checkCarousel() {
     this.slidesView++;
-    if (this.slidesView >= this.images.length) {
+    if (this.slidesView >= this.images.length -1) {
       this.deactivateCarousel();
     }
   }
