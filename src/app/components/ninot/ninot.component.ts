@@ -55,6 +55,9 @@ export class NinotComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.idNinot = params['id'];
       this.getNinot(this.idNinot);
+      console.log(this.idNinot);
+      
+      
     });
     this.checkUser();
   }
@@ -74,6 +77,8 @@ export class NinotComponent implements OnInit {
   async getNinot(id: any) {
     try {
       this.ninot = await this.ninotsService.getNinot(id);
+      console.log(this.ninot);
+
       this.checkSpeak();
       this.loading = false;
     } catch (error) {
@@ -91,7 +96,8 @@ export class NinotComponent implements OnInit {
     // Si ya se está hablando, no hagas nada
     const utterance = new SpeechSynthesisUtterance();
     utterance.text = `Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcionAccesible !== '' ? this.ninot.descripcionAccesible : 'No tiene descripción.'}.`;
-
+    console.log(this.ninot);
+    
     // Set this.speaking to true when speech starts
     this.speaking = true;
 

@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { getApp } from '@angular/fire/app';
 import { Firestore, collectionData, increment, setDoc } from '@angular/fire/firestore';
 import { getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
-import { LOCAL_STORAGE } from '@ng-web-apis/common';
-import { getApp } from 'firebase/app';
 import { collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
 import { Observable, of } from 'rxjs';
@@ -80,7 +79,11 @@ export class NinotsService {
 
   // Read one
   async getNinot(id: string) {
+    console.log('getting Ninot');
+    
     const cachedNinot = await this.ninotsCache?.find(ninot => ninot.id === id);
+    console.log('cachedNinot', cachedNinot);
+    
     if (cachedNinot) {
       return cachedNinot;
     } else {
