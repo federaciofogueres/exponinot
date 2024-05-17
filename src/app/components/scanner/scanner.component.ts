@@ -42,6 +42,8 @@ export class ScannerComponent {
     console.log('QR content -> ', content);
 
     if(!this.audioMode){
+      console.log('changeing scanner mode -> ', true);
+      
       this.scannerEnabledEvent.emit({type: 'scanner', mode: false});
     }
     
