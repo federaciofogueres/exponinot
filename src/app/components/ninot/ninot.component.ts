@@ -1,10 +1,10 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NinotsService } from './../../services/ninots.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { NinotsService } from './../../services/ninots.service';
 
 @Component({
   selector: 'app-ninot',
@@ -51,26 +51,12 @@ export class NinotComponent implements OnInit {
     this.loading = true;
     this.route.params.subscribe(params => {
       this.idNinot = params['id'];
-  
-      // Actualiza tus datos aquí usando el nuevo id
     });
     // const id = this.route.snapshot.paramMap.get('id');
     this.getNinot(this.idNinot);
     this.checkUser();
     console.log('Entro aquí -> ngOnInit');
-    
-    // this.checkSpeak();
   }
-
-  // ngAfterViewChecked() {
-  //   console.log('Entro aquí -> ngAfterViewChecked');
-    
-  //   // console.log('speaking -> ', this.speaking, this.ninot);
-    
-  //   if (!this.speaking && this.ninot !== undefined) {
-  //     this.checkSpeak();
-  //   }
-  // }
 
   checkSpeak() {
     if (this.cookieService.get('audioMode') === 'true' && !this.hasSpoke) {

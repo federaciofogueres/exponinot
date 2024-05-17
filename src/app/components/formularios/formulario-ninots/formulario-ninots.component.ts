@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NinotsService } from '../../../services/ninots.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Asociacion } from '../../../../external-api/asociacion';
-import { CensoService } from '../../../services/censo.service';
-import { ResponseAsociaciones } from '../../../../external-api/responseAsociaciones';
-import { AlertService } from '../../alert/alert.service';
-import { TipoNinot } from '../../../models/tipo-ninot-model';
 import { CookieService } from 'ngx-cookie-service';
+import { Asociacion } from '../../../../external-api/asociacion';
+import { ResponseAsociaciones } from '../../../../external-api/responseAsociaciones';
+import { TipoNinot } from '../../../models/tipo-ninot-model';
+import { CensoService } from '../../../services/censo.service';
+import { NinotsService } from '../../../services/ninots.service';
+import { AlertService } from '../../alert/alert.service';
 import { SpinnerComponent } from '../../spinner/spinner.component';
 
 @Component({

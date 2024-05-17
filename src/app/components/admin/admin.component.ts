@@ -1,14 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormularioNinotsComponent } from '../formularios/formulario-ninots/formulario-ninots.component';
-import { FormularioTipoNinotComponent } from '../formularios/formulario-tipo-ninot/formulario-tipo-ninot.component';
 import { FormsModule } from '@angular/forms';
-import { NinotsService } from '../../services/ninots.service';
-import { QRService } from '../../services/qr.service';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import * as XLSX from 'xlsx';
 import { Ninot } from '../../models/ninot-model';
+import { NinotsService } from '../../services/ninots.service';
+import { QRService } from '../../services/qr.service';
 import { AlertService } from '../alert/alert.service';
+import { FormularioNinotsComponent } from '../formularios/formulario-ninots/formulario-ninots.component';
+import { FormularioTipoNinotComponent } from '../formularios/formulario-tipo-ninot/formulario-tipo-ninot.component';
 
 @Component({
   selector: 'app-admin',

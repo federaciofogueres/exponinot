@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NinotsService } from '../../../services/ninots.service';
-import { TiposNinotsService } from '../../../services/tipos-ninots.service';
 import { Router } from '@angular/router';
+import { TiposNinotsService } from '../../../services/tipos-ninots.service';
 
 @Component({
   selector: 'app-formulario-tipo-ninot',

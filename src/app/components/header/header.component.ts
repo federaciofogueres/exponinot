@@ -4,13 +4,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 
 
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
-import { QRModel } from '../../models/qr-model';
-import { CookiesComponent } from '../cookies/cookies.component';
-import { CommonModule } from '@angular/common';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CookieService } from 'ngx-cookie-service';
-import { SpinnerComponent } from '../spinner/spinner.component';
+import { QRModel } from '../../models/qr-model';
 import { NinotsService } from '../../services/ninots.service';
 
 @Component({

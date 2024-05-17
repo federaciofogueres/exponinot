@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { collection, getDocs } from 'firebase/firestore';
-import { FirebaseService } from './../../services/firebase.service';
-import { NinotsService } from '../../services/ninots.service';
-import { Router } from '@angular/router';
-import { TipoNinot } from '../../models/tipo-ninot-model';
-import { Ninot } from '../../models/ninot-model';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Ninot } from '../../models/ninot-model';
+import { TipoNinot } from '../../models/tipo-ninot-model';
+import { NinotsService } from '../../services/ninots.service';
 
 @Component({
   selector: 'app-ninots',

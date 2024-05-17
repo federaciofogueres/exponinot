@@ -1,36 +1,5 @@
-@if (loading) {
-    <app-spinner></app-spinner>
-} @else {
-    <app-carrusel></app-carrusel>
-    <div class="container">
-        <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
-    </div>
-    <app-cookies></app-cookies>
-    <!-- @if (audioMode) {
-        <div class="container audio-scanner">
-            <div class="scanner-container">
-                <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
-                    <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
-                    <h1 class="m-0 ms-1">Escanea un QR</h1>
-                </div>
-                <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResultAudioMode($event)"></zxing-scanner>
-            </div>
-        </div>
-    } @else {
-        <div class="container">
-            @if (!scannerEnabled) {
-                <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
-            }
-            @if (scannerEnabled) {
-                <div class="scanner-container">
-                    <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
-                        <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
-                        <h1 class="m-0 ms-1">Escanea un QR</h1>
-                    </div>
-                    <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
-                </div>
-            }
-            <app-cookies></app-cookies>
-        </div>
-    } -->
-}
+<app-carrusel></app-carrusel>
+<div class="container">
+    <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
+</div>
+<app-cookies></app-cookies>

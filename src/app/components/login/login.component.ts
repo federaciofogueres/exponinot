@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { SpinnerComponent } from '../spinner/spinner.component';
-import { CensoService } from '../../services/censo.service';
-import { AlertService } from '../alert/alert.service';
-import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { AlertService } from '../alert/alert.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-login',
