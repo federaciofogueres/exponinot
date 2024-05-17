@@ -63,14 +63,19 @@ export class HeaderComponent {
   handleQrCodeResult(resultString: string) {
     let content: QRModel = JSON.parse(resultString);
 
+    console.log(content);
+    
+
     if (content.tipo !== -1 && content.id === '') {
       this.router.navigate(['/ninots', 0]);
     }
 
     if (content.tipo !== -1) {
       this.router.navigate(['/ninots', content.id]);
+    } else {
+      this.playAudio(content.file);
     }
-    this.playAudio(content.file);
+    
     this.scannerEnabled = this.audioMode;
     // if (!this.audioMode) {
     //   this.scannerEnabled = false;
