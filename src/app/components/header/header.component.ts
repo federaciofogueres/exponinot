@@ -4,36 +4,31 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 
 
-import { BarcodeFormat } from '@zxing/library';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { CookieService } from 'ngx-cookie-service';
-import { QRModel } from '../../models/qr-model';
-import { NinotsService } from '../../services/ninots.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, NgbModule, ZXingScannerModule],
+  imports: [RouterModule, NgbModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
+  // formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
 
-  //Se muestra el escaner
-  scannerEnabled = false;
-  //Modo audioGuia
-  audioMode = false;
+  // //Se muestra el escaner
+  // scannerEnabled = false;
+  // //Modo audioGuia
+  // audioMode = false;
 
-  isPlaying = false;
-  loading = false;
+  // isPlaying = false;
+  // loading = false;
   userLogged: boolean = false;
 
   constructor(
     protected router: Router,
     protected authService: AuthService,
-    private cookieService: CookieService,
-    private ninotsService: NinotsService
+    // private cookieService: CookieService,
+    // private ninotsService: NinotsService
   ) {}
 
   ngOnInit() {
@@ -45,58 +40,52 @@ export class HeaderComponent {
     this.router.navigateByUrl('');
   }
   
-  checkSpeak(){
-    this.audioMode = this.cookieService.get('audioMode') === 'true';
-    this.loading = false;
-  }
+  // checkSpeak(){
+  //   this.audioMode = this.cookieService.get('audioMode') === 'true';
+  //   this.loading = false;
+  // }
 
-  handleQrCodeResult(resultString: string) {
-    let content: QRModel = JSON.parse(resultString);
+  // handleQrCodeResult(resultString: string) {
+  //   let content: QRModel = JSON.parse(resultString);
+  //   if (content.tipo !== -1 && content.id === '') {
+  //     this.router.navigate(['/ninots', 0]);
+  //   }
+  //   if (content.tipo !== -1) {
+  //     this.ninotsService.incrementVisits(content.id as string);
+  //     this.router.navigate(['/ninots', content.id]);
+  //   } else {
+  //     this.playAudio(content.file);
+  //   }
+  //   this.scannerEnabled = this.audioMode;
+  // }
 
-    console.log(content);
-    
+  // setAudioMode(mode: boolean) {
+  //   this.audioMode = mode;
+  //   this.cookieService.set('audioMode', this.audioMode.toString());
+  //   this.setScanner(mode);
+  // }
 
-    if (content.tipo !== -1 && content.id === '') {
-      this.router.navigate(['/ninots', 0]);
-    }
+  // setScanner(mode: boolean) {
+  //   this.scannerEnabled = mode;
+  // }
 
-    if (content.tipo !== -1) {
-      this.ninotsService.incrementVisits(content.id as string);
-      this.router.navigate(['/ninots', content.id]);
-    } else {
-      this.playAudio(content.file);
-    }
-    
-    this.scannerEnabled = this.audioMode;
-  }
+  // playAudio(file?: string) {
+  //   if (!this.isPlaying) {
+  //     this.isPlaying = true;
+  //     let audio = new Audio();
+  //     audio.src = file ? file : 'assets/audio/guia-1.mp3';
+  //     audio.load();
+  //     audio.play();
+  //     audio.onended = () => {
+  //       this.isPlaying = false;
+  //     };
+  //   }
+  // }
 
-  setAudioMode(mode: boolean) {
-    this.audioMode = mode;
-    this.cookieService.set('audioMode', this.audioMode.toString());
-    this.setScanner(mode);
-  }
-
-  setScanner(mode: boolean) {
-    this.scannerEnabled = mode;
-  }
-
-  playAudio(file?: string) {
-    if (!this.isPlaying) {
-      this.isPlaying = true;
-      let audio = new Audio();
-      audio.src = file ? file : 'assets/audio/guia-1.mp3';
-      audio.load();
-      audio.play();
-      audio.onended = () => {
-        this.isPlaying = false;
-      };
-    }
-  }
-
-  back() {
-    this.scannerEnabled = false;
-    this.audioMode = false;
-    this.cookieService.set('audioMode', 'false');
-  }
+  // back() {
+  //   this.scannerEnabled = false;
+  //   this.audioMode = false;
+  //   this.cookieService.set('audioMode', 'false');
+  // }
 
 }

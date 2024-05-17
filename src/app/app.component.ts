@@ -29,6 +29,9 @@ export class AppComponent {
     }
   }
 
-
+  setOffScanner() {
+    this.scannerEnabled = false;
+    this.audioMode = false;
+  }
 
 }
