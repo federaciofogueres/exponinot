@@ -53,7 +53,7 @@ export class ScannerComponent {
       // this.ninotsService.incrementVisits(content.id as string);
       // this.router.navigate(['/ninots', content.id]);
       this.goToNinot(content.id as string);
-    } else {
+    } else if(content.file){
       this.playAudio(content.file);
     }
     this.scannerEnabled = this.audioMode;
