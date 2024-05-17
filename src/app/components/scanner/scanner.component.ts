@@ -47,7 +47,10 @@ export class ScannerComponent {
       this.scannerEnabledEvent.emit({type: 'scanner', mode: false});
     }
     
-    if (content.tipo !== -1 && content.id === '') {
+    if (content.tipo === -1 && content.id === '') {
+      console.log('Sagradas');
+      
+      this.ninotsService.incrementVisits(content.id as string);
       this.router.navigate(['/ninots', 0]);
     }
     if (content.tipo !== -1) {
