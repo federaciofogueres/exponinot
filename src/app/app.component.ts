@@ -25,9 +25,9 @@ export class AppComponent {
   ){
     this.qrService.backEvent$.subscribe({
       next: () => {
-        console.log('setting back 3', this.audioMode);
+        console.log('setting back 3', this.audioMode, this.scannerEnabled);
         if(this.audioMode) {
-          this.scannerEnabled = false;
+          this.scannerEnabled = true;
         } else{
           this.setOffScanner();
         }
