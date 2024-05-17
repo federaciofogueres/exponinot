@@ -53,6 +53,9 @@ export class NinotComponent implements OnInit {
     this.loading = true;
     this.route.params.subscribe(params => {
       console.log('Params -> ', params['id']);
+
+      console.log('Entro aquí -> ngOnInit', this.router.url);
+      
       
       this.idNinot = params['id'];
       this.getNinot(this.idNinot);
