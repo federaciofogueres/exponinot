@@ -97,7 +97,7 @@ export class NinotComponent implements OnInit {
   speak() {
     // Si ya se está hablando, no hagas nada
     const utterance = new SpeechSynthesisUtterance();
-    utterance.text = `Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcionAccesible !== '' ? this.ninot.descripcionAccesible : 'No tiene descripción.'}.`;
+    utterance.text = `Número: ${this.ninot.order}. Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcionAccesible !== '' ? this.ninot.descripcionAccesible : 'No tiene descripción.'}.`;
     console.log(this.ninot);
     
     // Set this.speaking to true when speech starts
