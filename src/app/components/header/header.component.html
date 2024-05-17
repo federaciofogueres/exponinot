@@ -37,7 +37,9 @@
                     <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
                     <h1 class="m-0 ms-1">Escanea un QR</h1>
                 </div>
-                <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+                <div class="container-scanner">
+                    <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+                </div>
             </div>
         </div>
     }
