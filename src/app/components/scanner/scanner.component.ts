@@ -12,7 +12,7 @@ import { NinotsService } from '../../services/ninots.service';
   standalone: true,
   imports: [ZXingScannerModule],
   templateUrl: './scanner.component.html',
-  styleUrl: './scanner.component.scss'
+  styleUrls: ['./scanner.component.scss']
 })
 export class ScannerComponent {
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
@@ -45,16 +45,24 @@ export class ScannerComponent {
     if (content.tipo === -1 && content.id === '') {
       console.log('Sagradas');
       
-      this.ninotsService.incrementVisits(content.id as string);
-      this.router.navigate(['/ninots', 0]);
+      // this.ninotsService.incrementVisits(content.id as string);
+      // this.router.navigate(['/ninots', 0]);
+      this.goToNinot('0');
     }
     if (content.tipo !== -1) {
-      this.ninotsService.incrementVisits(content.id as string);
-      this.router.navigate(['/ninots', content.id]);
+      // this.ninotsService.incrementVisits(content.id as string);
+      // this.router.navigate(['/ninots', content.id]);
+      this.goToNinot(content.id as string);
     } else {
       this.playAudio(content.file);
     }
     this.scannerEnabled = this.audioMode;
+  }
+
+  goToNinot(id: string){
+    console.log('Go to ninot -> ', id);
+    this.ninotsService.incrementVisits(id);
+    this.router.navigate(['/ninots', id]);
   }
 
   playAudio(file?: string) {
