@@ -40,12 +40,7 @@ export class ScannerComponent {
     let content: QRModel = JSON.parse(resultString);
 
     console.log('QR content -> ', content);
-
-    if(!this.audioMode){
-      console.log('changeing scanner mode -> ', true);
-      
-      this.scannerEnabledEvent.emit({type: 'scanner', mode: false});
-    }
+    this.scannerEnabledEvent.emit({type: 'scanner', mode: false});
     
     if (content.tipo === -1 && content.id === '') {
       console.log('Sagradas');

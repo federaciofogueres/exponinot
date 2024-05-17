@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
+import { QRService } from './services/qr.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,20 @@ export class AppComponent {
 
   scannerEnabled = false;
   audioMode = false;
+
+  constructor(
+    private qrService: QRService
+  ){
+    this.qrService.backEvent$.subscribe({
+      next: () => {
+        if(this.audioMode) {
+          this.scannerEnabled = false;
+        } else{
+          this.setOffScanner();
+        }
+      }
+    })
+  }
 
   onScannerEnabled(event: any) {
     console.log('Scanner enabled', event);

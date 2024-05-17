@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
+import { QRService } from '../../services/qr.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NinotsService } from './../../services/ninots.service';
 
@@ -44,7 +45,8 @@ export class NinotComponent implements OnInit {
     protected router: Router,
     private ninotsService: NinotsService,
     private cookieService: CookieService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    private qrService: QRService
   ) {}
 
   ngOnInit() {
@@ -107,7 +109,8 @@ export class NinotComponent implements OnInit {
     utterance.onend = () => {
       this.speaking = false;
       if (this.audioMode) {
-        this.router.navigate(['/home']);
+        // this.router.navigate(['/home']);
+        this.qrService.back();
       }
     };
 
