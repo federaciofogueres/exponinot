@@ -36,6 +36,9 @@ export class ScannerComponent {
 
   handleQrCodeResult(resultString: string) {
     let content: QRModel = JSON.parse(resultString);
+
+    console.log('QR content -> ', content);
+    
     if (content.tipo !== -1 && content.id === '') {
       this.router.navigate(['/ninots', 0]);
     }
