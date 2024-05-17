@@ -37,6 +37,8 @@ export class NinotComponent implements OnInit {
 
   audioMode: boolean = false;
 
+  idNinot: string = '';
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
@@ -47,8 +49,13 @@ export class NinotComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    const id = this.route.snapshot.paramMap.get('id');
-    this.getNinot(id);
+    this.route.params.subscribe(params => {
+      this.idNinot = params['id'];
+  
+      // Actualiza tus datos aquí usando el nuevo id
+    });
+    // const id = this.route.snapshot.paramMap.get('id');
+    this.getNinot(this.idNinot);
     this.checkUser();
     console.log('Entro aquí -> ngOnInit');
     
@@ -80,9 +87,7 @@ export class NinotComponent implements OnInit {
   async getNinot(id: any) {
     try {
       this.ninot = await this.ninotsService.getNinot(id);
-      // this.ninotsService.incrementVisits(this.ninot.id);
       this.checkSpeak();
-
       this.loading = false;
     } catch (error) {
       console.error('Error getting ninot:', error);

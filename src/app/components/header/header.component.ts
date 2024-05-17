@@ -11,6 +11,7 @@ import { CookiesComponent } from '../cookies/cookies.component';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { NinotsService } from '../../services/ninots.service';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,8 @@ export class HeaderComponent {
   constructor(
     protected router: Router,
     protected authService: AuthService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private ninotsService: NinotsService
   ) {}
 
   ngOnInit() {
@@ -51,15 +53,6 @@ export class HeaderComponent {
     this.loading = false;
   }
 
-  // handleQrCodeResultAudioMode(resultString: string) {
-  //   let qrModel: QRModel = JSON.parse(resultString);
-  //   if (qrModel.tipo === -1) {
-  //     this.playAudio(qrModel.file);
-  //   } else {
-  //     this.router.navigate(['/ninots', qrModel.id]);
-  //   }
-  // }
-
   handleQrCodeResult(resultString: string) {
     let content: QRModel = JSON.parse(resultString);
 
@@ -71,37 +64,23 @@ export class HeaderComponent {
     }
 
     if (content.tipo !== -1) {
+      this.ninotsService.incrementVisits(content.id as string);
       this.router.navigate(['/ninots', content.id]);
     } else {
       this.playAudio(content.file);
     }
     
     this.scannerEnabled = this.audioMode;
-    // if (!this.audioMode) {
-    //   this.scannerEnabled = false;
-    // }
   }
 
   setAudioMode(mode: boolean) {
     this.audioMode = mode;
     this.cookieService.set('audioMode', this.audioMode.toString());
     this.setScanner(mode);
-    // if (this.router.url === '/home') {
-    //   window.location.reload();
-    // }
-    // this.router.navigate(['/home']);
   }
 
   setScanner(mode: boolean) {
-    // if(this.scannerEnabled){
-    //   this.audioMode = false;
-    // }
     this.scannerEnabled = mode;
-    // this.cookieService.set('scannerEnabled', this.scannerEnabled.toString());
-    // if (this.router.url === '/home') {
-    //   window.location.reload();
-    // }
-    // this.router.navigate(['/home']);
   }
 
   playAudio(file?: string) {
