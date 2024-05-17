@@ -102,6 +102,7 @@ export class NinotsComponent {
     } else {
       this.showNinots = [...this.filteredNinots];
     }
+    this.sortNinots(this.sort);
   }
 
   showCategoria(ninot: Ninot): boolean {
