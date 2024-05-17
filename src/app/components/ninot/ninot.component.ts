@@ -53,10 +53,10 @@ export class NinotComponent implements OnInit {
       console.log('Params -> ', params['id']);
       
       this.idNinot = params['id'];
+      this.getNinot(this.idNinot);
     });
-    // const id = this.route.snapshot.paramMap.get('id');
-    this.getNinot(this.idNinot);
     this.checkUser();
+    // const id = this.route.snapshot.paramMap.get('id');
     console.log('Entro aquí -> ngOnInit');
   }
 
@@ -74,7 +74,10 @@ export class NinotComponent implements OnInit {
 
   async getNinot(id: any) {
     try {
+      console.log('getting ninot -> ', id);
+      
       this.ninot = await this.ninotsService.getNinot(id);
+      console.log('getting ninot -> ', this.ninot);
       this.checkSpeak();
       this.loading = false;
     } catch (error) {
