@@ -115,6 +115,8 @@ export class NinotComponent implements OnInit {
       this.speaking = false;
       if (this.audioMode) {
         // this.router.navigate(['/home']);
+        console.log('setting back');
+        
         this.qrService.back();
       }
     };

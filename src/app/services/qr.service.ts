@@ -14,6 +14,7 @@ export class QRService {
   constructor() { }
 
   back() {
+    console.log('setting back 2');
     this.backEvent.next();
   }
   
