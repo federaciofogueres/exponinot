@@ -1,11 +1,11 @@
 @if (!this.router.url.includes('login')) {
-    @if(!this.router.url.includes('home')) {
-        <div class="py-3 px-md-5 px-3">
+    <!-- @if(!this.router.url.includes('home')) { -->
+        <div class="p-3 px-md-5 mb-2 background-rojo text-light">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center me-2">
                         <a routerLink="/">
-                            <img class="img-fluid img-header" src="../../../assets/img/fede.png">
+                            <img class="img-fluid img-header" src="../../../assets/img/logo-intranet.png">
                         </a>
                     </div>
                     <span class="h2 m-0">
@@ -29,17 +29,28 @@
                 }
             </div>
         </div>
+    <!-- } -->
+    @if(scannerEnabled){
+        <div class="container">
+            <div class="scanner-container">
+                <div class="scanner-header background-rojo text-light d-flex align-items-center p-3">
+                    <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
+                    <h1 class="m-0 ms-1">Escanea un QR</h1>
+                </div>
+                <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+            </div>
+        </div>
     }
-    <div class="tab-bar">
+    <div class="tab-bar text-light background-rojo p-3">
         <div class="tab-button d-flex align-items-center" (click)="router.navigateByUrl('/ninots')">
             <i class="bi bi-person-fill me-2" style="font-size: 1.5rem;"></i>
             <span>Ninots</span>
         </div>
-        <div class="tab-button d-flex align-items-center" (click)="enableScanner()">
+        <div class="tab-button d-flex align-items-center" (click)="setScanner(true)">
             <i class="bi bi-qr-code-scan me-2" style="font-size: 1.5rem;"></i>
             <span>Escanear QR</span>
         </div>
-        <div class="tab-button d-flex align-items-center" (click)="setAudioMode()">
+        <div class="tab-button d-flex align-items-center" (click)="setAudioMode(true)">
             <i class="bi bi-volume-up-fill me-2" style="font-size: 1.5rem;"></i>
             <span>Modo audio</span>
         </div>

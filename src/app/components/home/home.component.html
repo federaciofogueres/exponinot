@@ -2,20 +2,25 @@
     <app-spinner></app-spinner>
 } @else {
     <app-carrusel></app-carrusel>
-    @if (audioMode) {
+    <div class="container">
+        <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
+    </div>
+    <app-cookies></app-cookies>
+    <!-- @if (audioMode) {
         <div class="container audio-scanner">
             <div class="scanner-container">
                 <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
                     <i class="bi bi-box-arrow-in-left" style="font-size: 2rem;" (click)="back()"></i>
                     <h1 class="m-0 ms-1">Escanea un QR</h1>
                 </div>
-                <!-- <ngx-scanner-qrcode (event)="handleQrCodeResultAudioMode($event)"></ngx-scanner-qrcode> -->
                 <zxing-scanner [formats]="formatsEnabled" (scanSuccess)="handleQrCodeResultAudioMode($event)"></zxing-scanner>
             </div>
         </div>
     } @else {
         <div class="container">
-            <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
+            @if (!scannerEnabled) {
+                <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
+            }
             @if (scannerEnabled) {
                 <div class="scanner-container">
                     <div class="scanner-header bg-dark text-light d-flex align-items-center" style="min-height: 94px;">
@@ -26,20 +31,6 @@
                 </div>
             }
             <app-cookies></app-cookies>
-            <div class="tab-bar">
-                <div class="tab-button d-flex align-items-center" (click)="router.navigateByUrl('/ninots')">
-                    <i class="bi bi-person-fill me-2" style="font-size: 1.5rem;"></i>
-                    <span>Ninots</span>
-                </div>
-                <div class="tab-button d-flex align-items-center" (click)="enableScanner()">
-                    <i class="bi bi-qr-code-scan me-2" style="font-size: 1.5rem;"></i>
-                    <span>Escanear QR</span>
-                </div>
-                <div class="tab-button d-flex align-items-center" (click)="setAudioMode()">
-                    <i class="bi bi-volume-up-fill me-2" style="font-size: 1.5rem;"></i>
-                    <span>Modo audio</span>
-                </div>
-            </div>
         </div>
-    }
+    } -->
 }

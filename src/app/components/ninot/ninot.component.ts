@@ -30,7 +30,7 @@ export class NinotComponent implements OnInit {
   loading: boolean = false;
   speaking: boolean = false;
   userLogged: boolean = false;
-  contador = 0;
+  hasSpoke: boolean = false;
 
   fotoMode: string = 'boceto';
   flip: string = 'inactive';
@@ -65,13 +65,13 @@ export class NinotComponent implements OnInit {
   //   }
   // }
 
-checkSpeak() {
-  if (this.cookieService.get('audioMode') === 'true') {
-    this.audioMode = true;
-    this.contador++;
-    this.speak();
+  checkSpeak() {
+    if (this.cookieService.get('audioMode') === 'true' && !this.hasSpoke) {
+      this.audioMode = true;
+      this.hasSpoke = true;
+      this.speak();
+    }
   }
-}
 
   checkUser(){
     this.userLogged = this.authService.isLoggedIn();

@@ -15,22 +15,22 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, NgbModule],
+  imports: [RouterModule, NgbModule, ZXingScannerModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
+
+  //Se muestra el escaner
   scannerEnabled = false;
+  //Modo audioGuia
   audioMode = false;
+
   isPlaying = false;
   loading = false;
-
-  resultado: QRModel = { tipo: 0, id: 0 };
-
-
-
   userLogged: boolean = false;
+
   constructor(
     protected router: Router,
     protected authService: AuthService,
@@ -45,48 +45,58 @@ export class HeaderComponent {
     this.authService.logout();
     this.router.navigateByUrl('');
   }
-
-
   
   checkSpeak(){
-    if(this.cookieService.get('audioMode') === 'true'){
-      this.audioMode = true;
-    }
+    this.audioMode = this.cookieService.get('audioMode') === 'true';
     this.loading = false;
   }
 
+  // handleQrCodeResultAudioMode(resultString: string) {
+  //   let qrModel: QRModel = JSON.parse(resultString);
+  //   if (qrModel.tipo === -1) {
+  //     this.playAudio(qrModel.file);
+  //   } else {
+  //     this.router.navigate(['/ninots', qrModel.id]);
+  //   }
+  // }
+
   handleQrCodeResult(resultString: string) {
-    console.log('Resultado del escaneo QR: ', resultString);
     let content: QRModel = JSON.parse(resultString);
-    
+
+    if (content.tipo !== -1 && content.id === '') {
+      this.router.navigate(['/ninots', 0]);
+    }
+
     if (content.tipo !== -1) {
       this.router.navigate(['/ninots', content.id]);
-    } else {
-      this.playAudio(content.file);
-      this.scannerEnabled = false;
     }
+    this.playAudio(content.file);
+    this.scannerEnabled = this.audioMode;
+    // if (!this.audioMode) {
+    //   this.scannerEnabled = false;
+    // }
   }
 
-  setAudioMode() {
-    this.audioMode = !this.audioMode;
+  setAudioMode(mode: boolean) {
+    this.audioMode = mode;
     this.cookieService.set('audioMode', this.audioMode.toString());
-    this.router.navigate(['/home']);
+    this.setScanner(mode);
+    // if (this.router.url === '/home') {
+    //   window.location.reload();
+    // }
+    // this.router.navigate(['/home']);
   }
 
-  enableScanner() {
-    this.scannerEnabled = true;
-    this.cookieService.set('scannerEnabled', this.scannerEnabled.toString());
-    this.router.navigate(['/home']);
-  }
-
-  handleQrCodeResultAudioMode(resultString: string) {
-    let qrModel: QRModel = JSON.parse(resultString);
-    this.resultado = qrModel;
-    if (qrModel.tipo === -1) {
-      this.playAudio(qrModel.file);
-    } else {
-      this.router.navigate(['/ninots', qrModel.id]);
-    }
+  setScanner(mode: boolean) {
+    // if(this.scannerEnabled){
+    //   this.audioMode = false;
+    // }
+    this.scannerEnabled = mode;
+    // this.cookieService.set('scannerEnabled', this.scannerEnabled.toString());
+    // if (this.router.url === '/home') {
+    //   window.location.reload();
+    // }
+    // this.router.navigate(['/home']);
   }
 
   playAudio(file?: string) {
@@ -96,7 +106,6 @@ export class HeaderComponent {
       audio.src = file ? file : 'assets/audio/guia-1.mp3';
       audio.load();
       audio.play();
-      
       audio.onended = () => {
         this.isPlaying = false;
       };

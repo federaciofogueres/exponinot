@@ -1,3 +1,4 @@
+@import "../../../variables.scss";
 .tab-bar {
     position: fixed;
     bottom: 0;
@@ -12,4 +13,21 @@
 
 .img-header {
     height: 32px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    height: calc(100vh - 96px); /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
+}
+
+.scanner-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
