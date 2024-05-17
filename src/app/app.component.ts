@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { FooterComponent } from './components/footer/footer.component';
@@ -21,13 +21,15 @@ export class AppComponent {
 
   constructor(
     private qrService: QRService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private cd: ChangeDetectorRef
   ){
     this.qrService.backEvent$.subscribe({
       next: () => {
         console.log('setting back 3', this.audioMode, this.scannerEnabled);
         if(this.audioMode) {
           this.scannerEnabled = true;
+          this.cd.detectChanges();
           console.log('setting back 4', this.audioMode, this.scannerEnabled);
           
         } else{
