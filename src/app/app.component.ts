@@ -28,6 +28,8 @@ export class AppComponent {
         console.log('setting back 3', this.audioMode, this.scannerEnabled);
         if(this.audioMode) {
           this.scannerEnabled = true;
+          console.log('setting back 4', this.audioMode, this.scannerEnabled);
+          
         } else{
           this.setOffScanner();
         }
