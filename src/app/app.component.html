@@ -1,2 +1,7 @@
 <app-header></app-header>
-<router-outlet></router-outlet>
+@if (scannerEnabled) {
+    <app-scanner></app-scanner>
+} @else {
+    <router-outlet></router-outlet>
+}
+<app-footer (scannerEnabled)="onScannerEnabled($event)"></app-footer>
