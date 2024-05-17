@@ -125,16 +125,16 @@ export class AdminComponent {
         categoria: (item.categoria.toString() || ''),
         asociacion: (item.asociacion.toString() || ''),
         artista: (item.artista.toString() || ''),
-        idAsociacion: item.idAsociacion,
+        idAsociacion: Number(item.idAsociacion),
         id: (item.id.toString() || ''),
-        tipo: item.tipo,
+        tipo: Number(item.tipo),
         boceto: (item.boceto.toString() || ''),
-        order: item.order,
+        order: Number(item.order),
         ninot: (item.ninot.toString() || ''),
         descripcionAccesible: (item.descripcionAccesible.toString() || '')
       }
       this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
-        console.log('Ninot created successfully -> ', result);
+        console.log('Ninot created successfully -> ', result, ninotData);
       }).catch((error) => {
         console.log('Error creating ninot -> ', error);
       });
