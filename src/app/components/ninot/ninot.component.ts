@@ -51,7 +51,9 @@ export class NinotComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.idNinot = this.route.snapshot.paramMap.get('id')!;
+    if(this.idNinot === 'undefined') {
+      this.idNinot = this.route.snapshot.paramMap.get('id')!;
+    }
     this.route.params.subscribe(params => {
       this.idNinot = params['id'];
       this.getNinot(this.idNinot);
