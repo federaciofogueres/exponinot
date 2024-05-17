@@ -125,9 +125,11 @@ export class NinotComponent implements OnInit {
     if ('speechSynthesis' in window) {
       if (window.speechSynthesis.getVoices().length == 0) {
         window.speechSynthesis.onvoiceschanged = () => {
+          window.speechSynthesis.cancel();
           window.speechSynthesis.speak(utterance);
         };
       } else {
+        window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
       }
     } else {
