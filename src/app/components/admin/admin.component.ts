@@ -28,7 +28,6 @@ export class AdminComponent {
   ) {}
 
   generarQR() {
-    console.log('Generar QR');
     this.ninotsService.getNinotsWithCache().subscribe({
       next: async (response) => {
         let qrPromises = response.map(ninot => 
@@ -119,8 +118,6 @@ export class AdminComponent {
 
   processData(data: any[]) {
     for (let item of data) {
-      console.log(item);
-      
       const ninotData: Ninot = {
         visitas: 0,
         lema: (item.lema.toString() || ''),
@@ -136,8 +133,6 @@ export class AdminComponent {
         ninot: (item.ninot.toString() || ''),
         descripcionAccesible: (item.descripcionAccesible.toString() || '')
       }
-      console.log('Ninot data -> ', ninotData);
-      
       this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
         console.log('Ninot created successfully -> ', result);
       }).catch((error) => {

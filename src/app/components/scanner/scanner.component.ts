@@ -38,20 +38,11 @@ export class ScannerComponent {
 
   handleQrCodeResult(resultString: string) {
     let content: QRModel = JSON.parse(resultString);
-
-    console.log('QR content -> ', content);
     this.scannerEnabledEvent.emit({type: 'scanner', mode: false});
-    
     if (content.tipo === -1 && content.id === '') {
-      console.log('Sagradas');
-      
-      // this.ninotsService.incrementVisits(content.id as string);
-      // this.router.navigate(['/ninots', 0]);
       this.goToNinot('0');
     }
     if (content.tipo !== -1) {
-      // this.ninotsService.incrementVisits(content.id as string);
-      // this.router.navigate(['/ninots', content.id]);
       this.goToNinot(content.id as string);
     } else if(content.file){
       this.playAudio(content.file);
@@ -60,7 +51,6 @@ export class ScannerComponent {
   }
 
   goToNinot(id: string){
-    console.log('Go to ninot -> ', id);
     this.ninotsService.incrementVisits(id);
     this.router.navigate(['/ninots', id]);
   }

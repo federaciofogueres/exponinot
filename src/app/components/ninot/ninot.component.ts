@@ -53,22 +53,13 @@ export class NinotComponent implements OnInit {
     this.loading = true;
     this.idNinot = this.route.snapshot.paramMap.get('id')!;
     this.route.params.subscribe(params => {
-      console.log('Params -> ', params['id']);
-
-      console.log('Entro aquí -> ngOnInit', this.router.url);
-      
-      
       this.idNinot = params['id'];
       this.getNinot(this.idNinot);
     });
     this.checkUser();
-    // const id = this.route.snapshot.paramMap.get('id');
-    console.log('Entro aquí -> ngOnInit');
   }
 
   checkSpeak() {
-    console.log('Check speak -> ', this.cookieService.get('audioMode') === 'true', !this.hasSpoke, this.hasSpoke);
-    
     if (this.cookieService.get('audioMode') === 'true' && !this.hasSpoke) {
       this.audioMode = true;
       this.hasSpoke = true;
@@ -82,10 +73,7 @@ export class NinotComponent implements OnInit {
 
   async getNinot(id: any) {
     try {
-      console.log('getting ninot -> ', id);
-      
       this.ninot = await this.ninotsService.getNinot(id);
-      console.log('getting ninot -> ', this.ninot);
       this.checkSpeak();
       this.loading = false;
     } catch (error) {
@@ -101,23 +89,16 @@ export class NinotComponent implements OnInit {
 
   speak() {
     // Si ya se está hablando, no hagas nada
-    console.log('loooog -> ', this.speaking || !this.ninot, this.speaking, !this.ninot);
-    
     const utterance = new SpeechSynthesisUtterance();
     utterance.text = `Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcionAccesible !== '' ? this.ninot.descripcionAccesible : 'No tiene descripción.'}.`;
 
     // Set this.speaking to true when speech starts
     this.speaking = true;
-    console.log('Speaking -> ', utterance.text);
-    
 
     // Set this.speaking to false when speech ends
     utterance.onend = () => {
       this.speaking = false;
       if (this.audioMode) {
-        // this.router.navigate(['/home']);
-        console.log('setting back');
-        
         this.qrService.back();
       }
     };

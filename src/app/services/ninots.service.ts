@@ -1,13 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { FirebaseService } from './firebase.service';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc, getDoc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { getApp } from 'firebase/app';
 import { Firestore, collectionData, increment, setDoc } from '@angular/fire/firestore';
-import { Observable, finalize, of } from 'rxjs';
 import { getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
-import { first, tap } from 'rxjs/operators';
 import { LOCAL_STORAGE } from '@ng-web-apis/common';
+import { getApp } from 'firebase/app';
+import { collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { getStorage, ref } from 'firebase/storage';
+import { Observable, of } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +21,6 @@ export class NinotsService {
 
   private ninotsCache: any[] | null = null;
 
-  private readonly storage = inject(LOCAL_STORAGE);
 
   incrementVisits(ninotId: string) {
     const ninotRef = doc(this._firestore, 'ninots', ninotId);
@@ -39,8 +37,6 @@ export class NinotsService {
 
   // Read
   getNinots() {
-    console.log('Getting ninots');
-    
     return collectionData(this._collection) as Observable<any[]>;
   }
 
@@ -53,9 +49,7 @@ export class NinotsService {
     const ninotsData = sessionStorage.getItem('ninots');
     // const ninotsData = localStorage.getItem('ninots');
     if (ninotsData) {
-      const { ninots, time } = JSON.parse(ninotsData);
-      const currentTime = new Date().getTime();
-      const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+      const { ninots } = JSON.parse(ninotsData);
       // if (currentTime - time < oneDay) {
       //   this.ninotsCache = ninots;
       //   return of(ninots);
@@ -134,7 +128,6 @@ export class NinotsService {
           reject(error);
         }, () => {
           getDownloadURL(task.snapshot.ref).then((downloadURL: string) => {
-            console.log('File available at', downloadURL);
             ninotForm.controls[field].setValue(downloadURL);
             resolve(downloadURL);
           });

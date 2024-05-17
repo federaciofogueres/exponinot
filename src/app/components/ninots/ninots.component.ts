@@ -75,7 +75,6 @@ export class NinotsComponent {
     this.ninotsService.getNinotsWithCache().subscribe({
       next: (ninots) => {
         this.ninots = ninots.sort((a, b) => a.id! - b.id!);
-        console.log('Ninots:', this.ninots);
         this.updateFilteredNinots(0);
         this.loading = false;
       },
@@ -87,7 +86,6 @@ export class NinotsComponent {
   }
 
   viewNinot(ninot: any) {
-    console.log(ninot);
     this.router.navigateByUrl(`/ninots/${ninot.id}`);
   }
 

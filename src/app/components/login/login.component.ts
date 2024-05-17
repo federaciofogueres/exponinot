@@ -34,7 +34,6 @@ export class LoginComponent {
   async login() {
     this.loading = true;
     if(this.username.valid && this.password.valid) {
-      console.log(`Username: ${this.username.value} - password: ${this.password.value}`);
       if (await this.authService.login(this.username.value!, this.password.value!)) {
         this.loading = false;
         this.alertService.success('Bienvenido!', 5000)

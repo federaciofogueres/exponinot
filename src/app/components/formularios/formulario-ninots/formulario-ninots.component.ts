@@ -62,11 +62,7 @@ export class FormularioNinotsComponent {
   handleAsociacion(event: Event) {
     const target = event.target as HTMLSelectElement;
     const asociacionId = target.value;
-    console.log('Asociacion id selected -> ', asociacionId);
-      
     let asociacion: Asociacion = this.asociaciones.find(asoc => asoc.id === +asociacionId)!;
-    console.log('Asociacion selected -> ', asociacion);
-    
     this.ninotForm.controls['idAsociacion'].setValue(asociacion.id);
     this.ninotForm.controls['asociacion'].setValue(asociacion.nombre);
   }
@@ -89,8 +85,6 @@ export class FormularioNinotsComponent {
     let ninotData = this.cookieService.get('ninot');
     if (ninotData){
       let ninot = JSON.parse(ninotData);
-      console.log('Ninot -> ', ninot);
-
       if (ninot) {
         this.editing = true;
         this.ninotForm.patchValue(ninot);
@@ -104,8 +98,6 @@ export class FormularioNinotsComponent {
     const ninotData = this.ninotForm.value;
     ninotData.visitas = 0;
     ninotData.tipo = Number(this.ninotForm.get('tipo')?.value);
-    console.log('Creating ninot -> ', ninotData);
-    
     this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
       console.log('Ninot created successfully -> ', result);
       this.ninotForm.reset();
@@ -154,8 +146,6 @@ export class FormularioNinotsComponent {
     const idNinot = this.ninotForm.get('id')?.value;
     const filePath = `images/${field}/${tipoNinotPath}/${idNinot}.jpg`;
     let imageUrl = await this.ninotsService.uploadImageNinot(filePath, file, field, this.ninotForm);
-    console.log('DATA -> ', imageUrl, field);
-    
     this.ninotForm.get(field)?.setValue(imageUrl);
     this.loading = false;
   }

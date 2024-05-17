@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, setDoc, doc, collectionData, getDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, deleteDoc, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 const PATH = 'tiposNinots';
@@ -14,8 +14,6 @@ export class TiposNinotsService {
 
   // Create
   async createTipoNinot(ninotData: any, id: string) {
-    console.log('ninotData', ninotData, 'id', id, PATH);
-    
     await setDoc(doc(this._firestore, PATH, id), ninotData);
   }
 
