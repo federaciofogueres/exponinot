@@ -17,6 +17,8 @@ import { NinotsService } from '../../services/ninots.service';
 export class ScannerComponent {
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
 
+  @Output() scannerEnabledEvent = new EventEmitter<{type: string, mode: boolean}>();
+
   //Se muestra el escaner
   @Input()
   scannerEnabled = false;
@@ -38,6 +40,10 @@ export class ScannerComponent {
     let content: QRModel = JSON.parse(resultString);
 
     console.log('QR content -> ', content);
+
+    if(!this.audioMode){
+      this.scannerEnabledEvent.emit({type: 'scanner', mode: false});
+    }
     
     if (content.tipo !== -1 && content.id === '') {
       this.router.navigate(['/ninots', 0]);
