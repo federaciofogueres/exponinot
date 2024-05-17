@@ -66,6 +66,8 @@ export class NinotComponent implements OnInit {
   }
 
   checkSpeak() {
+    console.log('Check speak -> ', this.cookieService.get('audioMode') === 'true', !this.hasSpoke, this.hasSpoke);
+    
     if (this.cookieService.get('audioMode') === 'true' && !this.hasSpoke) {
       this.audioMode = true;
       this.hasSpoke = true;

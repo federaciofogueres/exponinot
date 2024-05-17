@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
@@ -19,7 +20,8 @@ export class AppComponent {
   audioMode = false;
 
   constructor(
-    private qrService: QRService
+    private qrService: QRService,
+    private cookieService: CookieService
   ){
     this.qrService.backEvent$.subscribe({
       next: () => {
@@ -41,12 +43,14 @@ export class AppComponent {
     this.scannerEnabled = event.mode;
     if(event.type === 'audio') {
       this.audioMode = event.mode;
+      this.cookieService.set('audioMode', this.audioMode.toString());
     }
   }
 
   setOffScanner() {
     this.scannerEnabled = false;
     this.audioMode = false;
+    this.cookieService.set('audioMode', 'false');
   }
 
 }
