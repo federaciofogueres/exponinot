@@ -27,4 +27,8 @@ export class CookiesComponent {
     this.cookieService.set('cookies', 'aceptadas');
     this.showCookies = false;
   }
+
+  redirectToLegal() {
+    window.open('https://www.hogueras.es/aviso-legal/');
+  }
 }
