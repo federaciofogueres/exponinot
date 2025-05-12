@@ -1,5 +1,11 @@
-<app-carrusel></app-carrusel>
+<!-- <app-carrusel></app-carrusel>
 <div class="container">
     <img class="img-fluid bg-img" src="assets/img/backgrounds/BG1.png">
 </div>
-<app-cookies></app-cookies>
+<app-cookies></app-cookies> -->
+
+<lib-ffsj-login 
+    [title]="'Expo Ninot App'" 
+    (logStatus)="manageLogin($event)"
+></lib-ffsj-login>
+<lib-ffsj-spinner></lib-ffsj-spinner>

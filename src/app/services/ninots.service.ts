@@ -4,6 +4,7 @@ import { Firestore, collectionData, increment, setDoc } from '@angular/fire/fire
 import { getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, of } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 @Injectable({
@@ -20,6 +21,9 @@ export class NinotsService {
 
   private ninotsCache: any[] | null = null;
 
+  constructor(
+    private cookieService: CookieService
+  ) { }
 
   incrementVisits(ninotId: string) {
     const ninotRef = doc(this._firestore, 'ninots', ninotId);
@@ -39,31 +43,37 @@ export class NinotsService {
     return collectionData(this._collection) as Observable<any[]>;
   }
 
-  getNinotsWithCache(): Observable<any[]> {
+  getNinotsWithCache(): Observable<any[]>  {
+    if (this.cookieService.get('refreshData') === 'true') {
+      return this.getNinots().pipe(
+        first(),
+        tap(ninots => {
+          this.ninotsCache = ninots;
+          this.storeNinotsInLocalStorage(ninots);
+        })
+      );
+    }
+
     if (this.ninotsCache) {
       return of(this.ninotsCache);
     }
   
     // const ninotsData = this.storage.getItem('ninots');
     const ninotsData = sessionStorage.getItem('ninots');
+    const { ninots } = JSON.parse(ninotsData!);
+    this.ninotsCache = ninots;
+    return of(ninots);
     // const ninotsData = localStorage.getItem('ninots');
-    if (ninotsData) {
-      const { ninots } = JSON.parse(ninotsData);
-      // if (currentTime - time < oneDay) {
-      //   this.ninotsCache = ninots;
-      //   return of(ninots);
-      // }
-      this.ninotsCache = ninots;
-      return of(ninots);
-    }
-    
-    return this.getNinots().pipe(
-      first(),
-      tap(ninots => {
-        this.ninotsCache = ninots;
-        this.storeNinotsInLocalStorage(ninots);
-      })
-    );
+    // if (ninotsData) {
+    //   const { ninots } = JSON.parse(ninotsData);
+    //   // if (currentTime - time < oneDay) {
+    //   //   this.ninotsCache = ninots;
+    //   //   return of(ninots);
+    //   // }
+    //   this.ninotsCache = ninots;
+    //   return of(ninots);
+    // }
+
   }
   
   storeNinotsInLocalStorage(ninots: any[]) {
@@ -138,4 +148,26 @@ export class NinotsService {
       );
     });
   }
+
+  incrementVisitsIP(ip: string) {
+    const ipRef = doc(this._firestore, 'visitas', ip);
+    return updateDoc(ipRef, {
+      visitas: increment(1)
+    });
+  }
+
+  async pushVisit(ip: string){
+    await setDoc(doc(this._firestore, 'visitas', ip), {ip: ip, visitas: increment(1)});
+  }
+
+  async getVisit(ip: string){
+    const visitRef = doc(this._firestore, 'visitas', ip);
+    const visitSnap = await getDoc(visitRef); // Replace getDocs with getDoc
+    if (visitSnap.exists()) {
+      return visitSnap.data();
+    } else {
+      return -1;
+    }
+  }
+
 }

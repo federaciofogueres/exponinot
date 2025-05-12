@@ -75,6 +75,8 @@ export class NinotsComponent {
     this.ninotsService.getNinotsWithCache().subscribe({
       next: (ninots) => {
         this.ninots = ninots.sort((a, b) => a.id! - b.id!);
+        console.log(this.ninots.sort((a, b) => a.visitas! - b.visitas!));
+        
         this.updateFilteredNinots(0);
         this.loading = false;
       },

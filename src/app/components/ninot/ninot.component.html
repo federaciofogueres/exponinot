@@ -84,6 +84,12 @@
             (click)="toggleFlip(); fotoMode = fotoMode === 'boceto' ? 'ninot' : 'boceto'" 
             [@flipState]="flip">
         } @else {
+          <p>{{ ninot.descripcion }}</p>
+          <div class="text-center mb-1">
+            <span class="h4 m-0 text-naranja">
+              Ninot de exposición
+            </span>
+          </div>
           <img [src]="ninot.ninot" alt="Imagen del ninot" class="img-fluid rounded" >
         }
       </div>

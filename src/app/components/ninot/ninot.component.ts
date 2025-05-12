@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { QRService } from '../../services/qr.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
@@ -40,6 +41,8 @@ export class NinotComponent implements OnInit {
 
   idNinot: string = '';
 
+  private paramsSubscription!: Subscription;
+  
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
@@ -54,14 +57,16 @@ export class NinotComponent implements OnInit {
     if(this.idNinot === 'undefined') {
       this.idNinot = this.route.snapshot.paramMap.get('id')!;
     }
-    this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       this.idNinot = params['id'];
       this.getNinot(this.idNinot);
       console.log(this.idNinot);
-      
-      
     });
     this.checkUser();
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   checkSpeak() {
