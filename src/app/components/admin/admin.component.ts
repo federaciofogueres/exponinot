@@ -25,12 +25,12 @@ export class AdminComponent {
     private ninotsService: NinotsService,
     private qrService: QRService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   generarQR() {
     this.ninotsService.getNinotsWithCache().subscribe({
       next: async (response) => {
-        let qrPromises = response.map(ninot => 
+        let qrPromises = response.map(ninot =>
           this.qrService.generateQRCode({
             tipo: ninot.tipo,
             id: ninot.id
@@ -38,20 +38,20 @@ export class AdminComponent {
         );
 
         let qrCodes = await Promise.all(qrPromises);
-        
+
         const zip = new JSZip();
         let index = 0;
-        for(const qrCode of qrCodes) {
+        for (const qrCode of qrCodes) {
           const imgData = qrCode.split(',')[1];
           zip.file(`QRCode${index}.png`, imgData, { base64: true });
           index++;
         }
-  
+
         zip.generateAsync({ type: 'blob' }).then((content: any) => {
           saveAs(content, 'QRCodes.zip');
         });
 
-      },error: (error) => {
+      }, error: (error) => {
         console.log('Error -> ', error);
       }
     });
@@ -62,48 +62,65 @@ export class AdminComponent {
     this.alertService.warning('Esta funcionalidad está deshabilitada temporalmente');
   }
 
-  downloadExcelTemplate() {
-    // Crea un objeto vacío de Ninot.
-    let ninot: Ninot = {
-      lema: '',
-      descripcion: '',
-      categoria: '',
-      asociacion: '',
-      artista: '',
-      idAsociacion: null,
-      id: '',
-      tipo: null,
-      boceto: '',
-      order: null,
-      visitas: 0,
-      ninot: '',
-      descripcionAccesible: ''
-    };
-  
+  async downloadExcelTemplate(downloadAllNinots: boolean = false) {
+    let ninots: Ninot[] = [];
+    if (downloadAllNinots) {
+      await new Promise<void>((resolve, reject) => {
+        this.ninotsService.getNinotsWithCache().subscribe({
+          next: (response) => {
+            ninots = response.sort((a, b) => a.id - b.id);
+            resolve();
+          },
+          error: (error) => {
+            console.error('Error getting ninots:', error);
+            reject(error);
+          }
+        });
+      });
+    } else {
+      let ninot: Ninot = {
+        lema: '',
+        descripcion: '',
+        categoria: '',
+        asociacion: '',
+        artista: '',
+        idAsociacion: null,
+        id: '',
+        tipo: null,
+        boceto: '',
+        order: null,
+        visitas: 0,
+        ninot: '',
+        descripcionAccesible: ''
+      };
+      ninots.push(ninot);
+    }
+
+
     // Crea un array con un solo objeto que tiene las claves del objeto ninot como propiedades.
-    let data = [ninot];
-  
+    let data = ninots;
+
     // Crea una hoja de cálculo con los datos.
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-  
+
     // Crea un libro de trabajo y añade la hoja de cálculo.
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
-  
+
     // Descarga el archivo Excel.
     XLSX.writeFile(wb, 'PlantillaNinot.xlsx');
   }
 
   onFileChange(evt: any) {
     const target: DataTransfer = <DataTransfer>(evt.target);
-    
+
     if (target.files.length !== 1) throw new Error('No se puede usar múltiples archivos');
 
     const reader: FileReader = new FileReader();
 
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];

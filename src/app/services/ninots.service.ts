@@ -43,7 +43,7 @@ export class NinotsService {
     if (this.ninotsCache) {
       return of(this.ninotsCache);
     }
-  
+
     // const ninotsData = this.storage.getItem('ninots');
     const ninotsData = sessionStorage.getItem('ninots');
     // const ninotsData = localStorage.getItem('ninots');
@@ -56,7 +56,7 @@ export class NinotsService {
       this.ninotsCache = ninots;
       return of(ninots);
     }
-    
+
     return this.getNinots().pipe(
       first(),
       tap(ninots => {
@@ -65,7 +65,7 @@ export class NinotsService {
       })
     );
   }
-  
+
   storeNinotsInLocalStorage(ninots: any[]) {
     const date = new Date();
     const ninotsData = {
@@ -80,10 +80,10 @@ export class NinotsService {
   // Read one
   async getNinot(id: string) {
     console.log('getting Ninot');
-    
+
     const cachedNinot = await this.ninotsCache?.find(ninot => ninot.id === id);
     console.log('cachedNinot', cachedNinot);
-    
+
     if (cachedNinot) {
       return cachedNinot;
     } else {
@@ -114,7 +114,7 @@ export class NinotsService {
       const fileRef = ref(this._storage, filePath);
       const task = uploadBytesResumable(fileRef, file);
 
-      task.on('state_changed', 
+      task.on('state_changed',
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Upload is ${progress}% done`);

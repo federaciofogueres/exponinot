@@ -1,4 +1,3 @@
-
 <div class="container">
     <div class="d-flex justify-content-between m-3">
         <div class="form-check form-switch">
@@ -8,7 +7,8 @@
             </label>
         </div>
         <div class="dropdown">
-            <button class="excel-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="excel-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 <i class="bi bi-gear-fill" style="font-size: 1rem;">
                     <span style="font-style: normal;">
                         Opciones
@@ -16,18 +16,23 @@
                 </i>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" (click)="downloadExcelTemplate()"><i class="bi bi-filetype-xlsx me-2"></i>Descargar plantilla</a></li>
-                <li><a class="dropdown-item" (click)="openUploadDialog()"><i class="bi bi-cloud-arrow-up-fill me-2"></i>Subir Excel</a></li>
-                <li><a class="dropdown-item" (click)="generarQR()"><i class="bi bi-qr-code-scan me-2"></i>Generar QR's</a></li>
+                <li><a class="dropdown-item" (click)="downloadExcelTemplate()"><i
+                            class="bi bi-filetype-xlsx me-2"></i>Descargar plantilla</a></li>
+                <li><a class="dropdown-item" (click)="downloadExcelTemplate(true)"><i
+                            class="bi bi-filetype-xlsx me-2"></i>Descargar plantilla llena</a></li>
+                <li><a class="dropdown-item" (click)="openUploadDialog()"><i
+                            class="bi bi-cloud-arrow-up-fill me-2"></i>Subir Excel</a></li>
+                <li><a class="dropdown-item" (click)="generarQR()"><i class="bi bi-qr-code-scan me-2"></i>Generar
+                        QR's</a></li>
             </ul>
         </div>
         <input type="file" (change)="onFileChange($event)" style="display: none;" #uploadExcel />
     </div>
     <div class="form-container">
         @if (showNinotsForm) {
-            <app-formulario-ninots></app-formulario-ninots>
+        <app-formulario-ninots></app-formulario-ninots>
         } @else {
-            <app-formulario-tipo-ninot></app-formulario-tipo-ninot>
+        <app-formulario-tipo-ninot></app-formulario-tipo-ninot>
         }
     </div>
 </div>
