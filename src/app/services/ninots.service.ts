@@ -14,15 +14,18 @@ export class NinotsService {
 
   private _firestore = inject(Firestore);
 
-  private _collection = collection(this._firestore, 'ninots');
+  private pathCollection = 'ninots/2025/ninots';
+
+  private _collection = collection(this._firestore, this.pathCollection);
 
   private _storage = getStorage(this._firebaseApp, 'gs://exponinot.appspot.com');
 
   private ninotsCache: any[] | null = null;
 
 
+
   incrementVisits(ninotId: string) {
-    const ninotRef = doc(this._firestore, 'ninots', ninotId);
+    const ninotRef = doc(this._firestore, this.pathCollection, ninotId);
     return updateDoc(ninotRef, {
       visitas: increment(1)
     });
@@ -30,7 +33,8 @@ export class NinotsService {
 
   // Create
   async createNinot(ninotData: any, id: string) {
-    await setDoc(doc(this._firestore, 'ninots', id), ninotData);
+    await setDoc(doc(this._firestore, this.pathCollection, id), ninotData);
+    // await setDoc(doc(this._firestore, 'ninots', id), ninotData);
     // await addDoc(collection(this._firestore, 'ninots'), ninotData);
   }
 
@@ -87,7 +91,7 @@ export class NinotsService {
     if (cachedNinot) {
       return cachedNinot;
     } else {
-      const ninotRef = doc(this._firestore, 'ninots', id);
+      const ninotRef = doc(this._firestore, this.pathCollection, id);
       const ninotSnap = await getDoc(ninotRef); // Replace getDocs with getDoc
       if (ninotSnap.exists()) {
         return ninotSnap.data();
@@ -99,13 +103,13 @@ export class NinotsService {
 
   // Update
   async updateNinot(id: any, updatedData: any) {
-    const ninotRef = doc(this._firestore, 'ninots', id);
+    const ninotRef = doc(this._firestore, this.pathCollection, id);
     await updateDoc(ninotRef, updatedData);
   }
 
   // Delete
   async deleteNinot(id: any) {
-    const ninotRef = doc(this._firestore, 'ninots', id);
+    const ninotRef = doc(this._firestore, this.pathCollection, id);
     await deleteDoc(ninotRef);
   }
 

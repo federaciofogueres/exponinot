@@ -1,3 +1,6 @@
+@if (loading) {
+<app-spinner [fullscreen]="true"></app-spinner>
+} @else {
 <div class="container">
     <div class="d-flex justify-content-between m-3">
         <div class="form-check form-switch">
@@ -36,3 +39,4 @@
         }
     </div>
 </div>
+}

@@ -9,17 +9,19 @@ import { QRService } from '../../services/qr.service';
 import { AlertService } from '../alert/alert.service';
 import { FormularioNinotsComponent } from '../formularios/formulario-ninots/formulario-ninots.component';
 import { FormularioTipoNinotComponent } from '../formularios/formulario-tipo-ninot/formulario-tipo-ninot.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [FormularioNinotsComponent, FormularioTipoNinotComponent, FormsModule],
+  imports: [FormularioNinotsComponent, FormularioTipoNinotComponent, FormsModule, SpinnerComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
 export class AdminComponent {
   showNinotsForm = true;
   @ViewChild('uploadExcel') uploadExcel!: ElementRef;
+  loading: boolean = false;
 
   constructor(
     private ninotsService: NinotsService,
@@ -127,7 +129,9 @@ export class AdminComponent {
 
       const data = XLSX.utils.sheet_to_json(ws);
 
+      this.loading = true;
       this.processData(data);
+      this.loading = false;
     };
 
     reader.readAsBinaryString(target.files[0]);
@@ -137,18 +141,18 @@ export class AdminComponent {
     for (let item of data) {
       const ninotData: Ninot = {
         visitas: 0,
-        lema: (item.lema.toString() || ''),
-        descripcion: (item.descripcion.toString() || ''),
-        categoria: (item.categoria.toString() || ''),
-        asociacion: (item.asociacion.toString() || ''),
-        artista: (item.artista.toString() || ''),
+        lema: (item.lema?.toString() || ''),
+        descripcion: (item.descripcion?.toString() || ''),
+        categoria: (item.categoria?.toString() || ''),
+        asociacion: (item.asociacion?.toString() || ''),
+        artista: (item.artista?.toString() || ''),
         idAsociacion: Number(item.idAsociacion),
-        id: (item.id.toString() || ''),
+        id: (item.id?.toString() || ''),
         tipo: Number(item.tipo),
-        boceto: (item.boceto.toString() || ''),
+        boceto: (item.boceto?.toString() || ''),
         order: Number(item.order),
-        ninot: (item.ninot.toString() || ''),
-        descripcionAccesible: (item.descripcionAccesible.toString() || '')
+        ninot: (item.ninot?.toString() || ''),
+        descripcionAccesible: (item.descripcionAccesible?.toString() || '')
       }
       this.ninotsService.createNinot(ninotData, ninotData.id).then((result) => {
         console.log('Ninot created successfully -> ', result, ninotData);
