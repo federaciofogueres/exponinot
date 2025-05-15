@@ -16,11 +16,14 @@ export class QRService {
   back() {
     this.backEvent.next();
   }
-  
-  async generateQRCode(data: QRModel): Promise<string> {
+
+  async generateQRCode(data: QRModel | string): Promise<string> {
     return new Promise(async (resolve, reject) => {
       try {
-        const url = await QRCode.toDataURL(JSON.stringify(data), { errorCorrectionLevel: 'H', scale: 10 });
+        if (typeof data !== 'string') {
+          data = JSON.stringify(data)
+        }
+        const url = await QRCode.toDataURL(data, { errorCorrectionLevel: 'H', scale: 10 });
         resolve(url);
       } catch (err) {
         console.error(err);
