@@ -8,20 +8,27 @@ import { CensoService } from "../services/censo.service";
 })
 export class AuthGuard implements CanActivate {
 
+  restricted = true;
+
   constructor(
     private authService: AuthService,
     private router: Router,
     private censoService: CensoService,
-  ) {}
+  ) { }
 
   canActivate(): boolean {
-    if (this.authService.isLoggedIn()){
+    if (this.authService.isLoggedIn()) {
       let token = this.authService.getToken();
       this.censoService.configuration.accessToken = token;
       return true;
     } else {
-      this.router.navigate(['/login']);
-      return false;
+      if (this.restricted) {
+        this.router.navigate(['/restricted']);
+        return false;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
+      }
     }
   }
 
