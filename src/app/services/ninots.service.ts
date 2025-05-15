@@ -4,8 +4,7 @@ import { Firestore, collectionData, increment, setDoc } from '@angular/fire/fire
 import { getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
-import { Observable, of } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,30 +43,31 @@ export class NinotsService {
   }
 
   getNinotsWithCache(): Observable<any[]> {
-    if (this.ninotsCache) {
-      return of(this.ninotsCache);
-    }
+    return this.getNinots();
+    // if (this.ninotsCache) {
+    //   return of(this.ninotsCache);
+    // }
 
-    // const ninotsData = this.storage.getItem('ninots');
-    const ninotsData = sessionStorage.getItem('ninots');
-    // const ninotsData = localStorage.getItem('ninots');
-    if (ninotsData) {
-      const { ninots } = JSON.parse(ninotsData);
-      // if (currentTime - time < oneDay) {
-      //   this.ninotsCache = ninots;
-      //   return of(ninots);
-      // }
-      this.ninotsCache = ninots;
-      return of(ninots);
-    }
+    // // const ninotsData = this.storage.getItem('ninots');
+    // const ninotsData = sessionStorage.getItem('ninots');
+    // // const ninotsData = localStorage.getItem('ninots');
+    // if (ninotsData) {
+    //   const { ninots } = JSON.parse(ninotsData);
+    //   // if (currentTime - time < oneDay) {
+    //   //   this.ninotsCache = ninots;
+    //   //   return of(ninots);
+    //   // }
+    //   this.ninotsCache = ninots;
+    //   return of(ninots);
+    // }
 
-    return this.getNinots().pipe(
-      first(),
-      tap(ninots => {
-        this.ninotsCache = ninots;
-        this.storeNinotsInLocalStorage(ninots);
-      })
-    );
+    // return this.getNinots().pipe(
+    //   first(),
+    //   tap(ninots => {
+    //     this.ninotsCache = ninots;
+    //     this.storeNinotsInLocalStorage(ninots);
+    //   })
+    // );
   }
 
   storeNinotsInLocalStorage(ninots: any[]) {
