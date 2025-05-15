@@ -43,8 +43,10 @@ export class ScannerComponent {
       content = JSON.parse(resultString);
     } catch {
       // Si no es JSON, lo tratamos como URL
+      console.log('Estoy aquí -> ', { resultString });
       if (resultString.startsWith('http')) {
         // Extrae el id de la URL si es necesario
+        console.log('Entro en startsWith -> ', { resultString });
         const match = resultString.match(/\/ninots\/(\d+)/);
         const id = match ? match[1] : '0';
         this.goToNinot(id);
