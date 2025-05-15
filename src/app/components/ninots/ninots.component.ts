@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +9,7 @@ import { NinotsService } from '../../services/ninots.service';
 @Component({
   selector: 'app-ninots',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './ninots.component.html',
   styleUrls: ['./ninots.component.scss']
 })
@@ -19,7 +20,7 @@ export class NinotsComponent {
     { id: 2, tipo: 'Barraca', label: 'Barracas' },
   ];
   selectedTipoNinot = this.tiposNinots[0].id;
-  
+
   ninots: Ninot[] = [];
   filteredNinots: Ninot[] = [];
   showNinots: Ninot[] = [];
@@ -33,28 +34,48 @@ export class NinotsComponent {
   constructor(
     private ninotsService: NinotsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadData();
   }
 
+  private normalizeCategoria(cat: string = ''): string {
+    return cat
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   sortNinots(tipo: string) {
-    const categoryOrder: any = {
-      'Especial': 1,
-      'Primera': 2,
-      'Segunda': 3,
-      'Tercera': 4,
-      'Cuarta': 5,
-      'Quinta': 6,
-      'Sexta': 7,
-      'Sexta A': 7,
-      'Sexta B': 8
+    const categoryOrder: Record<string, number> = {
+      'especial': 1,
+      'primera': 2,
+      'segunda': 3,
+      'tercera': 4,
+      'tercera a': 5,
+      'tercera b': 6,
+      'cuarta': 7,
+      'quinta': 8,
+      'quinta a': 9,
+      'quinta b': 10,
+      'sexta': 11,
     };
-  
-    switch(tipo) {
+
+    switch (tipo) {
       case 'cat':
-        this.showNinots.sort((a, b) => (categoryOrder[a.categoria] || 10) - (categoryOrder[b.categoria] || 10));
+        this.showNinots.sort((a, b) => {
+          const aCat = this.normalizeCategoria(a.categoria);
+          const bCat = this.normalizeCategoria(b.categoria);
+          const aOrder = categoryOrder[aCat] ?? 99;
+          const bOrder = categoryOrder[bCat] ?? 99;
+          if (aOrder !== bOrder) {
+            return aOrder - bOrder;
+          }
+          return aCat.localeCompare(bCat);
+        });
         this.sort = 'cat';
         break;
       case 'alf':
@@ -62,7 +83,7 @@ export class NinotsComponent {
         this.sort = 'alf';
         break;
       case 'num':
-        this.showNinots.sort((a, b) => a.order! - b.order!);
+        this.showNinots.sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
         this.sort = 'num';
         break;
       default:
@@ -74,7 +95,7 @@ export class NinotsComponent {
     this.loading = true;
     this.ninotsService.getNinotsWithCache().subscribe({
       next: (ninots) => {
-        this.ninots = ninots.sort((a, b) => a.id! - b.id!);
+        this.ninots = ninots.sort((a, b) => a.order! - b.order!);
         this.updateFilteredNinots(0);
         this.loading = false;
       },
@@ -93,7 +114,7 @@ export class NinotsComponent {
     this.selectedTipoNinot = tipoId;
     this.filteredNinots = this.ninots.filter(ninot => ninot.tipo === tipoId);
     this.showNinots = [...this.filteredNinots];
-    if(this.sort === 'cat') this.sortNinots('cat');
+    if (this.sort === 'cat') this.sortNinots('cat');
   }
 
   filterNinots() {
@@ -106,10 +127,11 @@ export class NinotsComponent {
   }
 
   showCategoria(ninot: Ninot): boolean {
-    if (this.categoria === ninot.categoria) {
+    const normalizedCat = this.normalizeCategoria(ninot.categoria);
+    if (this.categoria === normalizedCat) {
       return false;
     } else {
-      this.categoria = ninot.categoria;
+      this.categoria = normalizedCat;
       return true;
     }
   }
