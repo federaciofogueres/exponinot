@@ -39,22 +39,22 @@ export class ScannerComponent {
     console.log({ resultString });
 
     let content: any;
+    let isUrl = false;
     try {
       content = JSON.parse(resultString);
     } catch {
+      console.log('Entro en el catch');
+
       // Si no es JSON, lo tratamos como URL
-      console.log('He entrado en el catch');
-
       if (resultString.startsWith('http')) {
-
-        console.log('He entrado en el startsWith');
-
+        console.log('Entro en el startsWith');
+        isUrl = true;
         // Extrae el id de la URL si es necesario
         const match = resultString.match(/\/ninots\/(\d+)/);
         const id = match ? match[1] : '0';
+        console.log('Nos vamos al id: ', id);
+
         this.goToNinot(id);
-        this.scannerEnabled = this.audioMode;
-        return;
       } else {
         // Otro formato no esperado
         console.warn('Formato de QR no reconocido:', resultString);
@@ -63,6 +63,12 @@ export class ScannerComponent {
     }
 
     this.scannerEnabledEvent.emit({ type: 'scanner', mode: false });
+    this.scannerEnabled = this.audioMode;
+
+    if (isUrl) {
+      return;
+    }
+
     if (content.tipo === -1 && content.id === '') {
       this.goToNinot('0');
     }
@@ -71,7 +77,6 @@ export class ScannerComponent {
     } else if (content.file) {
       this.playAudio(content.file);
     }
-    this.scannerEnabled = this.audioMode;
   }
 
   goToNinot(id: string) {
