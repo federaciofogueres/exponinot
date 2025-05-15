@@ -32,12 +32,13 @@ export class AdminComponent {
   generarQR() {
     this.ninotsService.getNinotsWithCache().subscribe({
       next: async (response) => {
-        let qrPromises = response.map(ninot =>
-          this.qrService.generateQRCode({
-            tipo: ninot.tipo,
-            id: ninot.id
-          })
-        );
+        let ninotsIds: string[] = [];
+        let qrPromises = response.map(ninot => {
+          ninot.tipo === 0 ? ninotsIds.push(`0-${ninot.order}`) : ninotsIds.push(`1-${ninot.order}`);
+          return this.qrService.generateQRCode(
+            'https://exponinot.hogueras.es/ninots/' + ninot.id
+          );
+        });
 
         let qrCodes = await Promise.all(qrPromises);
 
@@ -45,7 +46,7 @@ export class AdminComponent {
         let index = 0;
         for (const qrCode of qrCodes) {
           const imgData = qrCode.split(',')[1];
-          zip.file(`QRCode${index}.png`, imgData, { base64: true });
+          zip.file(`QRCode-${ninotsIds[index]}.png`, imgData, { base64: true });
           index++;
         }
 
