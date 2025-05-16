@@ -34,7 +34,7 @@ export class AdminComponent {
       next: async (response) => {
         let ninotsIds: string[] = [];
         let qrPromises = response.map(ninot => {
-          ninot.tipo === 0 ? ninotsIds.push(`0-${ninot.order}`) : ninotsIds.push(`1-${ninot.order}`);
+          ninotsIds.push(`${ninot.tipo}-${ninot.order}`);
           return this.qrService.generateQRCode(
             'https://exponinot.hogueras.es/ninots/' + ninot.id
           );
