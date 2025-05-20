@@ -30,7 +30,7 @@ export class FormularioNinotsComponent {
   loading: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private ninotsService: NinotsService,
     private router: Router,
     private censoService: CensoService,
@@ -83,7 +83,7 @@ export class FormularioNinotsComponent {
       descripcionAccesible: ['', Validators.required],
     });
     let ninotData = this.cookieService.get('ninot');
-    if (ninotData){
+    if (ninotData) {
       let ninot = JSON.parse(ninotData);
       if (ninot) {
         this.editing = true;
@@ -109,7 +109,7 @@ export class FormularioNinotsComponent {
   editNinot(ninotId: string) {
     const ninotData = this.ninotForm.value;
     console.log('Updating ninot -> ', ninotData, ninotId);
-    
+
     this.ninotsService.updateNinot(ninotId, ninotData).then((result) => {
       console.log('Ninot updated successfully -> ', result);
       this.ninotForm.reset();
@@ -119,7 +119,7 @@ export class FormularioNinotsComponent {
     });
   }
 
-  limpiar(){
+  limpiar() {
     this.cookieService.delete('ninot');
     this.editing = false;
     this.ninotForm.reset();
@@ -127,11 +127,11 @@ export class FormularioNinotsComponent {
 
   async uploadImage(event: any, field: any) {
     this.loading = true
-    const file = event.target.files[0];
+    let file = event.target.files[0];
     const tipoNinot = this.ninotForm.get('tipoNinot')?.value;
     let tipoNinotPath = '';
-  
-    switch(tipoNinot) {
+
+    switch (tipoNinot) {
       case 0:
         tipoNinotPath = 'adultos';
         break;
@@ -142,38 +142,39 @@ export class FormularioNinotsComponent {
         tipoNinotPath = 'barracas';
         break;
     }
-  
+
     const idNinot = this.ninotForm.get('id')?.value;
     const filePath = `images/${field}/${tipoNinotPath}/${idNinot}.jpg`;
+
+    // Si el campo es "ninot", voltea la imagen verticalmente antes de subirla
+    if (field === 'ninot') {
+      const imageBitmap = await createImageBitmap(file);
+      const canvas = document.createElement('canvas');
+      canvas.width = imageBitmap.width;
+      canvas.height = imageBitmap.height;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        // Voltear horizontalmente
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(imageBitmap, 0, 0);
+        // Convertir el canvas a blob
+        file = await new Promise<File>((resolve) => {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const flippedFile = new File([blob], file.name, { type: file.type });
+              resolve(flippedFile);
+            } else {
+              resolve(file); // Si falla, usa el original
+            }
+          }, file.type);
+        });
+      }
+    }
+
     let imageUrl = await this.ninotsService.uploadImageNinot(filePath, file, field, this.ninotForm);
     this.ninotForm.get(field)?.setValue(imageUrl);
     this.loading = false;
   }
 
-  // onFileDrop(event: any ) {
-  //   console.log('File dropped -> ', event);
-    
-  //   event.preventDefault();
-  //   if (event.dataTransfer) {
-  //     const files = event.dataTransfer.files;
-  //     if (files.length > 0) {
-  //       const uploadEvent = {
-  //         target: {
-  //           files: files
-  //         }
-  //       };
-  //       this.uploadImage(uploadEvent, 'boceto');
-  //     }
-  //   }
-  // }
-  
-  // onDragOver(event: any) {
-  //   event.stopPropagation();
-  //   event.preventDefault();
-  // }
-  
-  // onDragLeave(event: any) {
-  //   event.stopPropagation();
-  //   event.preventDefault();
-  // }
 }
