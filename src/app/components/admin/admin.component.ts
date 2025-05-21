@@ -21,13 +21,22 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 export class AdminComponent {
   showNinotsForm = true;
   @ViewChild('uploadExcel') uploadExcel!: ElementRef;
+  @ViewChild('uploadBocetos') uploadBocetosInput!: ElementRef;
   loading: boolean = false;
+
+  private ninots: Ninot[] = [];
 
   constructor(
     private ninotsService: NinotsService,
     private qrService: QRService,
     private alertService: AlertService
-  ) { }
+  ) {
+    this.ninotsService.getNinots().subscribe({
+      next: (response) => {
+        this.ninots = response;
+      }
+    })
+  }
 
   generarQR() {
     this.ninotsService.getNinotsWithCache().subscribe({
@@ -161,5 +170,48 @@ export class AdminComponent {
         console.log('Error creating ninot -> ', error);
       });
     }
+  }
+
+  async uploadBocetos(event?: any) {
+    // Si se llama desde el input file, obtén los archivos del evento
+    let files: FileList | null = null;
+    if (event && event.target && event.target.files) {
+      files = event.target.files;
+    } else if (this.uploadBocetosInput && this.uploadBocetosInput.nativeElement.files) {
+      files = this.uploadBocetosInput.nativeElement.files;
+    }
+
+    if (!files || files.length === 0) return;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      console.log('procesando archivo :', file.name);
+
+      // Extraer tipoNinotPath e idNinot del nombre del archivo (ej: 0-23.png)
+      const match = file.name.match(/^(\d+)-(\d+)\./);
+      if (!match) {
+        console.warn('Nombre de archivo no válido:', file.name);
+        continue;
+      }
+      const tipoNinotPath = match[1] === '0' ? 'adultos' : match[1] === '1' ? 'infantiles' : match[1] === '2' ? 'barracas' : 'otros';
+      const idNinot = match[2];
+      const currentYear = new Date().getFullYear();
+      const filePath = `images/bocetos/${currentYear}/${idNinot}.jpg`;
+
+      // Subir el archivo (puerta)
+      const path = await this.ninotsService.uploadImageNinot(filePath, file, 'boceto', null);
+      this.addUrlToNinot(Number(match[1]), match[2], path);
+
+    }
+  }
+
+  addUrlToNinot(tipoNinot: number, idAsociacion: string, url: string) {
+    const ninot = this.ninots.find(ninot => ninot.id === idAsociacion)
+    console.log(ninot);
+    if (ninot) {
+      ninot.boceto = url;
+      this.ninotsService.updateNinot(idAsociacion, ninot);
+    }
+
   }
 }

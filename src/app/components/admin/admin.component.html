@@ -25,11 +25,14 @@
                             class="bi bi-filetype-xlsx me-2"></i>Descargar plantilla llena</a></li>
                 <li><a class="dropdown-item" (click)="openUploadDialog()"><i
                             class="bi bi-cloud-arrow-up-fill me-2"></i>Subir Excel</a></li>
+                <li><a class="dropdown-item" (click)="uploadBocetosInputRef.click()"><i
+                            class="bi bi-cloud-arrow-up-fill me-2"></i>Subir bocetos</a></li>
                 <li><a class="dropdown-item" (click)="generarQR()"><i class="bi bi-qr-code-scan me-2"></i>Generar
                         QR's</a></li>
             </ul>
         </div>
         <input type="file" (change)="onFileChange($event)" style="display: none;" #uploadExcel />
+        <input type="file" #uploadBocetosInputRef style="display:none" multiple (change)="uploadBocetos($event)" />
     </div>
     <div class="form-container">
         @if (showNinotsForm) {
