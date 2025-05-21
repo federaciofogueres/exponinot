@@ -135,7 +135,9 @@ export class NinotsService {
           reject(error);
         }, () => {
           getDownloadURL(task.snapshot.ref).then((downloadURL: string) => {
-            ninotForm.controls[field].setValue(downloadURL);
+            if (ninotForm) {
+              ninotForm.controls[field].setValue(downloadURL);
+            }
             resolve(downloadURL);
           });
         }
