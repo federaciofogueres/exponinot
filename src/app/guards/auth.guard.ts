@@ -8,7 +8,7 @@ import { CensoService } from "../services/censo.service";
 })
 export class AuthGuard implements CanActivate {
 
-  restricted = true;
+  restricted = false;
 
   constructor(
     private authService: AuthService,
