@@ -1,7 +1,9 @@
 @if (scannerEnabled) {
-    <app-scanner [audioMode]="audioMode" [scannerEnabled]="scannerEnabled" (scannerEnabledEvent)="onScannerEnabled($event)" (onBack)="setOffScanner()"></app-scanner>
+<app-scanner [audioMode]="audioMode" [scannerEnabled]="scannerEnabled" (scannerEnabledEvent)="onScannerEnabled($event)"
+    (onBack)="setOffScanner()"></app-scanner>
 } @else {
-    <app-header></app-header>
-    <router-outlet></router-outlet>
+<app-header></app-header>
+<router-outlet></router-outlet>
 }
+<app-adds></app-adds>
 <app-footer (scannerEnabled)="onScannerEnabled($event)"></app-footer>

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { AddsComponent } from "./components/adds/adds.component";
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
@@ -9,7 +10,7 @@ import { QRService } from './services/qr.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, ScannerComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, ScannerComponent, AddsComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -23,13 +24,13 @@ export class AppComponent {
     private qrService: QRService,
     private cookieService: CookieService,
     private cd: ChangeDetectorRef
-  ){
+  ) {
     this.qrService.backEvent$.subscribe({
       next: () => {
-        if(this.audioMode) {
+        if (this.audioMode) {
           this.scannerEnabled = true;
           this.cd.detectChanges();
-        } else{
+        } else {
           this.setOffScanner();
         }
       }
@@ -42,7 +43,7 @@ export class AppComponent {
       this.audioMode = false;
     }
     this.scannerEnabled = event.mode;
-    if(event.type === 'audio') {
+    if (event.type === 'audio') {
       this.audioMode = event.mode;
       this.cookieService.set('audioMode', this.audioMode.toString());
     }
