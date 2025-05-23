@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AddsComponent } from "./components/adds/adds.component";
+import { AlertComponent } from "./components/alert/alert.component";
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ScannerComponent } from './components/scanner/scanner.component';
@@ -12,7 +14,7 @@ import { TicketService } from './services/ticket.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, ScannerComponent, AddsComponent, TicketComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, ScannerComponent, AddsComponent, TicketComponent, AlertComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -22,9 +24,11 @@ export class AppComponent {
   scannerEnabled = false;
   audioMode = false;
 
+  platformReady = false;
   showTicketModal = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private qrService: QRService,
     private cookieService: CookieService,
     private cd: ChangeDetectorRef,
@@ -42,9 +46,13 @@ export class AppComponent {
     })
   }
 
+
   ngOnInit(): void {
-    // Solo se ejecuta en navegador
-    this.showTicketModal = !this.ticketService.isTicketRegistered;
+    if (isPlatformBrowser(this.platformId)) {
+      this.platformReady = true;
+      this.showTicketModal = !this.ticketService.isTicketRegistered();
+      this.cd.detectChanges(); // fuerza actualización solo en cliente
+    }
   }
 
   handleTicketSaved(): void {

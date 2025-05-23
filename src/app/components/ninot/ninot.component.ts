@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
 import { QRService } from '../../services/qr.service';
+import { EnviarPuntuacionComponent } from '../enviar-puntuacion/enviar-puntuacion.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NinotsService } from './../../services/ninots.service';
 
 @Component({
   selector: 'app-ninot',
   standalone: true,
-  imports: [SpinnerComponent],
+  imports: [SpinnerComponent, EnviarPuntuacionComponent],
   animations: [
     trigger('flipState', [
       state('active', style({
@@ -40,6 +41,8 @@ export class NinotComponent implements OnInit {
 
   idNinot: string = '';
 
+  mostrarModal = false;
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router,
@@ -47,19 +50,19 @@ export class NinotComponent implements OnInit {
     private cookieService: CookieService,
     protected authService: AuthService,
     private qrService: QRService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loading = true;
-    if(this.idNinot === 'undefined') {
+    if (this.idNinot === 'undefined') {
       this.idNinot = this.route.snapshot.paramMap.get('id')!;
     }
     this.route.params.subscribe(params => {
       this.idNinot = params['id'];
       this.getNinot(this.idNinot);
       console.log(this.idNinot);
-      
-      
+
+
     });
     this.checkUser();
   }
@@ -72,7 +75,7 @@ export class NinotComponent implements OnInit {
     }
   }
 
-  checkUser(){
+  checkUser() {
     this.userLogged = this.authService.isLoggedIn();
   }
 
@@ -99,7 +102,7 @@ export class NinotComponent implements OnInit {
     const utterance = new SpeechSynthesisUtterance();
     utterance.text = `Número: ${this.ninot.order}. Asociación: ${this.ninot.asociacion}. Categoría: ${this.ninot.categoria}. Lema: ${this.ninot.lema}. Artista: ${this.ninot.artista}. Descripción: ${this.ninot.descripcionAccesible !== '' ? this.ninot.descripcionAccesible : 'No tiene descripción.'}.`;
     console.log(this.ninot);
-    
+
     // Set this.speaking to true when speech starts
     this.speaking = true;
 

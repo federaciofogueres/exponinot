@@ -1,4 +1,5 @@
 @import "../../../variables.scss";
+
 .ninot-container {
     height: calc(100% - 136px);
     overflow-y: auto;
@@ -8,10 +9,30 @@
     position: absolute;
     top: 13px;
     right: 16px;
-  }
+}
 
-.btn-admin{
+.btn-admin {
     position: absolute;
     top: 20px;
     right: 50px;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 76px;
+    right: 20px;
+    z-index: 1050; // por encima de casi todo
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    // box-shadow: 0 4px 12px $rojo;
+    transition: background-color 0.2s ease;
+    background-color: $rojo;
+
+    &:hover {
+        background-color: white;
+    }
+
+    i {
+        margin-right: 0.5rem;
+    }
 }

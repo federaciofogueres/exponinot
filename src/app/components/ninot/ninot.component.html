@@ -1,92 +1,96 @@
 @if (loading) {
-  <app-spinner [fullscreen]="true"></app-spinner>
+<app-spinner [fullscreen]="true"></app-spinner>
 }
 @if (!loading) {
-  <div class="container ninot-container">
-    @if (userLogged) {
-      <div class="dropdown btn-admin d-flex">
-        <div class="d-flex me-2">
-          <i class="bi bi-eye-fill me-2 align-items-center d-flex" style="font-size: 1.2rem;"></i>
-          <span class="h2 m-0">{{ninot.visitas}}</span>
-        </div>
-        <div class="align-items-center d-flex">
-          <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="padding: unset;">
-              <i class="bi bi-gear-fill align-items-center d-flex" style="font-size: 1.2rem;"></i>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li>
-                <div class="btn btn-primary w-100 p-1" (click)="edit()">
-                  <i class="bi bi-pencil-square"></i> Editar
-                </div>
-              </li>
-              <!-- <li>
+@if(mostrarModal) {
+<app-enviar-puntuacion (close)="mostrarModal = false" [ninotId]="idNinot"></app-enviar-puntuacion>
+}
+<div class="container ninot-container">
+  @if (userLogged) {
+  <div class="dropdown btn-admin d-flex">
+    <div class="d-flex me-2">
+      <i class="bi bi-eye-fill me-2 align-items-center d-flex" style="font-size: 1.2rem;"></i>
+      <span class="h2 m-0">{{ninot.visitas}}</span>
+    </div>
+    <div class="align-items-center d-flex">
+      <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
+        style="padding: unset;">
+        <i class="bi bi-gear-fill align-items-center d-flex" style="font-size: 1.2rem;"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li>
+          <div class="btn btn-primary w-100 p-1" (click)="edit()">
+            <i class="bi bi-pencil-square"></i> Editar
+          </div>
+        </li>
+        <!-- <li>
                 <div class="btn btn-danger w-100 p-1" (click)="deleteNinot()">
                   <i class="bi bi-trash3-fill"></i> Borrar
                 </div>
               </li> -->
-          </ul>
-        </div>
-      </div>
-    } @else {
-      <div class="d-flex justify-content-between btn-listen">
-        @if (speaking) {
-          <button class="btn btn-outline-dark border-white text-light" (click)="stopSpeaking()">
-            <i class="bi bi-stop-fill"></i> Parar
-          </button>
-        } @else {
-          <button class="btn btn-outline-dark speak-button border-white text-light" (click)="speak()">
-            <i class="bi bi-volume-up-fill"></i> Escuchar
-          </button>
-        }
-      </div>
-    }
-    <div class="p-3">
-      <div class="title text-center">
-        <span class="h4 m-0 text-rojo">
-          {{ninot.order}} - {{ninot.asociacion}}
-        </span>
-      </div>
-      <hr class="m-0 border-salmon">
-      <div class="text-center text-naranja">
-        <span class="h5 m-0">
-          {{ ninot.categoria }}
-        </span>
-      </div>
-      <div class="data mt-2">
-        <p>
-          <i class="bi bi-brush-fill text-rojo me-1"></i>
-          <strong class="text-rojo">Artista:</strong>
-           {{ ninot.artista }}
-        </p>
-        @if (fotoMode === 'boceto' && ninot.tipo !== 2) {
-          <p>
-            <i class="bi bi-chat-text-fill text-rojo me-1"></i>
-            <strong class="text-rojo">Lema:</strong>
-             {{ ninot.lema }}
-          </p>
-          <div class="text-center mb-1">
-            <span class="h4 m-0 text-rojo">
-              Boceto de la foguera
-            </span>
-          </div>
-        } @else if (fotoMode === 'ninot') {
-          <p>{{ ninot.descripcion }}</p>
-          <div class="text-center mb-1">
-            <span class="h4 m-0 text-naranja">
-              Ninot de exposición
-            </span>
-          </div>
-        }
-        @if (ninot.tipo !== 2) {
-          <img [src]="fotoMode === 'boceto' ? ninot.boceto : ninot.ninot" 
-            alt="Imagen del ninot" 
-            class="img-fluid rounded" 
-            (click)="toggleFlip(); fotoMode = fotoMode === 'boceto' ? 'ninot' : 'boceto'" 
-            [@flipState]="flip">
-        } @else {
-          <img [src]="ninot.ninot" alt="Imagen del ninot" class="img-fluid rounded" >
-        }
-      </div>
+      </ul>
     </div>
   </div>
+  } @else {
+  <div class="d-flex justify-content-between btn-listen">
+    <button class="btn btn-outline-dark border-white text-light floating-button" (click)="mostrarModal = true">
+      <i class="bi bi-chat-heart"></i> Puntuar
+    </button>
+    @if (speaking) {
+    <button class="btn btn-outline-dark border-white text-light" (click)="stopSpeaking()">
+      <i class="bi bi-stop-fill"></i> Parar
+    </button>
+    } @else {
+    <button class="btn btn-outline-dark speak-button border-white text-light" (click)="speak()">
+      <i class="bi bi-volume-up-fill"></i> Escuchar
+    </button>
+    }
+  </div>
+  }
+  <div class="p-3">
+    <div class="title text-center">
+      <span class="h4 m-0 text-rojo">
+        {{ninot.order}} - {{ninot.asociacion}}
+      </span>
+    </div>
+    <hr class="m-0 border-salmon">
+    <div class="text-center text-naranja">
+      <span class="h5 m-0">
+        {{ ninot.categoria }}
+      </span>
+    </div>
+    <div class="data mt-2">
+      <p>
+        <i class="bi bi-brush-fill text-rojo me-1"></i>
+        <strong class="text-rojo">Artista:</strong>
+        {{ ninot.artista }}
+      </p>
+      @if (fotoMode === 'boceto' && ninot.tipo !== 2) {
+      <p>
+        <i class="bi bi-chat-text-fill text-rojo me-1"></i>
+        <strong class="text-rojo">Lema:</strong>
+        {{ ninot.lema }}
+      </p>
+      <div class="text-center mb-1">
+        <span class="h4 m-0 text-rojo">
+          Boceto de la foguera
+        </span>
+      </div>
+      } @else if (fotoMode === 'ninot') {
+      <p>{{ ninot.descripcion }}</p>
+      <div class="text-center mb-1">
+        <span class="h4 m-0 text-naranja">
+          Ninot de exposición
+        </span>
+      </div>
+      }
+      @if (ninot.tipo !== 2) {
+      <img [src]="fotoMode === 'boceto' ? ninot.boceto : ninot.ninot" alt="Imagen del ninot" class="img-fluid rounded"
+        (click)="toggleFlip(); fotoMode = fotoMode === 'boceto' ? 'ninot' : 'boceto'" [@flipState]="flip">
+      } @else {
+      <img [src]="ninot.ninot" alt="Imagen del ninot" class="img-fluid rounded">
+      }
+    </div>
+  </div>
+</div>
 }

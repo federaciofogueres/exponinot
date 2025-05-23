@@ -1,4 +1,4 @@
-@if(showTicketModal){
+@if(platformReady && showTicketModal){
 <app-ticket (ticketSaved)="handleTicketSaved()"></app-ticket>
 }
 @if (scannerEnabled) {
@@ -10,3 +10,4 @@
 }
 <app-adds></app-adds>
 <app-footer (scannerEnabled)="onScannerEnabled($event)"></app-footer>
+<app-alert></app-alert>

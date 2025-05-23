@@ -5,6 +5,7 @@ import { getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
 import { Observable } from 'rxjs';
+import { Puntuacion } from '../models/puntuacion.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,8 +21,6 @@ export class NinotsService {
   private _storage = getStorage(this._firebaseApp, 'gs://exponinot.appspot.com');
 
   private ninotsCache: any[] | null = null;
-
-
 
   incrementVisits(ninotId: string) {
     const ninotRef = doc(this._firestore, this.pathCollection, ninotId);
@@ -111,6 +110,30 @@ export class NinotsService {
   async deleteNinot(id: any) {
     const ninotRef = doc(this._firestore, this.pathCollection, id);
     await deleteDoc(ninotRef);
+  }
+
+  async enviarPuntuacion(ninotId: string, puntuacion: Puntuacion): Promise<any> {
+    const ticketId = localStorage.getItem('ticketId');
+
+    if (!ticketId) {
+      return { type: 'danger', message: 'No se ha encontrado la entrada del usuario (ticketId).' }
+    }
+
+    const puntuacionPath = `ninots/2025/ninots/${ninotId}/puntuaciones/${ticketId}`;
+    const puntuacionRef = doc(this._firestore, puntuacionPath);
+
+    const docSnap = await getDoc(puntuacionRef);
+
+    if (docSnap.exists()) {
+      return { type: 'danger', message: 'Ya se ha registrado una puntuación con esta entrada.' }
+    }
+
+    const data: Puntuacion = {
+      ...puntuacion,
+      fecha: new Date()
+    };
+
+    await setDoc(puntuacionRef, data);
   }
 
   uploadImageNinot(filePath: string, file: any, field: string, ninotForm: any): Promise<string> {
