@@ -1,3 +1,6 @@
+@if(showTicketModal){
+<app-ticket (ticketSaved)="handleTicketSaved()"></app-ticket>
+}
 @if (scannerEnabled) {
 <app-scanner [audioMode]="audioMode" [scannerEnabled]="scannerEnabled" (scannerEnabledEvent)="onScannerEnabled($event)"
     (onBack)="setOffScanner()"></app-scanner>
