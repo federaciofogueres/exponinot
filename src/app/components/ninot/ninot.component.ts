@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
 import { QRService } from '../../services/qr.service';
+import { TicketService } from '../../services/ticket.service';
 import { EnviarPuntuacionComponent } from '../enviar-puntuacion/enviar-puntuacion.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NinotsService } from './../../services/ninots.service';
@@ -42,6 +43,7 @@ export class NinotComponent implements OnInit {
   idNinot: string = '';
 
   mostrarModal = false;
+  isTicketRegistered = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,11 +51,13 @@ export class NinotComponent implements OnInit {
     private ninotsService: NinotsService,
     private cookieService: CookieService,
     protected authService: AuthService,
-    private qrService: QRService
+    private qrService: QRService,
+    protected ticketService: TicketService
   ) { }
 
   ngOnInit() {
     this.loading = true;
+    this.isTicketRegistered = this.ticketService.isTicketRegistered();
     if (this.idNinot === 'undefined') {
       this.idNinot = this.route.snapshot.paramMap.get('id')!;
     }

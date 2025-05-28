@@ -28,7 +28,7 @@ export class TicketService {
     }
 
     isTicketRegistered(): boolean {
-        return isPlatformBrowser(this.platformId) && !!localStorage.getItem('ticketId');
+        return isPlatformBrowser(this.platformId) && !!localStorage.getItem('ticketId') && localStorage.getItem('ticketId') !== '-1';
     }
 
 }

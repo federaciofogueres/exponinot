@@ -10,9 +10,14 @@ $naranja: #e3741c;
 $rojo: #c4141c;
 $salmon: #dc7c7c;
 
+.invalid-field {
+    color: $rojo;
+    font-size: small;
+}
+
 .text-rojo {
     color: $rojo;
-  }
+}
 
 .text-naranja {
     color: $naranja;
@@ -28,7 +33,7 @@ $salmon: #dc7c7c;
 
 .border-salmon {
     border-color: $salmon;
-  }
+}
 
 .border-white {
     border-color: white;
@@ -44,4 +49,22 @@ $salmon: #dc7c7c;
 
 .background-salmon {
     background-color: $salmon;
+}
+
+.btn-foc-rojo {
+    background-color: $rojo;
+    border-color: $rojo;
+    color: white;
+}
+
+.btn-foc-naranja {
+    background-color: $naranja;
+    border-color: $naranja;
+    color: white;
+}
+
+.btn-foc-salmon {
+    background-color: $salmon;
+    border-color: $salmon;
+    color: white;
 }

@@ -33,9 +33,11 @@
   </div>
   } @else {
   <div class="d-flex justify-content-between btn-listen">
+    @if(isTicketRegistered) {
     <button class="btn btn-outline-dark border-white text-light floating-button" (click)="mostrarModal = true">
       <i class="bi bi-chat-heart"></i> Puntuar
     </button>
+    }
     @if (speaking) {
     <button class="btn btn-outline-dark border-white text-light" (click)="stopSpeaking()">
       <i class="bi bi-stop-fill"></i> Parar

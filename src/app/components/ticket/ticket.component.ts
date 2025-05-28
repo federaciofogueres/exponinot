@@ -15,8 +15,8 @@ export class TicketComponent {
 
   constructor(public ticketService: TicketService) { }
 
-  submitTicket(): void {
-    const value = this.userInput.trim();
+  submitTicket(ticketValue?: string): void {
+    const value = ticketValue ?? this.userInput.trim();
     if (value) {
       this.ticketService.ticketId = value;
       this.ticketSaved.emit();

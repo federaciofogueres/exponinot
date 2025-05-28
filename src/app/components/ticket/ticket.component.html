@@ -1,8 +1,18 @@
 <div class="ticket-modal">
-    <div class="ticket-content">
+    <div class="ticket-content position-relative">
+        <!-- Botón de cerrar (X) en la esquina superior derecha -->
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Cerrar"
+            (click)="submitTicket('-1')"></button>
+        <h1>Expo Ninot 2025</h1>
+        <span>Si estás visitando la exposición del ninot y dispones de una entrada física, por favor, introduce el
+            número de tu entrada y podrás valorar cada ninot de la exposición!</span>
+        <br>
         <h2>Introduce tu número de entrada</h2>
         <input type="text" [(ngModel)]="userInput" placeholder="Ej: 123456" />
-        <button (click)="submitTicket()">Guardar</button>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-primary btn-foc-naranja" (click)="submitTicket()">Guardar</button>
+            <button class="btn btn-primary btn-foc-rojo" (click)="submitTicket('-1')">No tengo entrada</button>
+        </div>
         <p>Esto no es una compra de entradas</p>
     </div>
 </div>
